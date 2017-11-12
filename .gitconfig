@@ -1,0 +1,16 @@
+[user]
+	name = Thomas Faingnaert
+	useConfigOnly = true
+[merge]
+	tool = gvimdiff
+[mergetool]
+	prompt = false
+[diff]
+	tool = gvimdiff
+[difftool]
+	prompt = false
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
