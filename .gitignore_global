@@ -1,2 +1,5 @@
 # Configuration file for clang_complete
 .clang_complete
+
+# Custom build system configuration
+build-system/
