@@ -3,3 +3,8 @@
 
 # Custom build system configuration
 build-system/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
