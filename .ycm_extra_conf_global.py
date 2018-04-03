@@ -9,9 +9,6 @@ flags = [
         '-Wpedantic'
         ]
 
-def DirectoryOfScript():
-    return os.path.dirname(os.path.abspath(__file__))
-
 def IsHeaderFile(filename):
     extension = os.path.splitext(filename)[1]
     return extension in [ '.h', '.hxx', '.hpp', '.hh' ]
@@ -57,3 +54,10 @@ def FlagsForFile(filename, **kwargs):
 
                         if compilation_db_path.exists():
                             return LoadCompilationDb(compilation_db_path, filename)
+
+    # Use default flags as fallback
+    return {
+            'flags': flags,
+            'include_paths_relative_to_dir': os.path.dirname(os.path.abspath(__file__)),
+            'override_filename': filename
+            }
