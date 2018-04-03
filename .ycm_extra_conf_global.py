@@ -43,8 +43,9 @@ def FlagsForFile(filename, **kwargs):
 
     # Try to find database using 'build-system/'
     directory = Path(filename)
-    while not directory.samefile(directory.parent):
+    while not directory.exists() or not directory.samefile(directory.parent):
         directory = directory.parent
+
         for subitem in directory.iterdir():
             if subitem.is_dir() and subitem.name == 'build-system':
                 for subsubitem in subitem.iterdir():
