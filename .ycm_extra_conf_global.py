@@ -9,8 +9,6 @@ flags = [
         '-Wpedantic'
         ]
 
-log = open('C:/Users/Thomas/ycm.log', 'w')
-
 def IsHeaderFile(filename):
     return Path(filename).suffix in [ '.h', '.hxx', '.hpp', '.hh' ]
 
@@ -48,17 +46,20 @@ def LoadCompilationDb(path, filename):
             }
 
 def FlagsForFile(filename, **kwargs):
-    log.write(filename)
-    log.write('\n')
-
     # If the file is a header, use corresponding source file
     source_file = FindCorrespondingSourceFile(Path(filename))
-    directory = source_file
 
-    log.write(str(source_file))
-    log.write('\n')
+    # Try to find the compilation database automatically,
+    # using directories of the form '*-build'
+    directory = source_file.parent
+    while not directory.exists() or not directory.samefile(directory.parent):
+        compilation_db_path = directory.with_name(directory.name + '-build')
+        if compilation_db_path.exists():
+            return LoadCompilationDb(compilation_db_path, str(source_file))
+        directory = directory.parent
 
     # Try to find database using 'build-system/'
+    directory = source_file
     while not directory.exists() or not directory.samefile(directory.parent):
         directory = directory.parent
 
@@ -70,11 +71,9 @@ def FlagsForFile(filename, **kwargs):
                         compilation_db_path = subitem.joinpath(config_file.readline()).resolve()
 
                         if compilation_db_path.exists():
-                            log.write('Loaded from compilation db\n')
                             return LoadCompilationDb(compilation_db_path, str(source_file))
 
     # Use default flags as fallback
-    log.write('Fallback\n')
     return {
             'flags': flags,
             'include_paths_relative_to_dir': os.path.dirname(os.path.abspath(__file__)),
