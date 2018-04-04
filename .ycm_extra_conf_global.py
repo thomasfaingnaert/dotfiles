@@ -1,4 +1,3 @@
-import os
 import ycm_core
 from pathlib import Path
 
@@ -9,24 +8,14 @@ flags = [
         '-Wpedantic'
         ]
 
-log = open('C:/Users/Thomas/ycm.log', 'w')
-
 def IsHeaderFile(filename):
     return Path(filename).suffix in [ '.h', '.hxx', '.hpp', '.hh' ]
 
 def FindCorrespondingSourceFile(filename):
     if IsHeaderFile(filename):
-        # Extensions for source files
-        extensions = [ '.cpp', '.cxx', '.cc', '.c', '.m', '.mm' ]
         # Try finding source file in same directory
-        for extension in extensions:
-            source_file = filename.with_suffix(extension)
-            if source_file.exists():
-                return source_file
-
-        # Try finding source file in ../src
-        for extension in extensions:
-            source_file = filename.parent.with_name('src').joinpath(filename.name).with_suffix(extension)
+        for extension in [ '.cpp', '.cxx', '.cc', '.c', '.m', '.mm' ]:
+            source_file = Path(filename).with_suffix(extension)
             if source_file.exists():
                 return source_file
 
@@ -48,21 +37,14 @@ def LoadCompilationDb(path, filename):
             }
 
 def FlagsForFile(filename, **kwargs):
-    log.write(filename)
-    log.write('\n')
-
     # If the file is a header, use corresponding source file
     source_file = FindCorrespondingSourceFile(Path(filename))
-    directory = source_file
-
-    log.write(str(source_file))
-    log.write('\n')
 
     # Try to find database using 'build-system/'
-    while not directory.exists() or not directory.samefile(directory.parent):
-        directory = directory.parent
+    while not source_file.exists() or not source_file.samefile(source_file.parent):
+        source_file = source_file.parent
 
-        for subitem in directory.iterdir():
+        for subitem in source_file.iterdir():
             if subitem.is_dir() and subitem.name == 'build-system':
                 for subsubitem in subitem.iterdir():
                     if subsubitem.is_file() and subsubitem.name == 'compilation-database.txt':
@@ -70,11 +52,9 @@ def FlagsForFile(filename, **kwargs):
                         compilation_db_path = subitem.joinpath(config_file.readline()).resolve()
 
                         if compilation_db_path.exists():
-                            log.write('Loaded from compilation db\n')
-                            return LoadCompilationDb(compilation_db_path, str(source_file))
+                            return LoadCompilationDb(compilation_db_path, filename)
 
     # Use default flags as fallback
-    log.write('Fallback\n')
     return {
             'flags': flags,
             'include_paths_relative_to_dir': os.path.dirname(os.path.abspath(__file__)),
