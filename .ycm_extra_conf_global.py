@@ -1,3 +1,4 @@
+import os
 import ycm_core
 from pathlib import Path
 
@@ -9,16 +10,16 @@ flags = [
         ]
 
 def IsHeaderFile(filename):
-    return Path(filename).suffix in [ '.h', '.hxx', '.hpp', '.hh' ]
+    extension = os.path.splitext(filename)[1]
+    return extension in [ '.h', '.hxx', '.hpp', '.hh' ]
 
 def FindCorrespondingSourceFile(filename):
     if IsHeaderFile(filename):
-        # Try finding source file in same directory
+        basename = os.path.splitext(filename)[0]
         for extension in [ '.cpp', '.cxx', '.cc', '.c', '.m', '.mm' ]:
-            source_file = Path(filename).with_suffix(extension)
-            if source_file.exists():
-                return source_file
-
+            replacement_file = basename + extension
+            if os.path.exists(replacement_file):
+                return replacement_file
     return filename
 
 def LoadCompilationDb(path, filename):
@@ -38,13 +39,14 @@ def LoadCompilationDb(path, filename):
 
 def FlagsForFile(filename, **kwargs):
     # If the file is a header, use corresponding source file
-    source_file = FindCorrespondingSourceFile(Path(filename))
+    filename = FindCorrespondingSourceFile(filename)
 
     # Try to find database using 'build-system/'
-    while not source_file.exists() or not source_file.samefile(source_file.parent):
-        source_file = source_file.parent
+    directory = Path(filename)
+    while not directory.exists() or not directory.samefile(directory.parent):
+        directory = directory.parent
 
-        for subitem in source_file.iterdir():
+        for subitem in directory.iterdir():
             if subitem.is_dir() and subitem.name == 'build-system':
                 for subsubitem in subitem.iterdir():
                     if subsubitem.is_file() and subsubitem.name == 'compilation-database.txt':
@@ -58,5 +60,5 @@ def FlagsForFile(filename, **kwargs):
     return {
             'flags': flags,
             'include_paths_relative_to_dir': os.path.dirname(os.path.abspath(__file__)),
-            'override_filename': str(source_file)
+            'override_filename': filename
             }
