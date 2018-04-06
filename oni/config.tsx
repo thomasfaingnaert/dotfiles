@@ -26,9 +26,9 @@ export const configuration = {
 
     "ui.colorscheme": "nord",
 
-    //"oni.useDefaultConfig": true,
+    "oni.useDefaultConfig": false,
     //"oni.bookmarks": ["~/Documents"],
-    //"oni.loadInitVim": false,
+    "oni.loadInitVim": true,
     //"editor.fontSize": "12px",
     //"editor.fontFamily": "Monaco",
 
