@@ -1,1 +1,2 @@
-colorscheme flattened_light
+set background=light
+colorscheme solarized8

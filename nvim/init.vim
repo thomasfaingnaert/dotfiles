@@ -1,5 +1,5 @@
 call plug#begin()
 
-Plug 'romainl/flattened'
+Plug 'lifepillar/vim-solarized8'
 
 call plug#end()
