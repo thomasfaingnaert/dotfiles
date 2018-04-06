@@ -12,3 +12,5 @@ $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath("$env:LocalAppData\nvim\autoload\plug.vim")
 )
 nvim +PlugInstall +qall
+md $env:AppData\Oni
+cmd /c mklink /H %APPDATA%\Oni\config.tsx oni\config.tsx
