@@ -1,6 +1,9 @@
 # Configuration file for clang_complete
 .clang_complete
 
+# Compilation flags for clang tools
+compile_flags.txt
+
 # Custom build system configuration
 build-system/
 
