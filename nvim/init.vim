@@ -84,3 +84,22 @@ set statusline+=%=                          " right align
 set statusline+=\ Line:\ %l/%L              " current line and total number of lines
 set statusline+=\ Col:\ %c                  " column number
 
+" Always show at least 5 lines above and below the cursor
+set scrolloff=5
+
+" Always show at least 5 columns left and right of the cursor
+set sidescrolloff=5
+
+" Don't automatically continue comment when pressing enter
+augroup no_continue_comment
+    autocmd!
+    autocmd FileType * setlocal formatoptions-=r
+augroup end
+
+" Allow hiding buffers with unsaved changes
+set hidden
+
+" Ignore case when searching, except when the pattern contains uppercase
+" letters
+set ignorecase
+set smartcase
