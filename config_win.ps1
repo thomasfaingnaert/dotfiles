@@ -22,3 +22,6 @@ vim +PlugInstall +qall
 md $env:LocalAppData\nvim
 cmd /c mklink /H %LOCALAPPDATA%\nvim\init.vim nvim\init.vim
 cmd /c mklink /H %LOCALAPPDATA%\nvim\ginit.vim nvim\ginit.vim
+
+md $env:AppData\Oni
+cmd /c mklink /H %APPDATA%\Oni\config.tsx oni\config.tsx
