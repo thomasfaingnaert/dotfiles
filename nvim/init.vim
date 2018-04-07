@@ -61,9 +61,26 @@ function! <SID>Preserve(command)
     call setreg('/', l:last_search)
 endfunction
 
+" Automatically strip whitespace when saving file
 augroup strip_whitespace
     autocmd!
-
-    " Automatically strip whitespace when saving file
     autocmd BufWritePre * :call<SID>Preserve("%s/\\s\\+$//e")
 augroup end
+
+" Always display statusline
+augroup display_statusline
+    autocmd!
+    autocmd BufWinEnter * :set laststatus=2
+augroup end
+
+" Configure statusline
+set statusline=                             " clear statusline for when vimrc is reloaded
+set statusline+=%f                          " path to file in the buffer
+set statusline+=%(\ %h%)                    " help flag: [Help] or empty
+set statusline+=%(\ %m%)                    " modified flag: [+] or [-] or empty
+set statusline+=%(\ %r%)                    " readonly flag: [RO] or empty
+set statusline+=%(\ (%{fugitive#head()})%)  " current branch
+set statusline+=%=                          " right align
+set statusline+=\ Line:\ %l/%L              " current line and total number of lines
+set statusline+=\ Col:\ %c                  " column number
+
