@@ -11,6 +11,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 
 Plug 'machakann/vim-sandwich'
+Plug 'junegunn/vim-easy-align'
 
 call plug#end()
 
@@ -50,6 +51,10 @@ nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gc :Glcd<CR>
+
+" Easy align mappings
+nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
 
 " Make mapping
 nnoremap <F7> :make<CR>
