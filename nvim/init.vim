@@ -49,6 +49,35 @@ nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gc :Glcd<CR>
 
+" Make mapping
+nnoremap <F7> :make<CR>
+
+" Function to set make mappings correctly
+function! SetMakeMappings()
+    " Check if a file named "Makefile" exists in the current directory
+    if filereadable("./Makefile")
+        set makeprg=make
+        nnoremap <F5> :make debug<CR>
+        nnoremap <F6> :make run<CR>
+    else
+        if has('win32')
+            set makeprg=build-system\build
+            nnoremap <F5> :make<CR>:silent !build-system\debug<CR>
+            nnoremap <F6> :make<CR>:silent !build-system\run<CR>
+        else
+            set makeprg=./build-system/build.sh
+            nnoremap <F5> :make<CR>:silent !./build-system/debug.sh<CR>
+            nnoremap <F6> :make<CR>:silent !./build-system/run.sh<CR>
+        end
+    endif
+endfunction
+
+" Update make mappings autocmd
+augroup update_make_mappings
+    autocmd!
+    autocmd BufWinEnter * call SetMakeMappings()
+augroup end
+
 " Function to preserve "state" and execute command
 " (Source: http://vimcasts.org/episodes/tidying-whitespace/)
 function! <SID>Preserve(command)
