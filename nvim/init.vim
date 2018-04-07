@@ -2,6 +2,11 @@ call plug#begin()
 
 Plug 'lifepillar/vim-solarized8'
 
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-unimpaired'
+
 call plug#end()
 
 " Show the line number the cursor is on
@@ -32,6 +37,14 @@ nnoremap <leader>= :call <SID>Preserve("normal gg=G")<CR>
 nnoremap <leader>b :ls<CR>:b<SPACE>
 nnoremap <leader>d :ls<CR>:bd<SPACE>
 nnoremap <leader>c :lcd %:h<CR>
+
+" Fugitive mappings
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>ge :Gedit<CR>
+nnoremap <leader>gw :Gwrite<CR>
+nnoremap <leader>gr :Gread<CR>
+nnoremap <leader>gp :Gpush<CR>
+nnoremap <leader>gc :Glcd<CR>
 
 " Function to preserve "state" and execute command
 " (Source: http://vimcasts.org/episodes/tidying-whitespace/)
