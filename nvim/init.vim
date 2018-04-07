@@ -2,6 +2,9 @@ call plug#begin()
 
 Plug 'lifepillar/vim-solarized8'
 
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
@@ -110,3 +113,9 @@ augroup split_location
     autocmd BufWinEnter * set nosplitbelow
     autocmd BufWinEnter * set splitright
 augroup end
+
+" UltiSnips configuration
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsEditSplit="vertical"
