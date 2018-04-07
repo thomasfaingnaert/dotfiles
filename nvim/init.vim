@@ -29,7 +29,7 @@ let mapleader=" "
 
 " Leader mappings
 nnoremap <leader>w :write<CR>
-nnoremap <leader>v :edit $MYVIMRC<CR>
+nnoremap <leader>v :edit ~/dotfiles/nvim/init.vim<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
 nnoremap <leader>l :set list!<CR>
 nnoremap <leader>h :set hlsearch!<CR>
