@@ -1,13 +1,13 @@
 # Dotfiles
 ## Installation
 ### Windows
-1. Install NeoVim and make sure it is in your PATH
-2. Clone the repository:
+1. Install gVim, Visual Studio, Python, Git for Windows, Clang, SumatraPDF and TeX Live
+2. Add gVim, Python, Clang and SumatraPDF to your PATH
+3. Clone the repository:
 ```sh
 git clone https://github.com/thomasfaingnaert/dotfiles ~/dotfiles
 ```
-3. Run Powershell as Administrator
-4. Navigate to the directory where you cloned the repository and run the script `config_win.ps1`:
+4. Run Powershell as Administrator, navigate to the directory where you cloned the repository and run the script `config_win.ps1`:
 ```powershell
 cd ~/dotfiles ; powershell -ExecutionPolicy ByPass -File .\config_win.ps1
 ```
