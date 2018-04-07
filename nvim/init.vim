@@ -10,6 +10,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 
+Plug 'machakann/vim-sandwich'
+
 call plug#end()
 
 " Show the line number the cursor is on
@@ -148,3 +150,6 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsEditSplit="vertical"
+
+" I prefer vim-surround keymappings instead of the default vim-sandwich mappings
+runtime macros/sandwich/keymap/surround.vim
