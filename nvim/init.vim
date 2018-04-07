@@ -103,3 +103,10 @@ set hidden
 " letters
 set ignorecase
 set smartcase
+
+" Set location of new window when splitting
+augroup split_location
+    autocmd!
+    autocmd BufWinEnter * set nosplitbelow
+    autocmd BufWinEnter * set splitright
+augroup end
