@@ -1,5 +1,7 @@
 call plug#begin()
 
+Plug 'lifepillar/vim-solarized8'
+
 call plug#end()
 
 " Show the line number the cursor is on
