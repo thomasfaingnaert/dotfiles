@@ -1,0 +1,6 @@
+vim/autoload/plug.vim
+vim/plugged/
+vim/backup/
+vim/swap/
+vim/undo/
+vim/.netrwhist
