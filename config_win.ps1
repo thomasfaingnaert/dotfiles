@@ -16,3 +16,5 @@ $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     "~\vimfiles\autoload\plug.vim"
   )
 )
+
+vim +PlugInstall +qall
