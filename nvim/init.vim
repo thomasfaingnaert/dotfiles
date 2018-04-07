@@ -13,3 +13,6 @@ set shiftwidth=4
 
 " Use spaces instead of tabs
 set expandtab
+
+" Change symbols used for invisible characters
+set listchars=eol:¬,tab:▸\ ,trail:·,precedes:←,extends:→
