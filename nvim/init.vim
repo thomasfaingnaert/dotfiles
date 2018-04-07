@@ -47,3 +47,10 @@ function! <SID>Preserve(command)
     call winrestview(l:win_view)
     call setreg('/', l:last_search)
 endfunction
+
+augroup strip_whitespace
+    autocmd!
+
+    " Automatically strip whitespace when saving file
+    autocmd BufWritePre * :call<SID>Preserve("%s/\\s\\+$//e")
+augroup end
