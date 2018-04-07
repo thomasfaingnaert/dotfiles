@@ -1,2 +1,2 @@
 set background=light
-colorscheme solarized8
+colorscheme NeoSolarized

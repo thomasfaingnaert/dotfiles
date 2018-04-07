@@ -18,3 +18,7 @@ $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 )
 
 vim +PlugInstall +qall
+
+md $env:LocalAppData\nvim
+cmd /c mklink /H %LOCALAPPDATA%\nvim\init.vim nvim\init.vim
+cmd /c mklink /H %LOCALAPPDATA%\nvim\ginit.vim nvim\ginit.vim

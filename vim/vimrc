@@ -1,7 +1,7 @@
 " Plugin list
 call plug#begin()
 
-Plug 'altercation/vim-colors-solarized'
+Plug 'icymind/NeoSolarized'
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -29,7 +29,7 @@ syntax enable
 if has('gui_running')
     " Use solarized light
     set background=light
-    colorscheme solarized
+    colorscheme NeoSolarized
 
     " Set guifont
     if has('win32')
