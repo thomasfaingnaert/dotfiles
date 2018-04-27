@@ -38,7 +38,7 @@ if has('gui_running')
     if has('win32')
         set guifont=Consolas:h11
     else
-        set guifont=Source\ Code\ Pro\ 11
+        set guifont=Hack\ 11
     endif
 
     " Remove menubar, toolbar, left and right scrollbars
@@ -104,7 +104,6 @@ let maplocalleader="\\"
 " Leader mappings
 nnoremap <leader>e :browse edit<CR>
 nnoremap <leader>w :write<CR>
-nnoremap <leader>v :edit ~/dotfiles/vim/vimrc<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
 nnoremap <leader>l :set list!<CR>
 nnoremap <leader>h :set hlsearch!<CR>
@@ -112,6 +111,12 @@ nnoremap <leader>= :call <SID>Preserve("normal gg=G")<CR>
 nnoremap <leader>b :ls<CR>:b<SPACE>
 nnoremap <leader>d :ls<CR>:bd<SPACE>
 nnoremap <leader>c :lcd %:h<CR>
+
+if has ('win32')
+    nnoremap <leader>v :edit ~/dotfiles/vim/vimrc<CR>
+else
+    nnoremap <leader>v :edit ~/.dotfiles/vim/vimrc<CR>
+endif
 
 " Fugitive mappings
 nnoremap <leader>gs :Gstatus<CR>
