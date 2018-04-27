@@ -17,6 +17,8 @@ cd ~/dotfiles ; powershell -ExecutionPolicy ByPass -File .\config_win.ps1
 ```sh
 git clone https://github.com/thomasfaingnaert/dotfiles ~/.dotfiles
 ```
-2. Navigate to the directory where you cloned the repository.
-3. Run the `config_unix.sh` configuration script.
+2. Navigate to the directory where you cloned the repository and run the `config_unix.sh` configuration script:
+```sh
+cd ~/.dotfiles && ./config_unix.sh
+```
 
