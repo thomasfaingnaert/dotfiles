@@ -310,3 +310,8 @@ if !has('gui_running')
     let g:vimtex_compiler_latexmk = { 'callback' : 0 }
 endif
 
+" Local overrides
+if filereadable($HOME . "/.vimrc.local")
+    execute "source " . $HOME . "/.vimrc.local"
+endif
+
