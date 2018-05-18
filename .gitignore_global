@@ -11,3 +11,13 @@ build-system/
 .idea/
 *.iml
 out/
+
+# LaTeX
+*.aux
+*.fdb_latexmk
+*.fls
+*.idx
+*.log
+*.pdf
+*.synctex.gz
+*.toc
