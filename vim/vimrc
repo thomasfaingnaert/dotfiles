@@ -38,7 +38,7 @@ if has('gui_running')
     if has('win32')
         set guifont=Consolas:h11
     else
-        set guifont=Hack\ 11
+        set guifont=Monospace\ 11
     endif
 
     " Remove menubar, toolbar, left and right scrollbars
