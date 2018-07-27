@@ -291,22 +291,6 @@ if has('win32')
     let g:vimtex_view_general_options_latexmk='-reuse-instance'
 endif
 
-" Required to make vimtex latexmk callback work
-" (See :h vimtex-faq-windows)
-if has('win32')
-    let g:vimtex_compiler_progname=v:progname
-endif
-
-" Disable vimtex latexmk callback in terminal Vim.
-" Generally, terminal Vim is not compiled with
-" +clientserver, so this callback wouldn't work anyway.
-" Even if it is, you would need to set servername explicitly,
-" since terminal Vim doesn't automatically generate a servername
-" on startup.
-if !has('gui_running')
-    let g:vimtex_compiler_latexmk = { 'callback' : 0 }
-endif
-
 " Autowrite LaTeX files, if compiler is active
 function! AutowriteLatex()
     if filereadable(expand('%')) && b:vimtex.compiler.is_running()
