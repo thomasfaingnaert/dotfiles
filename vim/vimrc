@@ -307,6 +307,18 @@ if !has('gui_running')
     let g:vimtex_compiler_latexmk = { 'callback' : 0 }
 endif
 
+" Autowrite LaTeX files, if compiler is active
+function! AutowriteLatex()
+    if filereadable(expand('%')) && b:vimtex.compiler.is_running()
+        execute "silent update"
+    endif
+endfunction
+
+augroup autowrite_latex_files
+    autocmd!
+    autocmd FileType tex :autocmd! autowrite_latex_files TextChanged,TextChangedI <buffer> call AutowriteLatex()
+augroup end
+
 " Local overrides
 if filereadable($HOME . "/.vimrc.local")
     execute "source " . $HOME . "/.vimrc.local"
