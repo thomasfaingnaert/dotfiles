@@ -160,6 +160,7 @@ endfunction
 " Update make mappings autocmd
 augroup update_make_mappings
     autocmd!
+
     autocmd BufWinEnter * call SetMakeMappings()
 augroup end
 
@@ -178,9 +179,10 @@ function! <SID>Preserve(command)
     call setreg('/', l:last_search)
 endfunction
 
-" Automatically strip whitespace when saving file
 augroup strip_whitespace
     autocmd!
+
+    " Automatically strip whitespace when saving file
     autocmd BufWritePre * :call<SID>Preserve("%s/\\s\\+$//e")
 augroup end
 
@@ -210,12 +212,16 @@ set scrolloff=5
 " Always show at least 5 columns left and right of the cursor
 set sidescrolloff=5
 
+" Show as much as possible of the last line in a window
+set display+=lastline
+
 " Delete comment character when joining commented lines
 set formatoptions+=j
 
-" Don't automatically continue comment when pressing enter
 augroup no_continue_comment
     autocmd!
+
+    " Don't automatically continue comment when pressing enter
     autocmd FileType * setlocal formatoptions-=r
 augroup end
 
@@ -233,11 +239,35 @@ set autoread
 inoremap <C-u> <C-g>u<C-u>
 inoremap <C-w> <C-g>u<C-w>
 
+" Enable timeout on key codes
+set ttimeout
+
+" Wait 100 ms for a key code or mapped key sequence to complete
+set ttimeoutlen=100
+
+" Don't look in included files for completion
+set complete-=i
+
+" Don't consider octal numbers for CTRL-A and CTRL-X
+set nrformats-=octal
+
+" Remember 200 lines of command line history
+set history=200
+
+" Don't use Ex mode. Use Q for formatting instead
+nnoremap Q gq
+
 " Allow hiding buffers with unsaved changes
 set hidden
 
+" Don't update the display while executing macros
+set lazyredraw
+
 " Show current mode
 set showmode
+
+" Show currently typed command
+set showcmd
 
 " UltiSnips configuration
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -245,9 +275,11 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsEditSplit="vertical"
 
-" Ignore case when searching except when the pattern contains uppercase
-" letters
-set ignorecase smartcase
+" Ignore case when searching...
+set ignorecase
+
+" ... except when the pattern contains uppercase letters
+set smartcase
 
 " Use LaTeX by default
 let g:tex_flavor="latex"
@@ -270,4 +302,9 @@ augroup autowrite_latex_files
     autocmd!
     autocmd FileType tex :autocmd! autowrite_latex_files TextChanged,TextChangedI <buffer> call AutowriteLatex()
 augroup end
+
+" Local overrides
+if filereadable($HOME . "/.vimrc.local")
+    execute "source " . $HOME . "/.vimrc.local"
+endif
 
