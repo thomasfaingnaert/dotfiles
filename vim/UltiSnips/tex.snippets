@@ -1,5 +1,5 @@
 snippet up "Use package" b
-\usepackage`!p snip.rv='[' if t[1] else ""`${1:options}`!p snip.rv = ']' if t[1] else ""`{${2:package}}$0
+\usepackage`!p snip.rv='[' if t[1] else ""`${2:options}`!p snip.rv = ']' if t[1] else ""`{${1:package}}$0
 endsnippet
 
 snippet ( "Inline math mode"
@@ -15,13 +15,23 @@ endsnippet
 snippet doc "Document" b
 \documentclass[a4paper,11pt]{article}
 
-\title{${1:title}}
+\usepackage[dutch]{babel}
+\usepackage[margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{siunitx}
+\usepackage{tikz}
+
+\title{${1:Title}}
 \author{Thomas Faingnaert}
 \date{\today}
 
 \begin{document}
+\maketitle
 $0
 \end{document}
 
 endsnippet
-
