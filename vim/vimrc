@@ -215,6 +215,10 @@ if has('win32')
     set shell=C:\WINDOWS\system32\cmd.exe
 endif
 
+" Allow undoing C-u and C-w in insert mode
+inoremap <C-u> <C-g>u<C-u>
+inoremap <C-w> <C-g>u<C-w>
+
 " Allow hiding buffers with unsaved changes
 set hidden
 
