@@ -1,7 +1,6 @@
 " Plugin list
 call plug#begin()
 
-Plug 'icymind/NeoSolarized'
 Plug 'joshdick/onedark.vim'
 
 Plug 'SirVer/ultisnips'
@@ -41,8 +40,6 @@ if has('gui_running')
     set guioptions-=m
     set guioptions-=T
     set guioptions-=r
-    set guioptions-=R
-    set guioptions-=l
     set guioptions-=L
 endif
 
@@ -81,7 +78,6 @@ set autoindent
 " Use 2 spaces in Ruby
 augroup ruby_indentation
     autocmd!
-
     autocmd FileType ruby setlocal shiftwidth=2 softtabstop=2
 augroup end
 
@@ -159,21 +155,15 @@ endfunction
 " Update make mappings autocmd
 augroup update_make_mappings
     autocmd!
-
     autocmd BufWinEnter * call SetMakeMappings()
 augroup end
 
 " Function to preserve "state" and execute command
 " (Source: http://vimcasts.org/episodes/tidying-whitespace/)
 function! <SID>Preserve(command)
-    " Preparation: save last search, and cursor position.
     let l:win_view = winsaveview()
     let l:last_search = getreg('/')
-    " Execute the command without adding to the
-    " changelist/jumplist:
     execute 'keepjumps ' . a:command
-    " Clean up: restore previous search history, and
-    " cursor position
     call winrestview(l:win_view)
     call setreg('/', l:last_search)
 endfunction
@@ -211,62 +201,20 @@ set scrolloff=5
 " Always show at least 5 columns left and right of the cursor
 set sidescrolloff=5
 
-" Show as much as possible of the last line in a window
-set display+=lastline
-
 " Delete comment character when joining commented lines
 set formatoptions+=j
 
+" Don't automatically continue comment when pressing enter
 augroup no_continue_comment
     autocmd!
-
-    " Don't automatically continue comment when pressing enter
     autocmd FileType * setlocal formatoptions-=r
 augroup end
-
-" Set shell to cmd.exe (this is needed to run vim as difftool in git for
-" windows)
-if has('win32')
-    set shell=C:\WINDOWS\system32\cmd.exe
-endif
-
-" When a file has been changed outside of Vim, but it has not been changed
-" inside of Vim, automatically read it again
-set autoread
-
-" Allow undoing C-u and C-w in insert mode
-inoremap <C-u> <C-g>u<C-u>
-inoremap <C-w> <C-g>u<C-w>
-
-" Enable timeout on key codes
-set ttimeout
-
-" Wait 100 ms for a key code or mapped key sequence to complete
-set ttimeoutlen=100
-
-" Don't look in included files for completion
-set complete-=i
-
-" Don't consider octal numbers for CTRL-A and CTRL-X
-set nrformats-=octal
-
-" Remember 200 lines of command line history
-set history=200
-
-" Don't use Ex mode. Use Q for formatting instead
-nnoremap Q gq
 
 " Allow hiding buffers with unsaved changes
 set hidden
 
 " Don't update the display while executing macros
 set lazyredraw
-
-" Show current mode
-set showmode
-
-" Show currently typed command
-set showcmd
 
 " UltiSnips configuration
 let g:UltiSnipsExpandTrigger="<tab>"
