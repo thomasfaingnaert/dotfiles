@@ -210,6 +210,11 @@ augroup no_continue_comment
     autocmd FileType * setlocal formatoptions-=r
 augroup end
 
+" Set shell to cmd.exe (this is needed to use gVim as difftool in Windows)
+if has('win32')
+    set shell=C:\WINDOWS\system32\cmd.exe
+endif
+
 " Allow hiding buffers with unsaved changes
 set hidden
 
@@ -262,4 +267,3 @@ augroup end
 if filereadable($HOME . "/.vimrc.local")
     execute "source " . $HOME . "/.vimrc.local"
 endif
-
