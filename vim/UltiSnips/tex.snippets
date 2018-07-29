@@ -25,6 +25,30 @@ $0
 
 endsnippet
 
+# Delimiter pairs
+snippet { "Curly bracket pair" i
+{${1:${VISUAL}}}
+endsnippet
+
+snippet ' "Single quotes" i
+\`${1:${VISUAL}}'
+endsnippet
+
+snippet " "Double quotes" i
+\`\`${1:${VISUAL}}''
+endsnippet
+
+snippet ( "Inline math mode" i
+\( ${1:${VISUAL}} \)
+endsnippet
+
+snippet [ "Display math mode" i
+\[
+    ${1:${VISUAL}}
+\]
+
+endsnippet
+
 # Preamble
 snippet up "Use package" b
 \usepackage`!p snip.rv='[' if t[2] else ""`${2}`!p snip.rv = ']' if t[2] else ""`{${1:package}}
@@ -42,3 +66,4 @@ endsnippet
 snippet eval "Evaluation limits"
 \eval{${1:f(x)}}_{${2:0}}^{${3:+\infty}}
 endsnippet
+
