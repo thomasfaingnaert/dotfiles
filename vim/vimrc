@@ -15,6 +15,8 @@ Plug 'lervag/vimtex'
 Plug 'machakann/vim-sandwich'
 Plug 'junegunn/vim-easy-align'
 
+Plug 'jiangmiao/auto-pairs'
+
 call plug#end()
 
 " I prefer vim-surround keymappings

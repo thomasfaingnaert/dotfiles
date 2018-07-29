@@ -1,18 +1,4 @@
-# Basic
-snippet up "Use package" b
-\usepackage`!p snip.rv='[' if t[2] else ""`${2}`!p snip.rv = ']' if t[2] else ""`{${1:package}}
-endsnippet
-
-snippet ( "Inline math mode"
-\( ${1:${VISUAL}} \)
-endsnippet
-
-snippet [ "Display math mode"
-\[
-	${1:${VISUAL}}
-\]$0
-endsnippet
-
+# Document templates
 snippet doc "Document" b
 \documentclass[a4paper,11pt]{article}
 
@@ -39,11 +25,12 @@ $0
 
 endsnippet
 
-# Physics package
-snippet d "Differential"
-\dd{${1}}
+# Preamble
+snippet up "Use package" b
+\usepackage`!p snip.rv='[' if t[2] else ""`${2}`!p snip.rv = ']' if t[2] else ""`{${1:package}}
 endsnippet
 
+# Integrals
 snippet int "Integral"
 \int ${1:f(x)} \dd{${2:x}}
 endsnippet
@@ -52,18 +39,6 @@ snippet dint "Definite integral"
 \int_{${1:-\infty}}^{${2:+\infty}} ${3:f(x)} \dd{${4:x}}
 endsnippet
 
-snippet abs "Absolute value"
-\abs{${1}}
-endsnippet
-
-snippet norm "Norm"
-\norm{${1}}
-endsnippet
-
 snippet eval "Evaluation limits"
 \eval{${1:f(x)}}_{${2:0}}^{${3:+\infty}}
-endsnippet
-
-snippet bo "Big Oh"
-\order{${1}}
 endsnippet
