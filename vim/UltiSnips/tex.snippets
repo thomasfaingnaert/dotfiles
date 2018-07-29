@@ -1,5 +1,5 @@
 snippet up "Use package" b
-\usepackage`!p snip.rv='[' if t[1] else ""`${2:options}`!p snip.rv = ']' if t[1] else ""`{${1:package}}$0
+\usepackage`!p snip.rv='[' if t[2] else ""`${2}`!p snip.rv = ']' if t[2] else ""`{${1:package}}$0
 endsnippet
 
 snippet ( "Inline math mode"
