@@ -1,7 +1,7 @@
 " Plugin list
 call plug#begin()
 
-Plug 'joshdick/onedark.vim'
+Plug 'iCyMind/NeoSolarized'
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -27,7 +27,8 @@ filetype plugin indent on
 syntax enable
 
 if has('gui_running')
-    colorscheme onedark
+    set background=light
+    colorscheme NeoSolarized
 
     " Set guifont
     if has('win32')
