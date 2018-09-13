@@ -17,3 +17,14 @@ $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 )
 
 vim +PlugInstall +qall
+
+$files = @("~/vimfiles", "~/.bash_history", "~/.gitconfig", "~/.gitignore_global", "~/.minttyrc", "~/_viminfo")
+
+foreach ($file in $files)
+{
+    if (Test-Path $file)
+    {
+        $f = Get-Item $file -Force
+        $f.Attributes = $f.Attributes -bor "Hidden"
+    }
+}
