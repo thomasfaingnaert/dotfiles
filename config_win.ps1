@@ -34,7 +34,6 @@ if (Test-Path 'HKCU:\Software\SimonTatham\PuTTY\Sessions')
     Get-ChildItem -Path 'HKCU:\Software\SimonTatham\PuTTY\Sessions' |
         ForEach-Object {
             Set-ItemProperty -Path $_.PSPath -Name "Colour0" -Value "101,123,131";
-            Set-ItemProperty -Path $_.PSPath -Name "Colour0" -Value "101,123,131";
             Set-ItemProperty -Path $_.PSPath -Name "Colour1" -Value "88,110,117";
             Set-ItemProperty -Path $_.PSPath -Name "Colour2" -Value "253,246,227";
             Set-ItemProperty -Path $_.PSPath -Name "Colour3" -Value "238,232,213";
