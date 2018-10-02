@@ -110,6 +110,7 @@ nnoremap <leader>= :call <SID>Preserve("normal gg=G")<CR>
 nnoremap <leader>b :ls<CR>:b<SPACE>
 nnoremap <leader>d :ls<CR>:bd<SPACE>
 nnoremap <leader>c :lcd %:h<CR>
+nnoremap <leader>s :set spell!<CR>:set spell?<CR>
 
 if has ('win32')
     nnoremap <leader>v :edit ~/dotfiles/vim/vimrc<CR>
@@ -272,4 +273,7 @@ augroup end
 if filereadable($HOME . "/.vimrc.local")
     execute "source " . $HOME . "/.vimrc.local"
 endif
+
+" Use British English by default for spell checking
+set spelllang=en_gb
 
