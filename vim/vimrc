@@ -239,6 +239,10 @@ set ignorecase
 " ... except when the pattern contains uppercase letters
 set smartcase
 
+" When a file has changed outside of Vim, and it has not changed inside of
+" Vim, automatically read it again
+set autoread
+
 " Use LaTeX by default
 let g:tex_flavor="latex"
 
