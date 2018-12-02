@@ -22,6 +22,9 @@ out/
 *.synctex.gz
 *.toc
 
+# LaTeX pdf images
+!images/*.pdf
+
 # BibTeX
 *.bbl
 *.blg
