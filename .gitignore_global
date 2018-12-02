@@ -18,6 +18,7 @@ out/
 *.fls
 *.idx
 *.log
+*.out
 *.pdf
 *.synctex.gz
 *.toc
