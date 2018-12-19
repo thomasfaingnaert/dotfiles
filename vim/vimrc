@@ -17,27 +17,27 @@ Plug 'junegunn/vim-easy-align'
 
 call plug#end()
 
+" Load matchit
+runtime macros/matchit.vim
+
 " I prefer vim-surround keymappings
 runtime macros/sandwich/keymap/surround.vim
 
-" Enable filetype detection, plugins and indent files
+" Enable filetype support and syntax highlighting
 filetype plugin indent on
-
-" Enable syntax highlighting
 syntax enable
 
+" GUI options
 if has('gui_running')
     set background=light
     colorscheme NeoSolarized
 
-    " Set guifont
     if has('win32')
         set guifont=Consolas:h11
     else
         set guifont=Monospace\ 11
     endif
 
-    " Remove menubar, toolbar, left and right scrollbars
     set guioptions-=m
     set guioptions-=T
     set guioptions-=r
@@ -53,25 +53,17 @@ let &backupdir=g:myruntime . '/backup//'
 let &directory=g:myruntime . '/swap//'
 let &undodir=g:myruntime . '/undo//'
 
-" Display relative line numbers
+" Line number settings
 set relativenumber
-
-" Show the line number of the current line
 set number
 
-" Allow backspacing over autoindent, line breaks and the start of insert
+" Sane backspace settings
 set backspace=indent,eol,start
 
-" One step of indent is 4 spaces
+" Indent settings
 set shiftwidth=4
-
-" A <Tab> or <BS> counts for 4 spaces
 set softtabstop=4
-
-" Use an appropriate amount of spaces to insert <Tab>
 set expandtab
-
-" Copy indent from current line when starting a new line
 set autoindent
 
 " Use 2 spaces in Ruby
@@ -99,7 +91,6 @@ let mapleader=" "
 let maplocalleader="\\"
 
 " Leader mappings
-set wildcharm=<C-z>
 nnoremap <leader>e :browse edit<CR>
 nnoremap <leader>w :write<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
@@ -169,10 +160,9 @@ function! <SID>Preserve(command)
     call setreg('/', l:last_search)
 endfunction
 
+" Automatically strip whitespace when saving file
 augroup strip_whitespace
     autocmd!
-
-    " Automatically strip whitespace when saving file
     autocmd BufWritePre * :call<SID>Preserve("%s/\\s\\+$//e")
 augroup end
 
@@ -196,10 +186,8 @@ set statusline+=\ Col:\ %c                  " column number
 " Enable enhanced command-line completion
 set wildmenu
 
-" Always show at least 5 lines above and below the cursor
+" Show at least 5 lines and columns around cursor
 set scrolloff=5
-
-" Always show at least 5 columns left and right of the cursor
 set sidescrolloff=5
 
 " Delete comment character when joining commented lines
