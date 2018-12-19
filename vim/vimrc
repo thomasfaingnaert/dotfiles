@@ -45,15 +45,13 @@ if has('gui_running')
 endif
 
 " Change directories of temporary files
-if has('win32')
-    set backupdir=~/vimfiles/backup//
-    set directory=~/vimfiles/swap//
-    set undodir=~/vimfiles/undo//
-else
-    set backupdir=~/.vim/backup//
-    set directory=~/.vim/swap//
-    set undodir=~/.vim/undo//
-endif
+if !exists('g:myruntime')
+    let g:myruntime=split(&rtp, ',')[0]
+end
+
+let &backupdir=g:myruntime . '/backup//'
+let &directory=g:myruntime . '/swap//'
+let &undodir=g:myruntime . '/undo//'
 
 " Display relative line numbers
 set relativenumber
@@ -101,13 +99,14 @@ let mapleader=" "
 let maplocalleader="\\"
 
 " Leader mappings
+set wildcharm=<C-z>
 nnoremap <leader>e :browse edit<CR>
 nnoremap <leader>w :write<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
 nnoremap <leader>l :set list!<CR>
 nnoremap <leader>h :set hlsearch!<CR>
 nnoremap <leader>= :call <SID>Preserve("normal gg=G")<CR>
-nnoremap <leader>b :ls<CR>:b<SPACE>
+nnoremap <leader>b :buffer <C-z><S-Tab>
 nnoremap <leader>d :ls<CR>:bd<SPACE>
 nnoremap <leader>c :lcd %:h<CR>
 nnoremap <leader>s :set spell!<CR>:set spell?<CR>
