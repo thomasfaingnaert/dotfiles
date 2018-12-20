@@ -24,17 +24,15 @@ call plug#end()
 " General settings
 " --------------------------------------------------------------------------------
 
+"" Setup
 " Load matchit
 runtime macros/matchit.vim
-
-" I prefer vim-surround keymappings
-runtime macros/sandwich/keymap/surround.vim
 
 " Enable filetype support and syntax highlighting
 filetype plugin indent on
 syntax enable
 
-" GUI options
+"" GUI options
 if has('gui_running')
     set background=light
     colorscheme NeoSolarized
@@ -51,7 +49,7 @@ if has('gui_running')
     set guioptions-=L
 endif
 
-" Change directories of temporary files
+"" Temporary directories
 if !exists('g:myruntime')
     let g:myruntime=split(&rtp, ',')[0]
 end
@@ -60,29 +58,26 @@ let &backupdir=g:myruntime . '/backup//'
 let &directory=g:myruntime . '/swap//'
 let &undodir=g:myruntime . '/undo//'
 
-" Line number settings
+"" Line numbers
 set relativenumber
 set number
 
-" Sane backspace settings
-set backspace=indent,eol,start
-
-" Indent settings
+"" Indentation
 set shiftwidth=4
 set softtabstop=4
 set expandtab
 set autoindent
 
-" Required to show custom list symbols
+"" Encoding and listchars
 set encoding=utf-8
-
-" Change symbols for invisible characters
 set listchars=eol:¬,tab:▸\ ,trail:·,precedes:←,extends:→
 
-" When searching, show where the pattern typed so far matches
+"" Search
 set incsearch
+set ignorecase
+set smartcase
 
-" Statusline
+"" Statusline
 set laststatus=2
 
 set statusline=                             " clear statusline for when vimrc is reloaded
@@ -94,6 +89,10 @@ set statusline+=%(\ (%{fugitive#head()})%)  " current branch
 set statusline+=%=                          " right align
 set statusline+=\ Line:\ %l/%L              " current line and total number of lines
 set statusline+=\ Col:\ %c                  " column number
+
+"" Other
+" Backspace settings
+set backspace=indent,eol,start
 
 " Enable enhanced command-line completion
 set wildmenu
@@ -115,12 +114,6 @@ set hidden
 
 " Don't update the display while executing macros
 set lazyredraw
-
-" Ignore case when searching...
-set ignorecase
-
-" ... except when the pattern contains uppercase letters
-set smartcase
 
 " When a file has changed outside of Vim, and it has not changed inside of
 " Vim, automatically read it again
@@ -157,6 +150,10 @@ if has('win32')
                 \ . ' --remote-silent +\%l \%f"'
     let g:vimtex_view_general_options_latexmk='-reuse-instance'
 endif
+
+"" vim-sandwich
+" I prefer vim-surround keymappings
+runtime macros/sandwich/keymap/surround.vim
 
 " --------------------------------------------------------------------------------
 " Mappings
