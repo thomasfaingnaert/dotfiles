@@ -240,6 +240,12 @@ augroup autowrite_latex_files
     autocmd FileType tex :autocmd! autowrite_latex_files TextChanged,TextChangedI <buffer> call AutowriteLatex()
 augroup end
 
+"" Automatically source vimrc
+augroup auto_source_vimrc
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup end
+
 " --------------------------------------------------------------------------------
 " Functions
 " --------------------------------------------------------------------------------
