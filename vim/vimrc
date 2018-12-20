@@ -323,9 +323,9 @@ function! VimrcFoldText()
     if l:level == 1
         let l:marker = '●'
     elseif l:level == 2
-        let l:marker = '  ○'
+        let l:marker = '    ○'
     else
-        let l:marker = '    -'
+        let l:marker = '        -'
     end
 
     if l:level == 1
