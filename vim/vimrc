@@ -68,10 +68,6 @@ set softtabstop=4
 set expandtab
 set autoindent
 
-"" Encoding and listchars
-set encoding=utf-8
-set listchars=eol:¬,tab:▸\ ,trail:·,precedes:←,extends:→
-
 "" Search
 set incsearch
 set ignorecase
@@ -91,36 +87,22 @@ set statusline+=\ Line:\ %l/%L              " current line and total number of l
 set statusline+=\ Col:\ %c                  " column number
 
 "" Other
-" Backspace settings
+set encoding=utf-8
+set listchars=eol:¬,tab:▸\ ,trail:·,precedes:←,extends:→
 set backspace=indent,eol,start
-
-" Enable enhanced command-line completion
 set wildmenu
-
-" Show at least 5 lines and columns around cursor
 set scrolloff=5
 set sidescrolloff=5
-
-" Delete comment character when joining commented lines
 set formatoptions+=j
+set hidden
+set lazyredraw
+set autoread
+set spelllang=en_gb
 
 " Set shell to cmd.exe (this is needed to use gVim as difftool in Windows)
 if has('win32')
     set shell=C:\WINDOWS\system32\cmd.exe
 endif
-
-" Allow hiding buffers with unsaved changes
-set hidden
-
-" Don't update the display while executing macros
-set lazyredraw
-
-" When a file has changed outside of Vim, and it has not changed inside of
-" Vim, automatically read it again
-set autoread
-
-" Use British English by default for spell checking
-set spelllang=en_gb
 
 " --------------------------------------------------------------------------------
 " Plugin settings
@@ -205,6 +187,26 @@ xmap ga <Plug>(EasyAlign)
 "" Make
 nnoremap <F7> :make<CR>
 
+"" Emacs-style command-line editing
+" See :h emacs-keys
+" start of line
+cnoremap <C-A>		<Home>
+" back one character
+cnoremap <C-B>		<Left>
+" delete character under cursor
+cnoremap <C-D>		<Del>
+" end of line
+cnoremap <C-E>		<End>
+" forward one character
+cnoremap <C-F>		<Right>
+" recall newer command-line
+cnoremap <C-N>		<Down>
+" recall previous (older) command-line
+cnoremap <C-P>		<Up>
+" back one word
+cnoremap <Esc><C-B>	<S-Left>
+" forward one word
+cnoremap <Esc><C-F>	<S-Right>
 
 " --------------------------------------------------------------------------------
 " Autocommands
