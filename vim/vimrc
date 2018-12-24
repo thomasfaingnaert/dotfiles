@@ -91,6 +91,7 @@ set encoding=utf-8
 set listchars=eol:¬,tab:▸\ ,trail:·,precedes:←,extends:→
 set backspace=indent,eol,start
 set wildmenu
+set wildcharm=<C-z>
 set scrolloff=5
 set sidescrolloff=5
 set formatoptions+=j
@@ -156,15 +157,17 @@ let mapleader=" "
 let maplocalleader="\\"
 
 nnoremap <leader>e :browse edit<CR>
-nnoremap <leader>w :write<CR>
+nnoremap <leader>w :update<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
 nnoremap <leader>l :set list!<CR>
 nnoremap <leader>h :set hlsearch!<CR>
 nnoremap <leader>= :call <SID>Preserve("normal gg=G")<CR>
-nnoremap <leader>b :ls<CR> :b<SPACE>
-nnoremap <leader>d :ls<CR>:bd<SPACE>
 nnoremap <leader>c :lcd %:h<CR>
-nnoremap <leader>s :set spell!<CR>:set spell?<CR>
+nnoremap <leader>p :set spell!<CR>:set spell?<CR>
+
+nnoremap <expr> <leader>b ListedBufferCount() < 2 ? ":ls<CR>:buffer <C-z>" : ":ls<CR>:buffer <C-z><S-Tab>"
+nnoremap <expr> <leader>s ListedBufferCount() < 2 ? ":ls<CR>:vert sbuffer <C-z>" : ":ls<CR>:vert sbuffer <C-z><S-Tab>"
+nnoremap <expr> <leader>d ListedBufferCount() < 2 ? ":ls<CR>:bdelete <C-z>" : ":ls<CR>:bdelete <C-z><S-Tab>"
 
 if has ('win32')
     nnoremap <leader>v :edit ~/dotfiles/vim/vimrc<CR>
@@ -335,6 +338,11 @@ function! VimrcFoldText()
     endif
 
     return l:marker . ' ' . l:title . ' ' . l:linecount
+endfunction
+
+"" Number of listed buffers
+function! ListedBufferCount()
+    return len(getbufinfo({'buflisted' : 1}))
 endfunction
 
 " --------------------------------------------------------------------------------
