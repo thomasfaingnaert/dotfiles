@@ -216,6 +216,10 @@ cnoremap <Esc><C-B>	<S-Left>
 " forward one word
 cnoremap <Esc><C-F>	<S-Right>
 
+"" Add empty lines above/below cursor
+nmap <CR> <Plug>unimpairedBlankDown
+nmap <S-CR> <Plug>unimpairedBlankUp
+
 " --------------------------------------------------------------------------------
 " Autocommands
 " --------------------------------------------------------------------------------
