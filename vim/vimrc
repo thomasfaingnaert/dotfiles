@@ -18,6 +18,9 @@ Plug 'lervag/vimtex'
 Plug 'machakann/vim-sandwich'
 Plug 'junegunn/vim-easy-align'
 
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+
 call plug#end()
 
 " --------------------------------------------------------------------------------
@@ -263,6 +266,23 @@ augroup auto_source_vimrc
     autocmd!
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup end
+
+"" Language server protocol (vim-lsp)
+""" Python
+" pip install python-language-server
+if executable('pyls')
+    augroup vim_lsp_python
+        autocmd!
+        autocmd User lsp_setup call lsp#register_server({
+                    \ 'name': 'pyls',
+                    \ 'cmd': {server_info->['pyls']},
+                    \ 'whitelist': ['python'],
+                    \ })
+        autocmd FileType python setlocal omnifunc=lsp#complete
+        autocmd FileType python setlocal keywordprg=:LspHover
+        autocmd FileType python nnoremap <buffer> <C-]> :LspDefinition<CR>
+    augroup end
+endif
 
 " --------------------------------------------------------------------------------
 " Functions
