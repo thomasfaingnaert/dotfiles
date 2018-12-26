@@ -52,7 +52,8 @@ if has('gui_running')
     set guioptions-=L
 endif
 
-"" Temporary directories
+"" System-dependent directories
+""" Temporary directories
 if !exists('g:myruntime')
     let g:myruntime=split(&rtp, ',')[0]
 end
@@ -60,6 +61,15 @@ end
 let &backupdir=g:myruntime . '/backup//'
 let &directory=g:myruntime . '/swap//'
 let &undodir=g:myruntime . '/undo//'
+
+""" Dotfiles
+if !exists('g:mydotfiles')
+    if has('win32')
+        let g:mydotfiles = '~/dotfiles'
+    else
+        let g:mydotfiles = '~/.dotfiles'
+    endif
+end
 
 "" Line numbers
 set relativenumber
@@ -166,6 +176,7 @@ let maplocalleader="\\"
 
 nnoremap <leader>e :browse edit<CR>
 nnoremap <leader>w :update<CR>
+nnoremap <leader>v :execute ':edit ' . g:mydotfiles . '/vim/vimrc'<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
 nnoremap <leader>l :set list!<CR>
 nnoremap <leader>h :set hlsearch!<CR>
@@ -180,11 +191,6 @@ nmap <leader>b :ls<CR>:buffer <C-z><C-x>
 nmap <leader>s :ls<CR>:vert sbuffer <C-z><C-x>
 nmap <leader>d :ls<CR>:bdelete <C-z><C-x>
 
-if has ('win32')
-    nnoremap <leader>v :edit ~/dotfiles/vim/vimrc<CR>
-else
-    nnoremap <leader>v :edit ~/.dotfiles/vim/vimrc<CR>
-endif
 
 "" Fugitive
 nnoremap <leader>gs :Gstatus<CR>
@@ -266,7 +272,7 @@ augroup end
 "" Automatically source vimrc
 augroup auto_source_vimrc
     autocmd!
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+    execute 'autocmd BufWritePost ' . g:mydotfiles . '/vim/vimrc' . ' source $MYVIMRC'
 augroup end
 
 "" Language server protocol (vim-lsp)
