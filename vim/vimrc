@@ -173,9 +173,12 @@ nnoremap <leader>= :call <SID>Preserve("normal gg=G")<CR>
 nnoremap <leader>c :lcd %:h<CR>
 nnoremap <leader>p :set spell!<CR>:set spell?<CR>
 
-nnoremap <expr> <leader>b ListedBufferCount() < 2 ? ":ls<CR>:buffer <C-z>" : ":ls<CR>:buffer <C-z><S-Tab>"
-nnoremap <expr> <leader>s ListedBufferCount() < 2 ? ":ls<CR>:vert sbuffer <C-z>" : ":ls<CR>:vert sbuffer <C-z><S-Tab>"
-nnoremap <expr> <leader>d ListedBufferCount() < 2 ? ":ls<CR>:bdelete <C-z>" : ":ls<CR>:bdelete <C-z><S-Tab>"
+" Deselect selected wildmenu option, if any
+cnoremap <expr> <C-x> wildmenumode() ? "\<S-Tab>" : ""
+
+nmap <leader>b :ls<CR>:buffer <C-z><C-x>
+nmap <leader>s :ls<CR>:vert sbuffer <C-z><C-x>
+nmap <leader>d :ls<CR>:bdelete <C-z><C-x>
 
 if has ('win32')
     nnoremap <leader>v :edit ~/dotfiles/vim/vimrc<CR>
@@ -370,11 +373,6 @@ function! VimrcFoldText()
     endif
 
     return l:marker . ' ' . l:title . ' ' . l:linecount
-endfunction
-
-"" Number of listed buffers
-function! ListedBufferCount()
-    return len(getbufinfo({'buflisted' : 1}))
 endfunction
 
 " --------------------------------------------------------------------------------
