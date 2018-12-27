@@ -82,6 +82,7 @@ set expandtab
 set autoindent
 
 "" Search
+set hlsearch
 set incsearch
 set ignorecase
 set smartcase
@@ -179,7 +180,7 @@ nnoremap <leader>w :update<CR>
 nnoremap <leader>v :execute ':edit ' . g:mydotfiles . '/vim/vimrc'<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
 nnoremap <leader>l :set list!<CR>
-nnoremap <leader>h :set hlsearch!<CR>
+nnoremap <leader>h :nohlsearch<CR>
 nnoremap <leader>= :call <SID>Preserve("normal gg=G")<CR>
 nnoremap <leader>c :lcd %:h<CR>
 nnoremap <leader>p :set spell!<CR>:set spell?<CR>
