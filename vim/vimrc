@@ -308,6 +308,7 @@ if executable('cquery')
         autocmd FileType c,cpp,objc,objcpp,cc setlocal omnifunc=lsp#complete
         autocmd FileType c,cpp,objc,objcpp,cc setlocal keywordprg=:LspHover
         autocmd FileType c,cpp,objc,objcpp,cc nnoremap <buffer> <C-]> :LspDefinition<CR>
+        autocmd FileType c,cpp,objc,objcpp,cc nnoremap <buffer> <F2> :LspRename<CR>
     augroup end
 endif
 
