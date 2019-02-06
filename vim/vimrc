@@ -241,6 +241,12 @@ nnoremap <leader>% :%s/\<<C-r><C-w>\>//g<Left><Left>
 "" Quickly switch between alternate files
 nnoremap <BS> <C-^>
 
+"" Don't fill in completion with omnicompletion
+inoremap <expr> <SID>CompleteOptLongestOff CompleteOptLongest(0)
+inoremap <expr> <SID>CompleteOptLongestOn CompleteOptLongest(1)
+inoremap <script> <C-x><C-o> <SID>CompleteOptLongestOn<C-x><C-o><SID>CompleteOptLongestOff
+
+
 " --------------------------------------------------------------------------------
 " Autocommands
 " --------------------------------------------------------------------------------
@@ -402,6 +408,16 @@ function! VimrcFoldText()
     endif
 
     return l:marker . ' ' . l:title . ' ' . l:linecount
+endfunction
+
+"" Toggle completeopt longest
+function! CompleteOptLongest(enable)
+    if a:enable
+        set completeopt+=longest
+    else
+        set completeopt-=longest
+    endif
+    return ''
 endfunction
 
 " --------------------------------------------------------------------------------
