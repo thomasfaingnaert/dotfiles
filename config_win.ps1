@@ -16,7 +16,10 @@ $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   )
 )
 
-vim +PlugInstall +qall
+if (Get-Command "vim" -ErrorAction SilentlyContinue)
+{
+    vim +PlugInstall +qall
+}
 
 $files = @("~/vimfiles", "~/.bash_history", "~/.gitconfig", "~/.gitignore_global", "~/.minttyrc", "~/_viminfo")
 
