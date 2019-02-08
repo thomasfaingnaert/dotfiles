@@ -159,6 +159,10 @@ endif
 " I prefer vim-surround keymappings
 runtime macros/sandwich/keymap/surround.vim
 
+"" vim-lsp
+" Seems this is needed for clangd to provide correct completions
+let g:lsp_async_completion=1
+
 " --------------------------------------------------------------------------------
 " Mappings
 " --------------------------------------------------------------------------------
