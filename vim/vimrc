@@ -311,7 +311,10 @@ if executable('pyls')
 endif
 
 """ C++
-" http://releases.llvm.org/download.html
+" Windows: http://releases.llvm.org/download.html
+" Ubuntu:
+" sudo apt install clang-tools
+" sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-6.0 100
 if executable('clangd')
     augroup vim_lsp_cpp
         autocmd!
