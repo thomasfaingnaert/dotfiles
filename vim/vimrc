@@ -221,7 +221,7 @@ nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
 "" Make
-nnoremap <F7> :make<CR>
+nnoremap <F7> :call <SID>make_application()<CR>
 
 "" Emacs-style command-line editing
 " See :h emacs-keys
@@ -328,20 +328,6 @@ if executable('clangd')
     augroup end
 endif
 
-"" Run files automatically
-""" Bash
-augroup run_bash
-    autocmd!
-    autocmd FileType sh execute 'nnoremap <buffer> <F7> :wall<CR>:!' . s:clear_command . ' && bash %<CR>:redraw!<CR>'
-augroup end
-
-""" Python
-augroup run_python
-    autocmd!
-    autocmd FileType python execute 'nnoremap <buffer> <F7> :wall<CR>:!' . s:clear_command . ' && python %<CR>:redraw!<CR>'
-augroup end
-
-
 " --------------------------------------------------------------------------------
 " Functions
 " --------------------------------------------------------------------------------
@@ -418,6 +404,28 @@ function! CompleteOptLongest(enable)
         set completeopt-=longest
     endif
     return ''
+endfunction
+
+"" Make and run current application
+function! s:make_application() abort
+    " Clear screen
+    if has('win32')
+        silent !cls
+    else
+        silent !clear
+    endif
+
+    " Build and run the project (filetype dependent)
+    if &filetype == 'python'
+        !python %
+    elseif &filetype == 'bash'
+        !bash %
+    else
+        make
+    endif
+
+    " Get rid of the 'Press ENTER of type command to continue'
+    silent redraw!
 endfunction
 
 " --------------------------------------------------------------------------------
