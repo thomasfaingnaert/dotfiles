@@ -254,12 +254,6 @@ inoremap <script> <C-x><C-o> <SID>CompleteOptLongestOn<C-x><C-o><SID>CompleteOpt
 " Autocommands
 " --------------------------------------------------------------------------------
 
-"" Update make mappings
-augroup update_make_mappings
-    autocmd!
-    autocmd BufWinEnter * call SetMakeMappings()
-augroup end
-
 "" Automatically strip whitespace
 augroup strip_whitespace
     autocmd!
@@ -330,27 +324,6 @@ endif
 " --------------------------------------------------------------------------------
 " Functions
 " --------------------------------------------------------------------------------
-
-"" Set custom :make mappings
-function! SetMakeMappings()
-    " Check if a file named "Makefile" exists in the directory of the current
-    " buffer
-    if filereadable(expand("%:p:h") . "/Makefile")
-        set makeprg=make
-        nnoremap <F5> :make debug<CR>
-        nnoremap <F6> :make run<CR>
-    else
-        if has('win32')
-            set makeprg=build-system\build
-            nnoremap <F5> :make<CR>:silent !build-system\debug<CR>
-            nnoremap <F6> :make<CR>:silent !build-system\run<CR>
-        else
-            set makeprg=./build-system/build.sh
-            nnoremap <F5> :make<CR>:silent !./build-system/debug.sh<CR>
-            nnoremap <F6> :make<CR>:silent !./build-system/run.sh<CR>
-        end
-    endif
-endfunction
 
 "" Preserve "state" and execute command
 " (Source: http://vimcasts.org/episodes/tidying-whitespace/)
