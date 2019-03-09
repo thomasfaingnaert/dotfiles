@@ -418,7 +418,7 @@ function! s:make_application() abort
     " Build and run the project (filetype dependent)
     if &filetype == 'python'
         !python %
-    elseif &filetype == 'bash'
+    elseif &filetype == 'sh'
         !bash %
     else
         make
