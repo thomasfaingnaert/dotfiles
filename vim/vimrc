@@ -423,9 +423,6 @@ function! s:make_application() abort
     else
         make
     endif
-
-    " Get rid of the 'Press ENTER of type command to continue'
-    silent redraw!
 endfunction
 
 " --------------------------------------------------------------------------------
