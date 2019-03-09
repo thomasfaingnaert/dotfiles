@@ -59,7 +59,7 @@ if has('gui_running')
     set guioptions-=L
 endif
 
-"" System-dependent directories
+"" System-dependent settings
 """ Temporary directories
 if !exists('g:myruntime')
     let g:myruntime=split(&rtp, ',')[0]
@@ -77,6 +77,13 @@ if !exists('g:mydotfiles')
         let g:mydotfiles = '~/.dotfiles'
     endif
 end
+
+""" Shell 'clear' command
+if has('win32')
+    let s:clear_command = 'cls'
+else
+    let s:clear_command = 'clear'
+endif
 
 "" Line numbers
 set relativenumber
@@ -325,13 +332,13 @@ endif
 """ Bash
 augroup run_bash
     autocmd!
-    autocmd FileType sh nnoremap <buffer> <F7> :wall<CR>:!bash %<CR>:redraw!<CR>
+    autocmd FileType sh execute 'nnoremap <buffer> <F7> :wall<CR>:!' . s:clear_command . ' && bash %<CR>:redraw!<CR>'
 augroup end
 
 """ Python
 augroup run_python
     autocmd!
-    autocmd FileType python nnoremap <buffer> <F7> :wall<CR>:!python %<CR>:redraw!<CR>
+    autocmd FileType python execute 'nnoremap <buffer> <F7> :wall<CR>:!' . s:clear_command . ' && python %<CR>:redraw!<CR>'
 augroup end
 
 
