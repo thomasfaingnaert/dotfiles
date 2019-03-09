@@ -321,6 +321,20 @@ if executable('clangd')
     augroup end
 endif
 
+"" Run files automatically
+""" Bash
+augroup run_bash
+    autocmd!
+    autocmd FileType sh nnoremap <buffer> <F7> :wall<CR>:!bash %<CR>:redraw!<CR>
+augroup end
+
+""" Python
+augroup run_python
+    autocmd!
+    autocmd FileType python nnoremap <buffer> <F7> :wall<CR>:!python %<CR>:redraw!<CR>
+augroup end
+
+
 " --------------------------------------------------------------------------------
 " Functions
 " --------------------------------------------------------------------------------
