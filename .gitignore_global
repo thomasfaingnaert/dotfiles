@@ -22,6 +22,7 @@ out/
 *.pdf
 *.synctex.gz
 *.toc
+*.xdv
 
 # LaTeX pdf images
 !images/*.pdf
