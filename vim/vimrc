@@ -24,6 +24,8 @@ Plug 'markonm/traces.vim'
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 
+Plug 'kana/vim-operator-user'
+Plug 'rhysd/vim-clang-format'
 Plug 'vim-scripts/DoxygenToolkit.vim'
 
 call plug#end()
@@ -268,6 +270,14 @@ nnoremap <BS> <C-^>
 inoremap <expr> <SID>CompleteOptLongestOff CompleteOptLongest(0)
 inoremap <expr> <SID>CompleteOptLongestOn CompleteOptLongest(1)
 inoremap <script> <C-x><C-o> <SID>CompleteOptLongestOn<C-x><C-o><SID>CompleteOptLongestOff
+
+"" clang-format
+if executable('clang-format')
+    augroup clang_format_operator
+        autocmd!
+        autocmd FileType c,cpp,objc map <buffer>= <Plug>(operator-clang-format)
+    augroup end
+endif
 
 
 " --------------------------------------------------------------------------------
