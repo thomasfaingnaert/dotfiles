@@ -18,6 +18,12 @@ configure_favourites()
     gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'org.gnome.Nautilus.desktop', 'gvim.desktop']"
 }
 
+configure_dualboot()
+{
+    timedatectl set-local-rtc 1
+}
+
 install_dotfiles
 install_yaru
 configure_favourites
+configure_dualboot
