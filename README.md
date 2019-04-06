@@ -16,13 +16,9 @@ ssh-keygen -b 4096 && \
 cat ~/.ssh/id_rsa.pub | xclip -sel c
 ```
 
-2. Clone the repository:
+2. Clone the repository, navigate to the directory where you cloned the repository and run the `bootstrap.sh` configuration script:
 ```bash
-git clone git@github.com:thomasfaingnaert/dotfiles.git ~/.dotfiles
+git clone git@github.com:thomasfaingnaert/dotfiles.git ~/.dotfiles && \
+cd ~/.dotfiles && \
+./bootstrap.sh
 ```
-
-3. Navigate to the directory where you cloned the repository and run the `bootstrap.sh` configuration script:
-```bash
-cd ~/.dotfiles && ./bootstrap.sh
-```
-
