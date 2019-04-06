@@ -14,5 +14,7 @@
 	br = branch
 	ci = commit
 	st = status
+	hotmail = config user.email thomas.faingnaert@hotmail.com
+	ugent = config user.email thomas.faingnaert@ugent.be
 [core]
 	excludesfile = ~/.gitignore_global
