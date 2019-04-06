@@ -1,44 +1,116 @@
 #!/usr/bin/env bash
 
-basic_apps_and_dotfiles()
+favorites=("'firefox.desktop'" "'org.gnome.Nautilus.desktop'")
+
+configure_dualboot()
 {
-    sudo apt-get install -y vim vim-gnome curl
-    sudo snap install skype --classic
-    ./config_unix.sh
-    gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'org.gnome.Nautilus.desktop', 'gvim.desktop', 'skype_skypeforlinux.desktop']"
+    # Make Linux store the time in local timezone instead of UTC, so the time does not jump
+    # when rebooting into a different OS. This is a better solution than configuring Windows
+    # to store the time in UTC.
+    timedatectl set-local-rtc 1
 }
 
 install_yaru()
 {
+    # Install Yaru
     sudo snap install communitheme
+
+    # Set GDM theme to Yaru
     sudo update-alternatives --install /usr/share/gnome-shell/theme/gdm3.css gdm3.css /snap/communitheme/current/share/gnome-shell/theme/Communitheme/gnome-shell.css 15
+
+    # Use Yaru as default user session for the current user
     sudo sed -ie '/^\[User\]$/,/^\[/ s/^\(XSession=\).*$/\1ubuntu-communitheme-snap/' /var/lib/AccountsService/users/${USER}
 }
 
-configure_dualboot()
+install_vim()
 {
-    timedatectl set-local-rtc 1
+    # Install dependencies
+    sudo apt-get install -y vim vim-gnome curl
+
+    # Install dotfiles
+    ./config_unix.sh
+
+    # Add gVim to favorites
+    favorites+=("'gvim.desktop'")
 }
 
+install_skype()
+{
+    # Install Skype
+    sudo snap install skype --classic
+
+    # Add Skype to favorites
+    favorites+=("'skype_skypeforlinux.desktop'")
+}
+
+install_slack()
+{
+    # Install Slack
+    sudo snap install slack --classic
+
+    # Add Slack to favorites
+    favorites+=("'slack_slack.desktop'")
+}
+
+install_cpp_dev_tools()
+{
+    # Install C++ tools
+    sudo apt-get install -y build-essential cmake
+
+    # Install clangd
+    sudo snap install clangd --classic
+}
+
+install_texlive()
+{
+    # Install texlive
+    sudo apt-get install -y texlive-full
+}
+
+# Join array
+# Source: https://stackoverflow.com/questions/1527049/how-can-i-join-elements-of-an-array-in-bash
+function join_by { local IFS="$1"; shift; printf "$*"; }
+
+
+# Ask the user what they want to install
 features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-    "Choose the features to install:" 10 60 3 \
-    basic       "Basic applications and dotfiles" ON \
+    "Choose the features to install:" 14 60 7 \
+    dualboot    "Dual boot fixes" ON \
     yaru        "Yaru theme for Ubuntu" ON \
-    dualboot    "Dual boot specific configuration with Windows" ON \
+    vim         "Vim + dotfiles" ON \
+    skype       "Skype" ON \
+    slack       "Slack" OFF \
+    cpp         "C++ Development" ON \
+    texlive     "TeX Live" OFF \
     3>&1 1>&2 2>&3)
 
 for feature in $features
 do
     case $feature in
-        "basic")
-            basic_apps_and_dotfiles
+        "dualboot")
+            configure_dualboot
             ;;
         "yaru")
             install_yaru
             ;;
-        "dualboot")
-            configure_dualboot
+        "vim")
+            install_vim
+            ;;
+        "skype")
+            install_skype
+            ;;
+        "slack")
+            install_slack
+            ;;
+        "cpp")
+            install_cpp_dev_tools
+            ;;
+        "texlive")
+            install_texlive
             ;;
     esac
 done
+
+# Set favourites
+gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
