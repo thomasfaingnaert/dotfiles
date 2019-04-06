@@ -26,6 +26,9 @@ install_yaru()
 
     # Use Yaru as default user session for the current user
     sudo sed -ie '/^\[User\]$/,/^\[/ s/^\(XSession=\).*$/\1ubuntu-communitheme-snap/' /var/lib/AccountsService/users/${USER}
+
+    # Change cursor theme to DMZ-White
+    gsettings set org.gnome.desktop.interface cursor-theme 'DMZ-White'
 }
 
 install_vim()
