@@ -2,7 +2,7 @@
 ## Installation
 ### Windows
 1. Clone the repository:
-```sh
+```bash
 git clone https://github.com/thomasfaingnaert/dotfiles ~/dotfiles
 ```
 
@@ -10,16 +10,22 @@ git clone https://github.com/thomasfaingnaert/dotfiles ~/dotfiles
 
 ### Linux
 1. Install `git`:
-```sh
+```bash
 sudo apt install -y git
 ```
-2. Clone the repository:
-```sh
+
+2. Generate an SSH key and add it to GitHub:
+```bash
+ssh-keygen -b 4096
+```
+
+3. Clone the repository:
+```bash
 git clone git@github.com:thomasfaingnaert/dotfiles.git ~/.dotfiles
 ```
 
-3. Navigate to the directory where you cloned the repository and run the `config_unix.sh` configuration script:
-```sh
+4. Navigate to the directory where you cloned the repository and run the `config_unix.sh` configuration script:
+```bash
 cd ~/.dotfiles && ./config_unix.sh
 ```
 
