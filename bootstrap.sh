@@ -49,6 +49,12 @@ install_vim()
     favorites+=("'gvim.desktop'")
 }
 
+install_keepassxc()
+{
+    # Install KeepassXC
+    sudo snap install keepassxc
+}
+
 install_skype()
 {
     # Install Skype
@@ -100,6 +106,7 @@ features=$(
     dualboot    "Dual boot fixes" ON \
     yaru        "Yaru theme for Ubuntu" ON \
     vim         "Vim + dotfiles" ON \
+    keepassxc   "KeepassXC" ON \
     skype       "Skype" ON \
     slack       "Slack" OFF \
     vlc         "VLC" ON \
@@ -118,6 +125,9 @@ do
             ;;
         "vim")
             install_vim
+            ;;
+        "keepassxc")
+            install_keepassxc
             ;;
         "skype")
             install_skype
