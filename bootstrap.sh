@@ -116,6 +116,9 @@ do
         "slack")
             install_slack
             ;;
+        "vlc")
+            install_vlc
+            ;;
         "cpp")
             install_cpp_dev_tools
             ;;
