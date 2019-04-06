@@ -21,8 +21,8 @@ cat ~/.ssh/id_rsa.pub | xclip -sel c
 git clone git@github.com:thomasfaingnaert/dotfiles.git ~/.dotfiles
 ```
 
-3. Navigate to the directory where you cloned the repository and run the `config_unix.sh` configuration script:
+3. Navigate to the directory where you cloned the repository and run the `bootstrap.sh` configuration script:
 ```bash
-cd ~/.dotfiles && ./config_unix.sh
+cd ~/.dotfiles && ./bootstrap.sh
 ```
 
