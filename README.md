@@ -11,8 +11,8 @@ git clone https://github.com/thomasfaingnaert/dotfiles ~/dotfiles
 ### Linux
 1. Install dependencies, generate an SSH key, and add it to GitHub:
 ```bash
-sudo apt install -y git xclip
-ssh-keygen -b 4096
+sudo apt install -y git xclip && \
+ssh-keygen -b 4096 && \
 cat ~/.ssh/id_rsa.pub | xclip -sel c
 ```
 
