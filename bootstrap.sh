@@ -10,6 +10,12 @@ configure_dualboot()
     timedatectl set-local-rtc 1
 }
 
+ubuntu_general()
+{
+    # Enable click-to-minimize
+    gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
+}
+
 install_yaru()
 {
     # Install Yaru
@@ -41,6 +47,12 @@ install_skype()
 
     # Add Skype to favorites
     favorites+=("'skype_skypeforlinux.desktop'")
+}
+
+install_vlc()
+{
+    # Install VLC
+    sudo snap install vlc
 }
 
 install_slack()
@@ -75,12 +87,13 @@ function join_by { local IFS="$1"; shift; printf "$*"; }
 # Ask the user what they want to install
 features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-    "Choose the features to install:" 14 60 7 \
+    "Choose the features to install:" 15 40 8 \
     dualboot    "Dual boot fixes" ON \
     yaru        "Yaru theme for Ubuntu" ON \
     vim         "Vim + dotfiles" ON \
     skype       "Skype" ON \
     slack       "Slack" OFF \
+    vlc         "VLC" ON \
     cpp         "C++ Development" ON \
     texlive     "TeX Live" OFF \
     3>&1 1>&2 2>&3)
@@ -111,6 +124,9 @@ do
             ;;
     esac
 done
+
+# General Ubuntu config
+ubuntu_general
 
 # Set favourites
 gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
