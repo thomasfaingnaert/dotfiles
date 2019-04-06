@@ -11,7 +11,7 @@ git clone https://github.com/thomasfaingnaert/dotfiles ~/dotfiles
 ### Linux
 1. Install `git`:
 ```sh
-sudo apt install git
+sudo apt install -y git
 ```
 2. Clone the repository:
 ```sh
