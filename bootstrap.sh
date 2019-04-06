@@ -13,5 +13,11 @@ install_yaru()
     sudo sed -ie '/^\[User\]$/,/^\[/ s/^\(XSession=\).*$/\1ubuntu-communitheme-snap/' /var/lib/AccountsService/users/${USER}
 }
 
+configure_favourites()
+{
+    gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'org.gnome.Nautilus.desktop', 'gvim.desktop']"
+}
+
 install_dotfiles
 install_yaru
+configure_favourites
