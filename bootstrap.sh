@@ -102,7 +102,7 @@ function join_by { local IFS="$1"; shift; printf "$*"; }
 # Ask the user what they want to install
 features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-    "Choose the features to install:" 15 40 8 \
+    "Choose the features to install:" 16 40 9 \
     dualboot    "Dual boot fixes" ON \
     yaru        "Yaru theme for Ubuntu" ON \
     vim         "Vim + dotfiles" ON \
