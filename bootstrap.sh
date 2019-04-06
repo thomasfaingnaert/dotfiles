@@ -14,6 +14,12 @@ ubuntu_general()
 {
     # Enable click-to-minimize
     gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
+
+    # Set alt-tab to switch between windows, not applications
+    gsettings set org.gnome.desktop.wm.keybindings switch-applications "[]"
+    gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "[]"
+    gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Super>Tab','<Alt>Tab']"
+    gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Super>Tab','<Shift><Alt>Tab']"
 }
 
 install_yaru()
