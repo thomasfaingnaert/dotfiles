@@ -82,7 +82,7 @@ install_slack()
 install_cpp_dev_tools()
 {
     # Install C++ tools
-    sudo apt-get install -y build-essential cmake
+    sudo apt-get install -y build-essential cmake checkinstall
 
     # Install clangd
     sudo snap install clangd --classic
