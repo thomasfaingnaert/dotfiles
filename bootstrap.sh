@@ -82,10 +82,7 @@ install_slack()
 install_cpp_dev_tools()
 {
     # Install C++ tools
-    sudo apt-get install -y build-essential cmake checkinstall
-
-    # Install clangd
-    sudo snap install clangd --classic
+    sudo apt-get install -y build-essential cmake checkinstall clang-7 clang-tools-7
 }
 
 install_texlive()
