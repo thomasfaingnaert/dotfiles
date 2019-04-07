@@ -1,3 +1,5 @@
+alias g='git'
+
 o()
 {
     if [ "$#" -eq "0" ]; then
