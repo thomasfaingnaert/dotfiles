@@ -1,5 +1,9 @@
 alias g='git'
 
+# Make completion work with git alias
+source /usr/share/bash-completion/completions/git
+__git_complete g _git
+
 o()
 {
     if [ "$#" -eq "0" ]; then
