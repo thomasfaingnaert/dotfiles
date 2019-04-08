@@ -91,6 +91,17 @@ install_texlive()
     sudo apt-get install -y texlive-full
 }
 
+install_screencasts()
+{
+    # Install peek
+    sudo add-apt-repository ppa:peek-developers/stable
+    sudo apt-get update
+    sudo apt-get install -y peek
+
+    # Install screenkey
+    sudo apt-get install -y screenkey slop
+}
+
 # Join array
 # Source: https://stackoverflow.com/questions/1527049/how-can-i-join-elements-of-an-array-in-bash
 function join_by { local IFS="$1"; shift; printf "$*"; }
@@ -99,7 +110,7 @@ function join_by { local IFS="$1"; shift; printf "$*"; }
 # Ask the user what they want to install
 features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-    "Choose the features to install:" 16 40 9 \
+    "Choose the features to install:" 17 40 10 \
     dualboot    "Dual boot fixes" ON \
     yaru        "Yaru theme for Ubuntu" ON \
     vim         "Vim + dotfiles" ON \
@@ -109,6 +120,7 @@ features=$(
     vlc         "VLC" ON \
     cpp         "C++ Development" ON \
     texlive     "TeX Live" OFF \
+    screencasts "Peek and Screenkey" OFF \
     3>&1 1>&2 2>&3)
 
 for feature in $features
@@ -140,6 +152,9 @@ do
             ;;
         "texlive")
             install_texlive
+            ;;
+        "screencasts")
+            install_screencasts
             ;;
     esac
 done
