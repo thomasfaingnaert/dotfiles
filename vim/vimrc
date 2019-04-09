@@ -25,7 +25,6 @@ Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 
 Plug 'kana/vim-operator-user'
-Plug 'rhysd/vim-clang-format'
 Plug 'vim-scripts/DoxygenToolkit.vim'
 
 call plug#end()
