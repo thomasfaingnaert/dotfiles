@@ -270,15 +270,6 @@ inoremap <expr> <SID>CompleteOptLongestOff CompleteOptLongest(0)
 inoremap <expr> <SID>CompleteOptLongestOn CompleteOptLongest(1)
 inoremap <script> <C-x><C-o> <SID>CompleteOptLongestOn<C-x><C-o><SID>CompleteOptLongestOff
 
-"" clang-format
-if executable('clang-format')
-    augroup clang_format_operator
-        autocmd!
-        autocmd FileType c,cpp,objc map <buffer>= <Plug>(operator-clang-format)
-    augroup end
-endif
-
-
 " --------------------------------------------------------------------------------
 " Autocommands
 " --------------------------------------------------------------------------------
@@ -349,6 +340,9 @@ if executable('clangd')
         autocmd FileType c,cpp,objc,objcpp,cc nnoremap <buffer> <F2> :LspRename<CR>
     augroup end
 endif
+
+"" C++ formatting
+autocmd FileType c,cpp setlocal equalprg=clang-format
 
 " --------------------------------------------------------------------------------
 " Functions
