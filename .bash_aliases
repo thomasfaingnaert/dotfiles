@@ -1,5 +1,9 @@
 alias g='git'
 
+# Copy to/paste from clipboard
+alias getclip='xclip -selection clipboard -o'
+alias setclip='xclip -selection clipboard'
+
 # Used to access git completion functions from within this script
 source /usr/share/bash-completion/completions/git
 
