@@ -342,7 +342,11 @@ if executable('clangd')
 endif
 
 "" C++ formatting
-autocmd FileType c,cpp setlocal equalprg=clang-format
+augroup cpp_auto_format
+    autocmd!
+    autocmd FileType c,cpp setlocal equalprg=clang-format
+    autocmd FileType c,cpp autocmd BufWritePre <buffer> call <SID>Preserve("normal gg=G")
+augroup end
 
 " --------------------------------------------------------------------------------
 " Functions
