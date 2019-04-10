@@ -112,7 +112,7 @@ install_texlive()
 install_screencasts()
 {
     # Install peek
-    sudo add-apt-repository ppa:peek-developers/stable
+    sudo add-apt-repository -y ppa:peek-developers/stable
     sudo apt-get update
     sudo apt-get install -y peek
 
