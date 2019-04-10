@@ -68,6 +68,12 @@ install_vlc()
 {
     # Install VLC
     sudo snap install vlc
+
+    # Get MIME types for audio and video that vlc supports
+    AUDIO_MIMETYPES=$(cat /var/lib/snapd/desktop/applications/vlc_vlc.desktop | grep MimeType | sed -e 's/MimeType=//' -e 's/;/\n/g' | grep 'audio/' | tr '\n' ' ')
+    VIDEO_MIMETYPES=$(cat /var/lib/snapd/desktop/applications/vlc_vlc.desktop | grep MimeType | sed -e 's/MimeType=//' -e 's/;/\n/g' | grep 'video/' | tr '\n' ' ')
+
+    xdg-mime default vlc_vlc.desktop ${AUDIO_MIMETYPES} ${VIDEO_MIMETYPES}
 }
 
 install_slack()
@@ -109,7 +115,7 @@ function join_by { local IFS="$1"; shift; printf "$*"; }
 
 # Ask the user what they want to install
 features=$(
-    whiptail --title "Select Features" --checklist --notags --separate-output \
+whiptail --title "Select Features" --checklist --notags --separate-output \
     "Choose the features to install:" 17 40 10 \
     dualboot    "Dual boot fixes" ON \
     yaru        "Yaru theme for Ubuntu" ON \
