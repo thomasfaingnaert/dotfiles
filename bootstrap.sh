@@ -22,6 +22,17 @@ ubuntu_general()
     gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Super>Tab','<Shift><Alt>Tab']"
 }
 
+configure_locale()
+{
+    LOCALE="en_GB.UTF-8"
+
+    # Set user locale
+    dbus-send --system --dest=org.freedesktop.Accounts /org/freedesktop/Accounts/User$UID org.freedesktop.Accounts.User.SetFormatsLocale string:"${LOCALE}"
+
+    # Set system wide locale
+    sudo update-locale LC_NUMERIC="${LOCALE}" LC_TIME="${LOCALE}" LC_MONETARY="${LOCALE}" LC_PAPER="${LOCALE}" LC_NAME="${LOCALE}" LC_ADDRESS="${LOCALE}" LC_TELEPHONE="${LOCALE}" LC_MEASUREMENT="${LOCALE}" LC_IDENTIFICATION="${LOCALE}"
+}
+
 install_yaru()
 {
     # Install Yaru
@@ -168,6 +179,9 @@ done
 
 # General Ubuntu config
 ubuntu_general
+
+# Fix locale settings
+configure_locale
 
 # Set favourites
 gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
