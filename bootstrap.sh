@@ -20,6 +20,15 @@ ubuntu_general()
     gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "[]"
     gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Super>Tab','<Alt>Tab']"
     gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Super>Tab','<Shift><Alt>Tab']"
+
+    # Change PrtScr to save to clipboard by default; to save to file, use Ctrl
+    gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot '<Ctrl>Print'
+    gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot '<Ctrl><Alt>Print'
+    gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot '<Ctrl><Shift>Print'
+
+    gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot-clip 'Print'
+    gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot-clip '<Alt>Print'
+    gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot-clip '<Shift>Print'
 }
 
 configure_locale()
