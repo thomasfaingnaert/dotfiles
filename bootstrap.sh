@@ -179,6 +179,9 @@ EOF
     sudo update-alternatives --set editor /usr/local/bin/vim
     sudo update-alternatives --install /usr/bin/vi vi /usr/local/bin/vim 1
     sudo update-alternatives --set vi /usr/local/bin/vim
+
+    # Get rid of warning when starting gvim
+    sudo apt-get install -y libcanberra-gtk-module
 }
 
 # Join array
