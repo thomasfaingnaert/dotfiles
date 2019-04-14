@@ -24,7 +24,6 @@ Plug 'markonm/traces.vim'
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 
-Plug 'kana/vim-operator-user'
 Plug 'vim-scripts/DoxygenToolkit.vim'
 
 call plug#end()
