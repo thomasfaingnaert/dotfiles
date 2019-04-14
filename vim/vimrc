@@ -277,7 +277,7 @@ inoremap <script> <C-x><C-o> <SID>completeopt_longest_on<C-x><C-o><SID>completeo
 "" Automatically strip whitespace
 augroup strip_whitespace
     autocmd!
-    autocmd BufWritePre * :call <SID>preserve_state("%s/\\s\\+$//e")
+    autocmd BufWritePre * call <SID>preserve_state("%s/\\s\\+$//e")
 augroup end
 
 "" Don't automatically continue comment when pressing enter
@@ -295,7 +295,7 @@ augroup end
 "" LaTeX - autowrite files
 augroup autowrite_latex_files
     autocmd!
-    autocmd FileType tex :autocmd! autowrite_latex_files TextChanged,TextChangedI <buffer> call <SID>autowrite_latex()
+    autocmd FileType tex autocmd! autowrite_latex_files TextChanged,TextChangedI <buffer> call <SID>autowrite_latex()
 augroup end
 
 "" Automatically source vimrc
