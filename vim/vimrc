@@ -210,7 +210,7 @@ nnoremap <leader>v :execute ':edit ' . g:mydotfiles . '/vim/vimrc'<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
 nnoremap <leader>l :set list!<CR>
 nnoremap <leader>h :nohlsearch<CR>
-nnoremap <leader>= :call <SID>Preserve("normal gg=G")<CR>
+nnoremap <leader>= :call <SID>preserve_state("normal gg=G")<CR>
 nnoremap <leader>c :lcd %:h<CR>
 nnoremap <leader>p :set spell!<CR>:set spell?<CR>
 
@@ -266,9 +266,9 @@ nnoremap <leader>% :%s/\(\<<C-r><C-w>\>\)//g<Left><Left>
 nnoremap <BS> <C-^>
 
 "" Don't fill in completion with omnicompletion
-inoremap <expr> <SID>CompleteOptLongestOff CompleteOptLongest(0)
-inoremap <expr> <SID>CompleteOptLongestOn CompleteOptLongest(1)
-inoremap <script> <C-x><C-o> <SID>CompleteOptLongestOn<C-x><C-o><SID>CompleteOptLongestOff
+inoremap <expr> <SID>completeopt_longest_off <SID>set_completeopt_longest(0)
+inoremap <expr> <SID>completeopt_longest_on <SID>set_completeopt_longest(1)
+inoremap <script> <C-x><C-o> <SID>completeopt_longest_on<C-x><C-o><SID>completeopt_longest_off
 
 " --------------------------------------------------------------------------------
 " Autocommands
@@ -277,7 +277,7 @@ inoremap <script> <C-x><C-o> <SID>CompleteOptLongestOn<C-x><C-o><SID>CompleteOpt
 "" Automatically strip whitespace
 augroup strip_whitespace
     autocmd!
-    autocmd BufWritePre * :call<SID>Preserve("%s/\\s\\+$//e")
+    autocmd BufWritePre * :call <SID>preserve_state("%s/\\s\\+$//e")
 augroup end
 
 "" Don't automatically continue comment when pressing enter
@@ -295,7 +295,7 @@ augroup end
 "" LaTeX - autowrite files
 augroup autowrite_latex_files
     autocmd!
-    autocmd FileType tex :autocmd! autowrite_latex_files TextChanged,TextChangedI <buffer> call AutowriteLatex()
+    autocmd FileType tex :autocmd! autowrite_latex_files TextChanged,TextChangedI <buffer> call <SID>autowrite_latex()
 augroup end
 
 "" Automatically source vimrc
@@ -345,7 +345,7 @@ endif
 augroup cpp_auto_format
     autocmd!
     autocmd FileType c,cpp setlocal equalprg=clang-format
-    autocmd FileType c,cpp autocmd BufWritePre <buffer> call <SID>Preserve("normal gg=G")
+    autocmd FileType c,cpp autocmd BufWritePre <buffer> call <SID>preserve_state("normal gg=G")
 augroup end
 
 " --------------------------------------------------------------------------------
@@ -354,7 +354,7 @@ augroup end
 
 "" Preserve "state" and execute command
 " (Source: http://vimcasts.org/episodes/tidying-whitespace/)
-function! <SID>Preserve(command)
+function! s:preserve_state(command)
     let l:win_view = winsaveview()
     let l:last_search = getreg('/')
     execute 'keepjumps ' . a:command
@@ -363,7 +363,7 @@ function! <SID>Preserve(command)
 endfunction
 
 "" Autowrite LaTeX files
-function! AutowriteLatex()
+function! s:autowrite_latex()
     if filereadable(expand('%')) && b:vimtex.compiler.is_running()
         execute "silent update"
     endif
@@ -417,7 +417,7 @@ function! VimrcFoldText()
 endfunction
 
 "" Toggle completeopt longest
-function! CompleteOptLongest(enable)
+function! s:set_completeopt_longest(enable)
     if a:enable
         set completeopt+=longest
     else
