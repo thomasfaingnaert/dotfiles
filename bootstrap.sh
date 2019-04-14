@@ -129,6 +129,58 @@ install_screencasts()
     sudo apt-get install -y screenkey slop
 }
 
+compile_vim()
+{
+    # Install dependencies
+    sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
+        libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
+        libcairo2-dev libx11-dev libxpm-dev libxt-dev \
+        python3-dev
+
+    # Get the python3 config dir
+    local python3_version=$(python3 --version | sed -e 's/[^0-9]*\([0-9]*\.[0-9]*\).*/\1/')
+    local python3_config_dir="/usr/lib/python${python3_version}/config-${python3_version}m-x86_64-linux-gnu"
+
+    if [ ! -d "$python3_config_dir" ]; then
+        echo "Python configuration directory '$python3_config_dir' not found!"
+        return
+    fi
+
+    # Clone Vim repository
+    mkdir -p ~/src
+    cd ~/src
+    git clone https://github.com/vim/vim.git vim
+    cd vim
+
+    # What Vim version are we building? (e.g. 8.1.1000 -> 81)
+    local vim_version=$(git describe --abbrev=0 --tags | sed -e 's/[^0-9]*\(.*\)/\1/')
+    local vim_short_version=$(git describe --abbrev=0 --tags | sed -e 's/[^0-9]*\([0-9]*\)\.\([0-9]*\).*/\1\2/')
+
+    # Config, compilation and install
+    ./configure --with-features=huge \
+                --enable-multibyte \
+                --enable-python3interp=yes \
+                --with-python3-config-dir=$python3_config_dir \
+                --enable-gui=gtk2 \
+                --enable-cscope \
+               --prefix=/usr/local
+
+    make VIMRUNTIMEDIR=/usr/local/share/vim/vim${vim_short_version}
+
+    sudo apt-get install -y checkinstall
+    cat >description-pak <<EOF
+Vi IMproved - enhanced vi editor - with GUI (compiled from source)
+EOF
+
+    sudo checkinstall -y --pkgname vim-git --pkgversion "${vim_version}" --maintainer "Thomas Faingnaert" --provides vim
+
+    # Set compiled Vim as default
+    sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 1
+    sudo update-alternatives --set editor /usr/local/bin/vim
+    sudo update-alternatives --install /usr/bin/vi vi /usr/local/bin/vim 1
+    sudo update-alternatives --set vi /usr/local/bin/vim
+}
+
 # Join array
 # Source: https://stackoverflow.com/questions/1527049/how-can-i-join-elements-of-an-array-in-bash
 function join_by { local IFS="$1"; shift; printf "$*"; }
@@ -137,7 +189,7 @@ function join_by { local IFS="$1"; shift; printf "$*"; }
 # Ask the user what they want to install
 features=$(
 whiptail --title "Select Features" --checklist --notags --separate-output \
-    "Choose the features to install:" 17 40 10 \
+    "Choose the features to install:" 18 40 11 \
     dualboot    "Dual boot fixes" ON \
     yaru        "Yaru theme for Ubuntu" ON \
     vim         "Vim + dotfiles" ON \
@@ -148,6 +200,7 @@ whiptail --title "Select Features" --checklist --notags --separate-output \
     cpp         "C++ Development" ON \
     texlive     "TeX Live" OFF \
     screencasts "Peek and Screenkey" OFF \
+    compile-vim "Compile Vim" OFF \
     3>&1 1>&2 2>&3)
 
 for feature in $features
@@ -182,6 +235,9 @@ do
             ;;
         "screencasts")
             install_screencasts
+            ;;
+        "compile-vim")
+            compile_vim
             ;;
     esac
 done
