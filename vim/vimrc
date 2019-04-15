@@ -243,8 +243,8 @@ cnoremap <C-n> <Down>
 cnoremap <C-p> <Up>
 
 "" Faster search and replace
-nnoremap <leader><leader> :'{,'}s/\(\<<C-r><C-w>\>\)//g<Left><Left>
-nnoremap <leader>% :%s/\(\<<C-r><C-w>\>\)//g<Left><Left>
+nnoremap <leader><leader> :'{,'}s/\<<C-r><C-w>\>//g<Left><Left>
+nnoremap <leader>% :%s/\<<C-r><C-w>\>//g<Left><Left>
 
 "" Quickly switch between alternate files
 nnoremap <BS> <C-^>
