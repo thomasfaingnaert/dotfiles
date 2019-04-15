@@ -237,25 +237,10 @@ xmap ga <Plug>(EasyAlign)
 nnoremap <F7> :call <SID>make_application()<CR>
 
 "" Emacs-style command-line editing
-" See :h emacs-keys
-" start of line
-cnoremap <C-A>		<Home>
-" back one character
-cnoremap <C-B>		<Left>
-" delete character under cursor
-cnoremap <C-D>		<Del>
-" end of line
-cnoremap <C-E>		<End>
-" forward one character
-cnoremap <C-F>		<Right>
-" recall newer command-line
-cnoremap <C-N>		<Down>
-" recall previous (older) command-line
-cnoremap <C-P>		<Up>
-" back one word
-cnoremap <Esc><C-B>	<S-Left>
-" forward one word
-cnoremap <Esc><C-F>	<S-Right>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-n> <Down>
+cnoremap <C-p> <Up>
 
 "" Faster search and replace
 nnoremap <leader><leader> :'{,'}s/\(\<<C-r><C-w>\>\)//g<Left><Left>
