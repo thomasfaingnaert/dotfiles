@@ -50,6 +50,14 @@ configure_locale()
     sudo update-locale LC_NUMERIC="${LOCALE}" LC_TIME="${LOCALE}" LC_MONETARY="${LOCALE}" LC_PAPER="${LOCALE}" LC_NAME="${LOCALE}" LC_ADDRESS="${LOCALE}" LC_TELEPHONE="${LOCALE}" LC_MEASUREMENT="${LOCALE}" LC_IDENTIFICATION="${LOCALE}"
 }
 
+git_diff_highlight()
+{
+    if [ -f /usr/share/doc/git/contrib/diff-highlight/diff-highlight ]; then
+        sudo chmod +x /usr/share/doc/git/contrib/diff-highlight/diff-highlight
+        sudo update-alternatives --install /usr/bin/diff-highlight diff-highlight /usr/share/doc/git/contrib/diff-highlight/diff-highlight 0
+    fi
+}
+
 install_yaru()
 {
     # Install Yaru
@@ -196,7 +204,6 @@ EOF
 # Source: https://stackoverflow.com/questions/1527049/how-can-i-join-elements-of-an-array-in-bash
 function join_by { local IFS="$1"; shift; printf "$*"; }
 
-
 # Ask the user what they want to install
 features=$(
 whiptail --title "Select Features" --checklist --notags --separate-output \
@@ -258,6 +265,9 @@ ubuntu_general
 
 # Fix locale settings
 configure_locale
+
+# Git diff highlighting
+git_diff_highlight
 
 # Set favourites
 gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
