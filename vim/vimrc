@@ -214,11 +214,11 @@ nnoremap <leader>c :lcd %:h<CR>
 nnoremap <leader>p :set spell!<CR>:set spell?<CR>
 
 " Deselect selected wildmenu option, if any
-cnoremap <expr> <C-x> wildmenumode() ? "\<S-Tab>" : ""
+cnoremap <expr> <SID>deselect_wildmenu_option wildmenumode() ? "\<S-Tab>" : ""
 
-nmap <leader>b :ls<CR>:buffer <C-z><C-x>
-nmap <leader>s :ls<CR>:vert sbuffer <C-z><C-x>
-nmap <leader>d :ls<CR>:bdelete <C-z><C-x>
+nmap <leader>b :ls<CR>:buffer <C-z><SID>deselect_wildmenu_option
+nmap <leader>s :ls<CR>:vert sbuffer <C-z><SID>deselect_wildmenu_option
+nmap <leader>d :ls<CR>:bdelete <C-z><SID>deselect_wildmenu_option
 
 
 "" Fugitive
