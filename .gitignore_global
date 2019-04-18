@@ -30,3 +30,6 @@ out/
 # BibTeX
 *.bbl
 *.blg
+
+# Citrix
+.access^
