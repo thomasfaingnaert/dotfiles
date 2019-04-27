@@ -25,7 +25,7 @@ out/
 *.xdv
 
 # LaTeX pdf images
-!images/*.pdf
+!**/images/*.pdf
 
 # BibTeX
 *.bbl
