@@ -4,6 +4,9 @@
 # Compilation flags for clang tools
 compile_flags.txt
 
+# Compilation database for C++
+compile_commands.json
+
 # Custom build system configuration
 build-system/
 
