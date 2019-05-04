@@ -259,6 +259,11 @@ inoremap <expr> <SID>completeopt_longest_off <SID>set_completeopt_longest(0)
 inoremap <expr> <SID>completeopt_longest_on <SID>set_completeopt_longest(1)
 inoremap <script> <C-x><C-o> <SID>completeopt_longest_on<C-x><C-o><SID>completeopt_longest_off
 
+"" Increase and reset font size
+nnoremap <M-+> :call <SID>increase_font_size(+1)<CR>
+nnoremap <M--> :call <SID>increase_font_size(-1)<CR>
+nnoremap <M-=> :call <SID>reset_font_size()<CR>
+
 " --------------------------------------------------------------------------------
 " Autocommands
 " --------------------------------------------------------------------------------
@@ -434,6 +439,34 @@ function! s:make_application() abort
     else
         make
     endif
+endfunction
+
+"" Increase and reset font size
+if !exists("s:default_font")
+    let s:default_font = &guifont
+endif
+
+function! s:increase_font_size(amount)
+    let l:min_font_size = 8
+    let l:max_font_size = 60
+
+    if has('win32')
+        let l:pattern = '^\(.*:h\)\([1-9][0-9]*\)$'
+    else
+        let l:pattern = '^\(.* \)\([1-9][0-9]*\)$'
+    endif
+
+    let l:font = substitute(&guifont, l:pattern, '\1', '')
+    let l:size = substitute(&guifont, l:pattern, '\2', '')
+    let l:new_size = l:size + a:amount
+
+    if (l:new_size >= l:min_font_size) && (l:new_size <= l:max_font_size)
+        let &guifont = l:font . l:new_size
+    endif
+endfunction
+
+function! s:reset_font_size()
+    let &guifont = s:default_font
 endfunction
 
 " --------------------------------------------------------------------------------
