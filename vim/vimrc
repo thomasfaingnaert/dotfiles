@@ -463,10 +463,13 @@ function! s:increase_font_size(amount)
     if (l:new_size >= l:min_font_size) && (l:new_size <= l:max_font_size)
         let &guifont = l:font . l:new_size
     endif
+
+    set lines=999 columns=999
 endfunction
 
 function! s:reset_font_size()
     let &guifont = s:default_font
+    set lines=999 columns=999
 endfunction
 
 " --------------------------------------------------------------------------------
