@@ -132,10 +132,15 @@ set autoread
 set spelllang=en_gb
 set nrformats-=octal
 
+
 " Set shell to cmd.exe (this is needed to use gVim as difftool in Windows)
 if has('win32')
     set shell=C:\WINDOWS\system32\cmd.exe
 endif
+
+"" Set wildignore
+set wildignore+=*/build/*
+set wildignore+=*/docs/*
 
 " --------------------------------------------------------------------------------
 " Plugin settings
