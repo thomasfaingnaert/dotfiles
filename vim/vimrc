@@ -429,6 +429,8 @@ function! s:make_application() abort
         !python %
     elseif &filetype == 'sh'
         !bash %
+    elseif &filetype == 'vim'
+        source %
     else
         make
     endif
