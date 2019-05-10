@@ -23,6 +23,9 @@ ubuntu_general()
     # Enable click-to-minimize
     gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
 
+    # Show battery percentage on the top bar
+    gsettings set org.gnome.desktop.interface show-battery-percentage true
+
     # Set alt-tab to switch between windows, not applications
     gsettings set org.gnome.desktop.wm.keybindings switch-applications "[]"
     gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "[]"
