@@ -17,6 +17,7 @@
 	hotmail = config user.email thomas.faingnaert@hotmail.com
 	ugent = config user.email thomas.faingnaert@ugent.be
 	ps = push
+        psu = push --set-upstream origin HEAD
 	pl = pull
 	d = diff
 	dc = diff --cached
