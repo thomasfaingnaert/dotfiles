@@ -10,22 +10,22 @@
 [difftool]
 	prompt = false
 [alias]
-	co = checkout
+	a = add
+	aa = add --all
 	br = branch
 	ci = commit
-	st = status
-	hotmail = config user.email thomas.faingnaert@hotmail.com
-	ugent = config user.email thomas.faingnaert@ugent.be
-        m = merge
-	ps = push
-        psu = push --set-upstream origin HEAD
-	pl = pull
+	co = checkout
 	d = diff
 	dc = diff --cached
+	hotmail = config user.email thomas.faingnaert@hotmail.com
 	l = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(dim white)%an%C(reset) %C(bold green)(%ar)%C(reset) - %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)'
+	m = merge
+	pl = pull
+	ps = push
+	psu = push --set-upstream origin HEAD
+	st = status
+	ugent = config user.email thomas.faingnaert@ugent.be
 	wc = !"wc() { git log --perl-regexp --author='^((?!Thomas Faingnaert|tfaingna).*)$' --abbrev-commit --decorate --date=relative --format=format:'-----COMMIT-----%C(bold blue)%h%C(reset) - %C(dim white)%an%C(reset) %C(bold green)(%ar)%C(reset) - %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)' --patch --color=always \"$@\" | diff-highlight | sed -e '/diff --git/,/+++ / d' -e '/^-----COMMIT-----/! s/^\\(.*\\)$/    \\1/' -e 's/^-----COMMIT-----//' | less -r; }; wc"
-	aa = add --all
-        a = add
 [core]
 	excludesfile = ~/.gitignore_global
 [pager]
