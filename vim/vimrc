@@ -362,6 +362,12 @@ augroup cpp_auto_format
     autocmd FileType c,cpp autocmd BufWritePre <buffer> call <SID>preserve_state("normal gg=G")
 augroup end
 
+"" Asciidoc - comments
+augroup asciidoc_comments
+    autocmd!
+    autocmd FileType asciidoc setlocal commentstring=//\ %s
+augroup end
+
 " --------------------------------------------------------------------------------
 " Functions
 " --------------------------------------------------------------------------------
