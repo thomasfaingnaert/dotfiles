@@ -280,6 +280,10 @@ nnoremap <M-+> :call <SID>increase_font_size(+1)<CR>
 nnoremap <M--> :call <SID>increase_font_size(-1)<CR>
 nnoremap <M-=> :call <SID>reset_font_size()<CR>
 
+"" Format paragraph so all sentences are on a different line
+nnoremap Q :set operatorfunc=<SID>format_paragraph<CR>g@
+vnoremap Q :<C-u>call <SID>format_paragraph(visualmode(), 1)<CR>
+
 " --------------------------------------------------------------------------------
 " Autocommands
 " --------------------------------------------------------------------------------
@@ -486,6 +490,16 @@ endfunction
 function! s:reset_font_size()
     let &guifont = s:default_font
     set lines=999 columns=999
+endfunction
+
+"" Format paragraph: all sentences on new line
+function! s:format_paragraph(type, ...)
+    " Join all lines
+    normal! J
+
+    " Add a linebreak after all punctuation (.?!) followed by at least one
+    " space and a capital letter, and remove that whitespace.
+    execute 's/\([.?!]\)\s\+\ze[A-Z]/\1\r/ge'
 endfunction
 
 " --------------------------------------------------------------------------------
