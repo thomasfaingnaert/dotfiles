@@ -34,7 +34,7 @@ call plug#end()
 
 "" Setup
 " Load matchit
-runtime macros/matchit.vim
+packadd! matchit
 
 " Enable filetype support and syntax highlighting
 filetype plugin indent on
