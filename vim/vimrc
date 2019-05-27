@@ -236,6 +236,7 @@ nnoremap <leader>gw :Gwrite<CR>
 nnoremap <leader>gr :Gread<CR>
 nnoremap <leader>gp :Gpush<CR>
 nnoremap <leader>gc :Glcd<CR>
+nnoremap <leader>gb :Gbrowse<CR>
 
 "" Easy align
 nmap ga <Plug>(EasyAlign)
