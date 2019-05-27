@@ -284,6 +284,10 @@ nnoremap <M-=> :call <SID>reset_font_size()<CR>
 nnoremap Q :set operatorfunc=<SID>format_paragraph<CR>g@
 vnoremap Q :<C-u>call <SID>format_paragraph(visualmode(), 1)<CR>
 
+"" Underline current line
+nnoremap <silent> <leader>u :call <SID>underline(0)<CR>
+nnoremap <silent> <leader>U :call <SID>underline(1)<CR>
+
 " --------------------------------------------------------------------------------
 " Autocommands
 " --------------------------------------------------------------------------------
@@ -508,6 +512,31 @@ function! s:format_paragraph(type, ...)
     " Add a linebreak after all punctuation (.?!) followed by at least one
     " space and a capital letter, and remove that whitespace.
     silent '[,']s/\([.?!]\)\s\+\ze[A-Z]/\1\r/ge
+endfunction
+
+"" Underline current line
+function! s:underline(above) abort
+    " Save cursor position
+    let l:pos = getcurpos()
+
+    " Prompt for character to underline with
+    let l:char = getchar()
+
+    " Use <Esc> to cancel
+    if l:char != 27
+        " Underline current line with chosen character
+        if a:above
+            execute "t-1 \| snomagic/\\./" . nr2char(l:char) . "/ge"
+
+            " Because of the extra line, we want the cursor one down
+            let l:pos[1] += 1
+        else
+            execute "t. \| snomagic/\\./" . nr2char(l:char) . "/ge"
+        endif
+    endif
+
+    " Restore cursor position
+    call setpos('.', l:pos)
 endfunction
 
 " --------------------------------------------------------------------------------
