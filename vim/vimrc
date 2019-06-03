@@ -187,10 +187,10 @@ inoremap <C-u> <C-g>u<C-u>
 inoremap <C-w> <C-g>u<C-w>
 
 "" Window navigation and movement
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+nnoremap <silent> <C-h> :call <SID>window_move('h')<CR>
+nnoremap <silent> <C-j> :call <SID>window_move('j')<CR>
+nnoremap <silent> <C-k> :call <SID>window_move('k')<CR>
+nnoremap <silent> <C-l> :call <SID>window_move('l')<CR>
 
 nnoremap <C-M-h> <C-w>H
 nnoremap <C-M-j> <C-w>J
@@ -541,6 +541,32 @@ function! s:underline(above) abort
 
     " Restore cursor position
     call setpos('.', l:pos)
+endfunction
+
+"" Move/create window
+" Source:
+" http://www.agillo.net/simple-vim-window-management/
+" https://aonemd.github.io/blog/handy-keymaps-in-vim
+
+function! s:window_move(key)
+    " Save old window
+    let l:current_window = winnr()
+
+    " Execute movement
+    execute "wincmd " . a:key
+
+    " Check if we have changed window
+    if (l:current_window == winnr())
+        " If not, create a new split
+        if (a:key =~# '[hl]')
+            wincmd v
+        else
+            wincmd s
+        endif
+
+        " Move to that new split
+        execute "wincmd " . a:key
+    endif
 endfunction
 
 " --------------------------------------------------------------------------------
