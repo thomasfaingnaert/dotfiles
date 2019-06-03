@@ -376,6 +376,13 @@ augroup asciidoc_comments
     autocmd FileType asciidoc setlocal commentstring=//\ %s
 augroup end
 
+"" Automatically open quickfix
+augroup auto_open_quickfix
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* nested cwindow
+    autocmd QuickFixCmdPost    l* nested lwindow
+augroup end
+
 " --------------------------------------------------------------------------------
 " Functions
 " --------------------------------------------------------------------------------
