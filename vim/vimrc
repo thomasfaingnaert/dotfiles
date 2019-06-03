@@ -198,14 +198,14 @@ nnoremap <C-M-k> <C-w>K
 nnoremap <C-M-l> <C-w>L
 
 "" Move lines up and down
-nnoremap <A-j> :move +1<CR>
-nnoremap <A-k> :move -2<CR>
+nnoremap <A-j> :move +1<CR>==
+nnoremap <A-k> :move -2<CR>==
 
-inoremap <A-j> <Esc>:move +1<CR>gi
-inoremap <A-k> <Esc>:move -2<CR>gi
+inoremap <A-j> <Esc>:move +1<CR>==gi
+inoremap <A-k> <Esc>:move -2<CR>==gi
 
-xnoremap <A-j> :move '>+1<CR>gv
-xnoremap <A-k> :move '<-2<CR>gv
+xnoremap <A-j> :move '>+1<CR>gv=gv
+xnoremap <A-k> :move '<-2<CR>gv=gv
 
 "" Leader
 let mapleader = " "
