@@ -178,6 +178,21 @@ endif
 " I prefer vim-surround keymappings
 runtime macros/sandwich/keymap/surround.vim
 
+"" vim-sort-motion
+" Ignore options when sorting \usepackage in LaTeX
+let g:sort_motion_flags = ''
+            \ . '/'
+            \ .     '\('
+            \ .         '^\\usepackage'
+            \ .         '\('
+            \ .             '\['
+            \ .             '[^\]]*'
+            \ .             '\]'
+            \ .         '\)\?'
+            \ .         '{'
+            \ .     '\)\?'
+            \ . '/'
+
 " --------------------------------------------------------------------------------
 " Mappings
 " --------------------------------------------------------------------------------
