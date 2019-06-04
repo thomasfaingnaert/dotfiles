@@ -82,13 +82,6 @@ if !exists('g:mydotfiles')
     endif
 end
 
-""" Shell 'clear' command
-if has('win32')
-    let s:clear_command = 'cls'
-else
-    let s:clear_command = 'clear'
-endif
-
 "" Line numbers
 set relativenumber
 set number
