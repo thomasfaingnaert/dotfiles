@@ -198,6 +198,16 @@ let g:projectionist_heuristics = {
             \           "alternate": "include/{}.h",
             \           "type": "source"
             \       }
+            \   },
+            \   "*.h&*.cpp": {
+            \       "*.h": {
+            \           "alternate": "{}.cpp",
+            \           "type": "header"
+            \       },
+            \       "*.cpp": {
+            \           "alternate": "{}.h",
+            \           "type": "source"
+            \       }
             \   }}
 
 " --------------------------------------------------------------------------------
