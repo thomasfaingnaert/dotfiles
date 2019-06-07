@@ -187,6 +187,19 @@ let g:sort_motion_flags = ''
             \ .     '\)\?'
             \ . '/'
 
+"" vim-projectionist
+let g:projectionist_heuristics = {
+            \   "include/*.h|src/*.cpp": {
+            \       "include/*.h": {
+            \           "alternate": "src/{}.cpp",
+            \           "type": "header"
+            \       },
+            \       "src/*.cpp": {
+            \           "alternate": "include/{}.h",
+            \           "type": "source"
+            \       }
+            \   }}
+
 " --------------------------------------------------------------------------------
 " Mappings
 " --------------------------------------------------------------------------------
