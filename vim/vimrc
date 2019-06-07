@@ -281,7 +281,7 @@ function! s:quick_replace(type, ...)
 endfunction
 
 "" Quickly switch between alternate files
-nnoremap <BS> <C-^>
+nnoremap <BS> :A<CR>
 
 "" Don't fill in completion with omnicompletion
 inoremap <expr> <SID>completeopt_longest_off <SID>set_completeopt_longest(0)
