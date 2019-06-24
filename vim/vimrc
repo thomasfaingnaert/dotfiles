@@ -144,6 +144,16 @@ endif
 set wildignore+=*/build/*
 set wildignore+=*/docs/*
 
+"" Set clang-format options
+let s:clang_format_settings = {
+            \       "BasedOnStyle": "LLVM",
+            \       "AccessModifierOffset": -4,
+            \       "AllowShortFunctionsOnASingleLine": "Inline",
+            \       "BreakBeforeBraces": "Allman",
+            \       "IncludeBlocks": "Regroup",
+            \       "IndentWidth": 4
+            \   }
+
 " --------------------------------------------------------------------------------
 " Plugin settings
 " --------------------------------------------------------------------------------
@@ -409,7 +419,7 @@ endif
 "" C++ formatting
 augroup cpp_auto_format
     autocmd!
-    autocmd FileType c,cpp setlocal equalprg=clang-format
+    autocmd FileType c,cpp let &l:equalprg = "clang-format -style='" . json_encode(s:clang_format_settings) . "'"
     autocmd FileType c,cpp autocmd BufWritePre <buffer> call <SID>preserve_state("normal gg=G")
 augroup end
 
