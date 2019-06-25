@@ -339,6 +339,9 @@ vnoremap Q :<C-u>call <SID>format_paragraph(visualmode(), 1)<CR>
 nnoremap <silent> <leader>u :call <SID>underline(0)<CR>
 nnoremap <silent> <leader>U :call <SID>underline(1)<CR>
 
+"" Easy grep
+nnoremap <silent> gr :silent grep! -r <cword> *<CR>
+
 " --------------------------------------------------------------------------------
 " Autocommands
 " --------------------------------------------------------------------------------
