@@ -131,6 +131,7 @@ set lazyredraw
 set autoread
 set spelllang=en_gb
 set nrformats-=octal
+set path+=**
 
 " This fixes netrw-gx and :Gbrowse not working in gVim
 let g:netrw_browsex_viewer="setsid xdg-open"
