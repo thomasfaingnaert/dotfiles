@@ -383,6 +383,12 @@ augroup auto_source_vimrc
     execute 'autocmd BufWritePost ' . g:mydotfiles . '/vim/vimrc' . ' source $MYVIMRC'
 augroup end
 
+"" Set folding for vimrc
+augroup folding_vimrc
+    autocmd!
+    execute 'autocmd BufReadPre ' . g:mydotfiles . '/vim/vimrc setlocal foldmethod=expr foldexpr=VimrcFoldExpr() foldtext=VimrcFoldText()'
+augroup end
+
 "" Language server protocol (vim-lsp)
 """ Python
 " pip install python-language-server
@@ -634,11 +640,9 @@ function! s:window_move(key)
 endfunction
 
 " --------------------------------------------------------------------------------
-" Local overrides and modeline
+" Local overrides
 " --------------------------------------------------------------------------------
 
 if filereadable($HOME . "/.vimrc.local")
     execute "source " . $HOME . "/.vimrc.local"
 endif
-
-" vim: foldmethod=expr foldexpr=VimrcFoldExpr() foldtext=VimrcFoldText()
