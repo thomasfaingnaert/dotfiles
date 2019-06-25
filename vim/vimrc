@@ -264,7 +264,7 @@ nnoremap <leader>v :execute ':edit ' . g:mydotfiles . '/vim/vimrc'<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
 nnoremap <leader>l :set list!<CR>
 nnoremap <leader>h :nohlsearch<CR>
-nnoremap <leader>= :call <SID>preserve_state("normal gg=G")<CR>
+nnoremap <silent> <leader>= :call <SID>preserve_state("silent normal gg=G")<CR>
 nnoremap <leader>c :lcd %:h<CR>
 nnoremap <leader>p :set spell!<CR>:set spell?<CR>
 
@@ -420,7 +420,7 @@ endif
 augroup cpp_auto_format
     autocmd!
     autocmd FileType c,cpp let &l:equalprg = "clang-format -style='" . json_encode(s:clang_format_settings) . "'"
-    autocmd FileType c,cpp autocmd BufWritePre <buffer> call <SID>preserve_state("normal gg=G")
+    autocmd FileType c,cpp autocmd BufWritePre <buffer> call <SID>preserve_state("silent normal gg=G")
 augroup end
 
 "" Asciidoc - comments
