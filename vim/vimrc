@@ -226,10 +226,6 @@ let g:projectionist_heuristics = {
             \       }
             \   }}
 
-"" vim-lsp
-" Customize popup window colours
-let g:lsp_popup_highlight = "PopupWindow"
-
 " --------------------------------------------------------------------------------
 " Mappings
 " --------------------------------------------------------------------------------
