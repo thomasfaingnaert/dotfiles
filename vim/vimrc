@@ -6,7 +6,7 @@ call plug#begin()
 
 Plug 'iCyMind/NeoSolarized'
 
-Plug 'SirVer/ultisnips'
+if has('python3') | Plug 'SirVer/ultisnips' | endif
 Plug 'honza/vim-snippets'
 
 Plug 'tpope/vim-commentary'
@@ -41,7 +41,7 @@ call plug#end()
 
 "" Setup
 " Load matchit
-packadd! matchit
+if !has('nvim') | packadd! matchit | endif
 
 " Enable filetype support and syntax highlighting
 filetype plugin indent on
