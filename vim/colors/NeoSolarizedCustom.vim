@@ -10,3 +10,4 @@ runtime colors/NeoSolarized.vim
 let g:colors_name = "NeoSolarizedCustom"
 
 highlight PopupWindow guibg=#fdf6e3
+highlight PopupWindowDark guibg=#f9e7b6
