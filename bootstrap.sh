@@ -10,7 +10,6 @@ favorites=(
 
 feature_dualboot()
 {
-
     # Make Linux store the time in local timezone instead of UTC, so the time does not jump
     # when rebooting into a different OS. This is a better solution than configuring Windows
     # to store the time in UTC.
@@ -27,7 +26,6 @@ feature_dualboot()
 
 feature_gnome()
 {
-
     # Enable click-to-minimize
     gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
 
@@ -52,7 +50,6 @@ feature_gnome()
 
 feature_locale()
 {
-
     LOCALE="en_GB.UTF-8"
 
     # Set user locale
@@ -64,7 +61,6 @@ feature_locale()
 
 feature_git_diff_highlight()
 {
-
     if [ -f /usr/share/doc/git/contrib/diff-highlight/diff-highlight ]; then
         sudo chmod +x /usr/share/doc/git/contrib/diff-highlight/diff-highlight
         sudo update-alternatives --install /usr/bin/diff-highlight diff-highlight /usr/share/doc/git/contrib/diff-highlight/diff-highlight 0
@@ -73,7 +69,6 @@ feature_git_diff_highlight()
 
 feature_yaru()
 {
-
     # Install Yaru
     sudo snap install communitheme
 
@@ -89,7 +84,6 @@ feature_yaru()
 
 feature_vim()
 {
-
     # Install dependencies
     sudo apt-get install -y vim vim-gnome curl
 
@@ -99,21 +93,18 @@ feature_vim()
 
 feature_keepassxc()
 {
-
     # Install KeepassXC
     sudo snap install keepassxc
 }
 
 feature_skype()
 {
-
     # Install Skype
     sudo snap install skype --classic
 }
 
 feature_vlc()
 {
-
     # Install VLC
     sudo snap install vlc
 
@@ -127,28 +118,24 @@ feature_vlc()
 
 feature_slack()
 {
-
     # Install Slack
     sudo snap install slack --classic
 }
 
 feature_cpp_dev()
 {
-
     # Install C++ tools
     sudo apt-get install -y build-essential cmake checkinstall clang-7 clang-tools-7
 }
 
 feature_texlive()
 {
-
     # Install texlive
     sudo apt-get install -y texlive-full
 }
 
 feature_screencasts()
 {
-
     # Install peek
     sudo add-apt-repository -y ppa:peek-developers/stable
     sudo apt-get update
@@ -160,7 +147,6 @@ feature_screencasts()
 
 feature_vim_git()
 {
-
     # Install dependencies
     sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
         libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
