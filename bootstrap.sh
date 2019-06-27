@@ -225,8 +225,7 @@ if [ $? -ne 0 ]; then
     exit
 fi
 
-for feature in $features
-do
+for feature in $features; do
     feature_${feature}
 done
 
