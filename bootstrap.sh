@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
-favorites=("'firefox.desktop'" "'org.gnome.Nautilus.desktop'")
+favorites=(
+    "'firefox.desktop'"
+    "'org.gnome.Nautilus.desktop'"
+    "'gvim.desktop'"
+    "'skype_skypeforlinux.desktop'"
+    "'slack_slack.desktop'"
+)
 
 configure_dualboot()
 {
@@ -83,9 +89,6 @@ install_vim()
 
     # Install dotfiles
     ./config_unix.sh
-
-    # Add gVim to favorites
-    favorites+=("'gvim.desktop'")
 }
 
 install_keepassxc()
@@ -98,9 +101,6 @@ install_skype()
 {
     # Install Skype
     sudo snap install skype --classic
-
-    # Add Skype to favorites
-    favorites+=("'skype_skypeforlinux.desktop'")
 }
 
 install_vlc()
@@ -120,9 +120,6 @@ install_slack()
 {
     # Install Slack
     sudo snap install slack --classic
-
-    # Add Slack to favorites
-    favorites+=("'slack_slack.desktop'")
 }
 
 install_cpp_dev_tools()
