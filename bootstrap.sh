@@ -221,6 +221,10 @@ whiptail --title "Select Features" --checklist --notags --separate-output \
     vim_git     "Compile Vim" OFF \
     3>&1 1>&2 2>&3)
 
+if [ $? -ne 0 ]; then
+    exit
+fi
+
 for feature in $features
 do
     feature_${feature}
