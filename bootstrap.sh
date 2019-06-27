@@ -8,8 +8,9 @@ favorites=(
     "'slack_slack.desktop'"
 )
 
-configure_dualboot()
+feature_dualboot()
 {
+
     # Make Linux store the time in local timezone instead of UTC, so the time does not jump
     # when rebooting into a different OS. This is a better solution than configuring Windows
     # to store the time in UTC.
@@ -24,8 +25,9 @@ configure_dualboot()
     sudo update-grub
 }
 
-ubuntu_general()
+feature_gnome()
 {
+
     # Enable click-to-minimize
     gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
 
@@ -48,8 +50,9 @@ ubuntu_general()
     gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot-clip '<Shift>Print'
 }
 
-configure_locale()
+feature_locale()
 {
+
     LOCALE="en_GB.UTF-8"
 
     # Set user locale
@@ -59,16 +62,18 @@ configure_locale()
     sudo update-locale LC_NUMERIC="${LOCALE}" LC_TIME="${LOCALE}" LC_MONETARY="${LOCALE}" LC_PAPER="${LOCALE}" LC_NAME="${LOCALE}" LC_ADDRESS="${LOCALE}" LC_TELEPHONE="${LOCALE}" LC_MEASUREMENT="${LOCALE}" LC_IDENTIFICATION="${LOCALE}"
 }
 
-git_diff_highlight()
+feature_git_diff_highlight()
 {
+
     if [ -f /usr/share/doc/git/contrib/diff-highlight/diff-highlight ]; then
         sudo chmod +x /usr/share/doc/git/contrib/diff-highlight/diff-highlight
         sudo update-alternatives --install /usr/bin/diff-highlight diff-highlight /usr/share/doc/git/contrib/diff-highlight/diff-highlight 0
     fi
 }
 
-install_yaru()
+feature_yaru()
 {
+
     # Install Yaru
     sudo snap install communitheme
 
@@ -82,8 +87,9 @@ install_yaru()
     gsettings set org.gnome.desktop.interface cursor-theme 'DMZ-White'
 }
 
-install_vim()
+feature_vim()
 {
+
     # Install dependencies
     sudo apt-get install -y vim vim-gnome curl
 
@@ -91,20 +97,23 @@ install_vim()
     ./config_unix.sh
 }
 
-install_keepassxc()
+feature_keepassxc()
 {
+
     # Install KeepassXC
     sudo snap install keepassxc
 }
 
-install_skype()
+feature_skype()
 {
+
     # Install Skype
     sudo snap install skype --classic
 }
 
-install_vlc()
+feature_vlc()
 {
+
     # Install VLC
     sudo snap install vlc
 
@@ -116,26 +125,30 @@ install_vlc()
     xdg-mime default vlc_vlc.desktop ${AUDIO_MIMETYPES} ${VIDEO_MIMETYPES}
 }
 
-install_slack()
+feature_slack()
 {
+
     # Install Slack
     sudo snap install slack --classic
 }
 
-install_cpp_dev_tools()
+feature_cpp_dev()
 {
+
     # Install C++ tools
     sudo apt-get install -y build-essential cmake checkinstall clang-7 clang-tools-7
 }
 
-install_texlive()
+feature_texlive()
 {
+
     # Install texlive
     sudo apt-get install -y texlive-full
 }
 
-install_screencasts()
+feature_screencasts()
 {
+
     # Install peek
     sudo add-apt-repository -y ppa:peek-developers/stable
     sudo apt-get update
@@ -145,8 +158,9 @@ install_screencasts()
     sudo apt-get install -y screenkey slop
 }
 
-compile_vim()
+feature_vim_git()
 {
+
     # Install dependencies
     sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
         libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
@@ -215,59 +229,25 @@ whiptail --title "Select Features" --checklist --notags --separate-output \
     skype       "Skype" ON \
     slack       "Slack" OFF \
     vlc         "VLC" ON \
-    cpp         "C++ Development" ON \
+    cpp_dev     "C++ Development" ON \
     texlive     "TeX Live" OFF \
     screencasts "Peek and Screenkey" OFF \
-    compile-vim "Compile Vim" OFF \
+    vim_git     "Compile Vim" OFF \
     3>&1 1>&2 2>&3)
 
 for feature in $features
 do
-    case $feature in
-        "dualboot")
-            configure_dualboot
-            ;;
-        "yaru")
-            install_yaru
-            ;;
-        "vim")
-            install_vim
-            ;;
-        "keepassxc")
-            install_keepassxc
-            ;;
-        "skype")
-            install_skype
-            ;;
-        "slack")
-            install_slack
-            ;;
-        "vlc")
-            install_vlc
-            ;;
-        "cpp")
-            install_cpp_dev_tools
-            ;;
-        "texlive")
-            install_texlive
-            ;;
-        "screencasts")
-            install_screencasts
-            ;;
-        "compile-vim")
-            compile_vim
-            ;;
-    esac
+    feature_${feature}
 done
 
-# General Ubuntu config
-ubuntu_general
+# GNOME config
+feature_gnome
 
 # Fix locale settings
-configure_locale
+feature_locale
 
 # Git diff highlighting
-git_diff_highlight
+feature_git_diff_highlight
 
 # Set favourites
 gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
