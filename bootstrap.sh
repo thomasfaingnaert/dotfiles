@@ -59,14 +59,6 @@ feature_locale()
     sudo update-locale LC_NUMERIC="${LOCALE}" LC_TIME="${LOCALE}" LC_MONETARY="${LOCALE}" LC_PAPER="${LOCALE}" LC_NAME="${LOCALE}" LC_ADDRESS="${LOCALE}" LC_TELEPHONE="${LOCALE}" LC_MEASUREMENT="${LOCALE}" LC_IDENTIFICATION="${LOCALE}"
 }
 
-feature_git_diff_highlight()
-{
-    if [ -f /usr/share/doc/git/contrib/diff-highlight/diff-highlight ]; then
-        sudo chmod +x /usr/share/doc/git/contrib/diff-highlight/diff-highlight
-        sudo update-alternatives --install /usr/bin/diff-highlight diff-highlight /usr/share/doc/git/contrib/diff-highlight/diff-highlight 0
-    fi
-}
-
 feature_yaru()
 {
     # Install Yaru
@@ -85,64 +77,7 @@ feature_yaru()
 feature_vim()
 {
     # Install dependencies
-    sudo apt-get install -y vim vim-gnome curl
-
-    # Install dotfiles
-    ./config_unix.sh
-}
-
-feature_keepassxc()
-{
-    # Install KeepassXC
-    sudo snap install keepassxc
-}
-
-feature_skype()
-{
-    # Install Skype
-    sudo snap install skype --classic
-}
-
-feature_vlc()
-{
-    # Install VLC
-    sudo snap install vlc
-
-    # Get MIME types for audio and video that vlc supports
-    AUDIO_MIMETYPES=$(cat /var/lib/snapd/desktop/applications/vlc_vlc.desktop | grep MimeType | sed -e 's/MimeType=//' -e 's/;/\n/g' | grep 'audio/' | tr '\n' ' ')
-    VIDEO_MIMETYPES=$(cat /var/lib/snapd/desktop/applications/vlc_vlc.desktop | grep MimeType | sed -e 's/MimeType=//' -e 's/;/\n/g' | grep 'video/' | tr '\n' ' ')
-
-    # Set VLC as default audio and video player for the supported filetypes
-    xdg-mime default vlc_vlc.desktop ${AUDIO_MIMETYPES} ${VIDEO_MIMETYPES}
-}
-
-feature_slack()
-{
-    # Install Slack
-    sudo snap install slack --classic
-}
-
-feature_cpp_dev()
-{
-    # Install C++ tools
-    sudo apt-get install -y build-essential cmake checkinstall clang-7 clang-tools-7
-}
-
-feature_texlive()
-{
-    # Install texlive
-    sudo apt-get install -y texlive-full
-}
-
-feature_screencasts()
-{
-    # Install peek
-    sudo add-apt-repository -y ppa:peek-developers/stable
-    sudo apt-get update
-    sudo apt-get install -y peek
-
-    # Install screenkey
-    sudo apt-get install -y screenkey slop
+    sudo apt-get install -y vim vim-gnome
 }
 
 feature_vim_git()
@@ -203,6 +138,75 @@ EOF
     sudo apt-get install -y libcanberra-gtk-module
 }
 
+feature_dotfiles()
+{
+    # Install dependencies
+    sudo apt-get install -y curl
+
+    # Install dotfiles
+    ./config_unix.sh
+
+    # diff-highlight for Git
+    if [ -f /usr/share/doc/git/contrib/diff-highlight/diff-highlight ]; then
+        sudo chmod +x /usr/share/doc/git/contrib/diff-highlight/diff-highlight
+        sudo update-alternatives --install /usr/bin/diff-highlight diff-highlight /usr/share/doc/git/contrib/diff-highlight/diff-highlight 0
+    fi
+}
+
+feature_keepassxc()
+{
+    # Install KeepassXC
+    sudo snap install keepassxc
+}
+
+feature_skype()
+{
+    # Install Skype
+    sudo snap install skype --classic
+}
+
+feature_vlc()
+{
+    # Install VLC
+    sudo snap install vlc
+
+    # Get MIME types for audio and video that vlc supports
+    AUDIO_MIMETYPES=$(cat /var/lib/snapd/desktop/applications/vlc_vlc.desktop | grep MimeType | sed -e 's/MimeType=//' -e 's/;/\n/g' | grep 'audio/' | tr '\n' ' ')
+    VIDEO_MIMETYPES=$(cat /var/lib/snapd/desktop/applications/vlc_vlc.desktop | grep MimeType | sed -e 's/MimeType=//' -e 's/;/\n/g' | grep 'video/' | tr '\n' ' ')
+
+    # Set VLC as default audio and video player for the supported filetypes
+    xdg-mime default vlc_vlc.desktop ${AUDIO_MIMETYPES} ${VIDEO_MIMETYPES}
+}
+
+feature_slack()
+{
+    # Install Slack
+    sudo snap install slack --classic
+}
+
+feature_cpp_dev()
+{
+    # Install C++ tools
+    sudo apt-get install -y build-essential cmake checkinstall clang-7 clang-tools-7
+}
+
+feature_texlive()
+{
+    # Install texlive
+    sudo apt-get install -y texlive-full
+}
+
+feature_screencasts()
+{
+    # Install peek
+    sudo add-apt-repository -y ppa:peek-developers/stable
+    sudo apt-get update
+    sudo apt-get install -y peek
+
+    # Install screenkey
+    sudo apt-get install -y screenkey slop
+}
+
 # Join array
 # Source: https://stackoverflow.com/questions/1527049/how-can-i-join-elements-of-an-array-in-bash
 function join_by { local IFS="$1"; shift; printf "$*"; }
@@ -212,16 +216,19 @@ features=$(
 whiptail --title "Select Features" --checklist --notags --separate-output \
     "Choose the features to install:" 18 40 11 \
     dualboot    "Dual boot fixes" ON \
+    gnome       "GNOME config" ON \
+    locale      "Locale settings" ON \
     yaru        "Yaru theme for Ubuntu" ON \
-    vim         "Vim + dotfiles" ON \
+    vim         "Vim (repositories)" ON \
+    vim_git     "Vim (from source)" OFF \
+    dotfiles    "Dotfiles" ON \
     keepassxc   "KeepassXC" ON \
     skype       "Skype" ON \
-    slack       "Slack" OFF \
     vlc         "VLC" ON \
+    slack       "Slack" OFF \
     cpp_dev     "C++ Development" ON \
     texlive     "TeX Live" OFF \
     screencasts "Peek and Screenkey" OFF \
-    vim_git     "Compile Vim" OFF \
     3>&1 1>&2 2>&3)
 
 if [ $? -ne 0 ]; then
@@ -231,15 +238,6 @@ fi
 for feature in $features; do
     feature_${feature}
 done
-
-# GNOME config
-feature_gnome
-
-# Fix locale settings
-feature_locale
-
-# Git diff highlighting
-feature_git_diff_highlight
 
 # Set favourites
 gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
