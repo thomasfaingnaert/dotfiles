@@ -179,7 +179,7 @@ feature_vim_git()
                 --with-python3-config-dir=$python3_config_dir \
                 --enable-gui=gtk2 \
                 --enable-cscope \
-               --prefix=/usr/local
+                --prefix=/usr/local
 
     make VIMRUNTIMEDIR=/usr/local/share/vim/vim${vim_short_version}
 
