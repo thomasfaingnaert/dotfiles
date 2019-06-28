@@ -104,11 +104,11 @@ feature_vim_git()
         python3-dev
 
     # Get the python3 config dir
-    local python3_version=$(python3 --version | sed -e 's/[^0-9]*\([0-9]*\.[0-9]*\).*/\1/')
+    local python3_version=$(python3 --version | sed 's/[^0-9]*\([0-9]*\.[0-9]*\).*/\1/')
     local python3_config_dir="/usr/lib/python${python3_version}/config-${python3_version}m-x86_64-linux-gnu"
 
-    if [ ! -d "$python3_config_dir" ]; then
-        echo "Python configuration directory '$python3_config_dir' not found!"
+    if [ ! -d "${python3_config_dir}" ]; then
+        echo "Python 3 configuration directory '${python3_config_dir}' not found!"
         return
     fi
 
@@ -118,20 +118,21 @@ feature_vim_git()
     git clone https://github.com/vim/vim.git vim
     cd vim
 
-    # What Vim version are we building? (e.g. 8.1.1000 -> 81)
-    local vim_version=$(git describe --abbrev=0 --tags | sed -e 's/[^0-9]*\(.*\)/\1/')
-    local vim_short_version=$(git describe --abbrev=0 --tags | sed -e 's/[^0-9]*\([0-9]*\)\.\([0-9]*\).*/\1\2/')
+    # What Vim version are we building?
+    local git_tag=$(git describe --abbrev=0 --tags) # v8.1.1000
+    local vim_version=$(echo ${git_tag} | sed 's/^[^0-9]//') # 8.1.1000
+    local vim_short_version=$(echo ${vim_version} | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1\2/') # 81
 
     # Config, compilation and install
     ./configure --with-features=huge \
                 --enable-multibyte \
                 --enable-python3interp=yes \
-                --with-python3-config-dir=$python3_config_dir \
+                --with-python3-config-dir=${python3_config_dir} \
                 --enable-gui=gtk2 \
                 --enable-cscope \
                 --prefix=/usr/local
 
-    make VIMRUNTIMEDIR=/usr/local/share/vim/vim${vim_short_version}
+    make -j$(nproc) VIMRUNTIMEDIR=/usr/local/share/vim/vim${vim_short_version}
 
     sudo apt-get install -y checkinstall
     cat >description-pak <<EOF
