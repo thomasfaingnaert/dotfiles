@@ -5,10 +5,10 @@ ln -sf "$(pwd)/.gitignore_global" ~/.gitignore_global
 
 ln -sfn "$(pwd)/vim" ~/.vim
 
-mkdir ~/.vim/autoload
-mkdir ~/.vim/backup
-mkdir ~/.vim/swap
-mkdir ~/.vim/undo
+mkdir -p ~/.vim/autoload \
+         ~/.vim/backup \
+         ~/.vim/swap \
+         ~/.vim/undo
 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
