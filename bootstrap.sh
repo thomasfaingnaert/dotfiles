@@ -147,6 +147,9 @@ feature_screencasts()
 
 feature_vim_git()
 {
+    # Create a directory to store .desktop files, if it doesn't exist already
+    sudo mkdir -p /usr/local/share/applications
+
     # Install dependencies
     sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
         libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
