@@ -20,7 +20,11 @@ feature_dualboot()
              -e 's/^GRUB_TIMEOUT=[0-9]*$/GRUB_TIMEOUT=5/' \
              -e 's/^GRUB_DEFAULT=.*$/GRUB_DEFAULT=saved/' \
              /etc/default/grub
-    grep -q '^GRUB_SAVEDEFAULT=true' /etc/default/grub || printf "\nGRUB_SAVEDEFAULT=true\n" | sudo tee -a /etc/default/grub
+
+    if ! grep -q '^GRUB_SAVEDEFAULT=true' /etc/default/grub; then
+        printf "\nGRUB_SAVEDEFAULT=true\n" | sudo tee -a /etc/default/grub >/dev/null
+    fi
+
     sudo update-grub
 }
 
