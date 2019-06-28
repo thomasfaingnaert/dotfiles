@@ -205,12 +205,6 @@ feature_cpp_dev()
     sudo apt-get install -y build-essential cmake checkinstall clang-7 clang-tools-7
 }
 
-feature_texlive()
-{
-    # Install texlive
-    sudo apt-get install -y texlive-full
-}
-
 feature_screencasts()
 {
     # Install peek
@@ -220,6 +214,12 @@ feature_screencasts()
 
     # Install screenkey
     sudo apt-get install -y screenkey slop
+}
+
+feature_texlive()
+{
+    # Install texlive
+    sudo apt-get install -y texlive-full
 }
 
 # Join array
@@ -242,8 +242,8 @@ whiptail --title "Select Features" --checklist --notags --separate-output \
     vlc         "VLC" ON \
     slack       "Slack" OFF \
     cpp_dev     "C++ Development" ON \
-    texlive     "TeX Live" OFF \
     screencasts "Peek and Screenkey" OFF \
+    texlive     "TeX Live" OFF \
     3>&1 1>&2 2>&3)
 
 if [ $? -ne 0 ]; then
