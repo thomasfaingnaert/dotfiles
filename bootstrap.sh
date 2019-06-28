@@ -214,7 +214,7 @@ function join_by { local IFS="$1"; shift; printf "$*"; }
 # Ask the user what they want to install
 features=$(
 whiptail --title "Select Features" --checklist --notags --separate-output \
-    "Choose the features to install:" 18 40 11 \
+    "Choose the features to install:" 21 35 14 \
     dualboot    "Dual boot fixes" ON \
     gnome       "GNOME config" ON \
     locale      "Locale settings" ON \
