@@ -114,7 +114,7 @@ feature_vim_git()
 
     # Clone Vim repository
     mkdir -p ~/src
-    cd ~/src
+    pushd ~/src
     git clone https://github.com/vim/vim.git vim
     cd vim
 
@@ -149,6 +149,9 @@ EOF
 
     # Get rid of warning when starting gvim
     sudo apt-get install -y libcanberra-gtk-module
+
+    # Restore current working directory
+    popd
 }
 
 feature_dotfiles()
