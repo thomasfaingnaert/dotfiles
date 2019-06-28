@@ -183,11 +183,10 @@ feature_vlc()
     sudo snap install vlc
 
     # Get MIME types for audio and video that vlc supports
-    AUDIO_MIMETYPES=$(cat /var/lib/snapd/desktop/applications/vlc_vlc.desktop | grep MimeType | sed -e 's/MimeType=//' -e 's/;/\n/g' | grep 'audio/' | tr '\n' ' ')
-    VIDEO_MIMETYPES=$(cat /var/lib/snapd/desktop/applications/vlc_vlc.desktop | grep MimeType | sed -e 's/MimeType=//' -e 's/;/\n/g' | grep 'video/' | tr '\n' ' ')
+    local mimetypes=$(grep '^MimeType=' /var/lib/snapd/desktop/applications/vlc_vlc.desktop | sed 's/^MimeType=//; s/;/\n/g' | grep '^\(audio\|video\)/' | tr '\n' ' ')
 
     # Set VLC as default audio and video player for the supported filetypes
-    xdg-mime default vlc_vlc.desktop ${AUDIO_MIMETYPES} ${VIDEO_MIMETYPES}
+    xdg-mime default vlc_vlc.desktop ${mimetypes}
 }
 
 feature_slack()
