@@ -13,4 +13,8 @@ mkdir ~/.vim/undo
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-vim +PlugInstall +qall
+if command -v vim &>/dev/null; then
+    vim +PlugInstall +qall
+else
+    echo "Skipping Vim configuration: Vim is not in PATH."
+fi
