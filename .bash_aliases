@@ -43,6 +43,8 @@ v()
 
     if [ "$num_servers" -eq "0" ]; then
         command gvim "$@"
+    elif [ "$#" -eq "0" ]; then
+        echo "Vim is already running"
     else
         command gvim --remote-silent "$@"
     fi
