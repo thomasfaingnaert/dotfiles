@@ -1,14 +1,17 @@
-cmd /c mklink /H %USERPROFILE%\.bash_aliases .bash_aliases
-cmd /c mklink /H %USERPROFILE%\.gitconfig .gitconfig
-cmd /c mklink /H %USERPROFILE%\.gitignore_global .gitignore_global
-cmd /c mklink /H %USERPROFILE%\.minttyrc .minttyrc
+$links = $(".bash_aliases", ".gitconfig", ".gitignore_global", ".minttyrc")
 
-cmd /c mklink /J %USERPROFILE%\vimfiles vim
+foreach ($link in $links)
+{
+    New-Item -ItemType HardLink -Path $HOME -Name $link -Value $link
+}
+
+New-Item -ItemType Junction -Path $HOME -Name vimfiles -Value vim
 
 md -Force ~\vimfiles\autoload
 md -Force ~\vimfiles\backup
 md -Force ~\vimfiles\swap
 md -Force ~\vimfiles\undo
+
 $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 (New-Object Net.WebClient).DownloadFile(
   $uri,
