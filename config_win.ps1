@@ -1,3 +1,4 @@
+cmd /c mklink /H %USERPROFILE%\.bash_aliases .bash_aliases
 cmd /c mklink /H %USERPROFILE%\.gitconfig .gitconfig
 cmd /c mklink /H %USERPROFILE%\.gitignore_global .gitignore_global
 cmd /c mklink /H %USERPROFILE%\.minttyrc .minttyrc
@@ -21,7 +22,18 @@ if (Get-Command "vim" -ErrorAction SilentlyContinue)
     vim +PlugInstall +qall
 }
 
-$files = @("~/vimfiles", "~/.bash_history", "~/.gitconfig", "~/.gitignore_global", "~/.minttyrc", "~/_viminfo")
+if (-Not (Test-Path -Path "~/.bash_profile"))
+{
+    $content = @'
+if [ -f ~/.bash_aliases ]; then
+    source ~/.bash_aliases
+fi
+'@
+    $encoding = New-Object System.Text.UTF8Encoding $False # UTF8 without BOM
+    [System.IO.File]::WriteAllLines("$HOME/.bash_profile", $content, $encoding)
+}
+
+$files = @("~/vimfiles", "~/.bash_aliases", "~/.bash_history", "~/.gitconfig", "~/.gitignore_global", "~/.minttyrc", "~/_viminfo")
 
 foreach ($file in $files)
 {
