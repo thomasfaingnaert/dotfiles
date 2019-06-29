@@ -7,12 +7,18 @@ my $COLOR = qr/\x1b\[[0-9;]*m/;
 my $GRAPH_PREFIX = qr/((?:$COLOR|[\h\\|\/])*)/;
 my $INDENT = "    ";
 
+my $last_file = "";
+
 sub print_indented {
     if (/^$GRAPH_PREFIX\*$GRAPH_PREFIX $COLOR[0-9a-f]{7}$COLOR \- /) {
         # Commit message: "* 1234567 - ..."
         print;
     }
     else {
+        # Add the filename to the @@ ... @@ header
+        s/^$GRAPH_PREFIX(\@\@)([\h0-9,+-]*\@\@.*?)$/$1$2 $last_file$3/;
+
+        # Indent by two steps and remove + and -
         s/^$GRAPH_PREFIX[\h+-]/$1${INDENT}${INDENT}/;
         print;
     }
@@ -21,6 +27,7 @@ sub print_indented {
 sub process_header {
     my $prefix = $1;
     my $file = $2;
+    $last_file = $file;
 
     # File added, modified or deleted?
     my $line = <>;
