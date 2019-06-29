@@ -52,6 +52,9 @@ sub process_header {
 
 }
 
+# Allow disabling script
+if ($ENV{NO_FANCY}) { while (<>) { print; } }
+
 while (<>) {
     if (/^${GRAPH_PREFIX}diff --git a\/(\S*) b\/(\S*)$/) {
         # Diff header: diff --git a/file b/file
