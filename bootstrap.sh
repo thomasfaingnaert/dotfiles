@@ -161,12 +161,6 @@ feature_dotfiles()
 
     # Install dotfiles
     ./config_unix.sh
-
-    # diff-highlight for Git
-    if [ -f /usr/share/doc/git/contrib/diff-highlight/diff-highlight ]; then
-        sudo chmod +x /usr/share/doc/git/contrib/diff-highlight/diff-highlight
-        sudo update-alternatives --install /usr/bin/diff-highlight diff-highlight /usr/share/doc/git/contrib/diff-highlight/diff-highlight 0
-    fi
 }
 
 feature_keepassxc()
