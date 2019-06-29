@@ -32,6 +32,6 @@
 [core]
 	excludesfile = ~/.gitignore_global
 [pager]
-	log = diff-highlight | less
-	show = diff-highlight | less
-	diff = diff-highlight | less
+	log = diff-highlight | compact-diff-headers | less
+	show = diff-highlight | compact-diff-headers | less
+	diff = diff-highlight | compact-diff-headers | less

@@ -1,0 +1,53 @@
+#!/usr/bin/env perl
+
+use warnings;
+use strict;
+
+my $COLOR = qr/\x1b\[[0-9;]*m/;
+my $GRAPH_PREFIX = qr/\s*$COLOR?\|?$COLOR? $COLOR?/;
+
+sub process_header {
+    my $prefix = $1;
+    my $file = $2;
+
+    # File added, modified or deleted?
+    my $line = <>;
+
+    if ($line =~ /^${GRAPH_PREFIX}deleted file mode [0-9]{6}$COLOR?$/) {
+        # Deleted
+        print "${prefix}Deleted: $file", "\n";
+    }
+    elsif ($line =~ /^${GRAPH_PREFIX}new file mode [0-9]{6}$COLOR?$/) {
+        # Added
+        print "${prefix}Added: $file", "\n";
+    }
+    elsif ($line =~ /^${GRAPH_PREFIX}index [0-9a-f]{7}\.\.[0-9a-f]{7}( [0-9]{6})?$COLOR?$/) {
+        # Modified
+        print "${prefix}Modified: $file", "\n";
+    }
+    else {
+        print "$prefix$file", "\n";
+        print "$line";
+    }
+
+}
+
+while (<>) {
+    if (/^($GRAPH_PREFIX)diff --git a\/(\S*) b\/(\S*)$/) {
+        # Diff header: diff --git a/file b/file
+        process_header();
+    }
+    elsif (/^${GRAPH_PREFIX}index [0-9a-f]{7}\.\.[0-9a-f]{7}( [0-9]{6})?$COLOR?$/) {
+        # index 1234567..1234567 123456
+    }
+    elsif (/^${GRAPH_PREFIX}(-{3} a|\+{3} b)\/\S*$COLOR?$/) {
+        # --- a/file
+        # +++ b/file
+    }
+    elsif (/^${GRAPH_PREFIX}\+{3} \/dev\/null$COLOR?$/) {
+        # +++ /dev/null
+    }
+    else {
+        print
+    }
+}
