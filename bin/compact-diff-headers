@@ -12,7 +12,7 @@ sub print_indented {
         print;
     }
     else {
-        s/^$GRAPH_PREFIX/$1    /;
+        s/^$GRAPH_PREFIX[\h+-]/$1    /;
         print;
     }
 }
