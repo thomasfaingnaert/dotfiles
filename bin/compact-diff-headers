@@ -4,7 +4,7 @@ use warnings;
 use strict;
 
 my $COLOR = qr/\x1b\[[0-9;]*m/;
-my $GRAPH_PREFIX = qr/((?:\h|(?:$COLOR)|[\\|\/])*)/;
+my $GRAPH_PREFIX = qr/((?:$COLOR|[\h\\|\/])*)/;
 
 sub print_indented {
     if (/^$GRAPH_PREFIX\*$GRAPH_PREFIX $COLOR[0-9a-f]{7}$COLOR \- /) {
