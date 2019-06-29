@@ -22,7 +22,13 @@ function_exists()
 
 # Add all defined git aliases as bash aliases, e.g. git co will become gco.
 # Source: https://gist.github.com/EQuimper/d875df92ef0ddaabf00636c90dbc9d25
-for al in $(git --list-cmds=alias); do
+if function_exists __git_aliases; then
+    aliases=$(__git_aliases)
+else
+    aliases=$(git --list-cmds=alias)
+fi
+
+for al in $aliases; do
     alias g$al="git $al"
 
     # Make sure this does not break completion
