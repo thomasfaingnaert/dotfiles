@@ -4,7 +4,7 @@ use warnings;
 use strict;
 
 my $COLOR = qr/\x1b\[[0-9;]*m/;
-my $GRAPH_PREFIX = qr/(\s*$COLOR?\|?$COLOR? )?$COLOR?/;
+my $GRAPH_PREFIX = qr/((?:\s|(?:$COLOR)|\|)*)/;
 
 sub process_header {
     my $prefix = $1;
