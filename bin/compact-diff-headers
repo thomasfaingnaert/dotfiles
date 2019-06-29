@@ -4,7 +4,7 @@ use warnings;
 use strict;
 
 my $COLOR = qr/\x1b\[[0-9;]*m/;
-my $GRAPH_PREFIX = qr/\s*$COLOR?\|?$COLOR? $COLOR?/;
+my $GRAPH_PREFIX = qr/(\s*$COLOR?\|?$COLOR? )?$COLOR?/;
 
 sub process_header {
     my $prefix = $1;
@@ -33,7 +33,7 @@ sub process_header {
 }
 
 while (<>) {
-    if (/^($GRAPH_PREFIX)diff --git a\/(\S*) b\/(\S*)$/) {
+    if (/^${GRAPH_PREFIX}diff --git a\/(\S*) b\/(\S*)$/) {
         # Diff header: diff --git a/file b/file
         process_header();
     }
