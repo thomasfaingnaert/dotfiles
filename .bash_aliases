@@ -5,7 +5,9 @@ alias getclip='xclip -selection clipboard -o'
 alias setclip='xclip -selection clipboard'
 
 # Used to access git completion functions from within this script
-source /usr/share/bash-completion/completions/git
+if [ -f /usr/share/bash-completion/completions/git ]; then
+    source /usr/share/bash-completion/completions/git
+fi
 
 # Make completion work with git alias
 # Source: https://stackoverflow.com/questions/39506941/alias-g-git-and-have-bash-completion-still-work
@@ -20,7 +22,7 @@ function_exists()
 
 # Add all defined git aliases as bash aliases, e.g. git co will become gco.
 # Source: https://gist.github.com/EQuimper/d875df92ef0ddaabf00636c90dbc9d25
-for al in `__git_aliases`; do
+for al in $(git --list-cmds=alias); do
     alias g$al="git $al"
 
     # Make sure this does not break completion
