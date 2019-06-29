@@ -58,3 +58,11 @@ if [ -d ~/.dotfiles/bin ]; then
 elif [ -d ~/dotfiles/bin ]; then
     export PATH=$PATH:~/dotfiles/bin
 fi
+
+# Set locale (if not set already)
+if [ -z "$LC_ALL" ]; then
+    export LC_ALL=C
+fi
+if [ -z "$LANG" ]; then
+    export LANG=C
+fi
