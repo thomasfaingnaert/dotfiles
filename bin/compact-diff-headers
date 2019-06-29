@@ -64,8 +64,9 @@ while (<>) {
         # --- a/file
         # +++ b/file
     }
-    elsif (/^${GRAPH_PREFIX}\+{3} \/dev\/null$COLOR?$/) {
+    elsif (/^${GRAPH_PREFIX}\+{3}|\-{3} \/dev\/null$COLOR?$/) {
         # +++ /dev/null
+        # --- /dev/null
     }
     else {
         print_indented;
