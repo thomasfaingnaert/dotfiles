@@ -4,7 +4,18 @@ use warnings;
 use strict;
 
 my $COLOR = qr/\x1b\[[0-9;]*m/;
-my $GRAPH_PREFIX = qr/((?:\s|(?:$COLOR)|\|)*)/;
+my $GRAPH_PREFIX = qr/((?:\h|(?:$COLOR)|[\\|\/])*)/;
+
+sub print_indented {
+    if (/^$GRAPH_PREFIX\*$GRAPH_PREFIX $COLOR[0-9a-f]{7}$COLOR \- /) {
+        # Commit message: "* 1234567 - ..."
+        print;
+    }
+    else {
+        s/^$GRAPH_PREFIX/$1    /;
+        print;
+    }
+}
 
 sub process_header {
     my $prefix = $1;
@@ -27,7 +38,7 @@ sub process_header {
     }
     else {
         print "$prefix$file", "\n";
-        print "$line";
+        print_indented $line;
     }
 
 }
@@ -48,6 +59,6 @@ while (<>) {
         # +++ /dev/null
     }
     else {
-        print
+        print_indented;
     }
 }
