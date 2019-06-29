@@ -51,3 +51,10 @@ v()
         command gvim --remote-silent "$@"
     fi
 }
+
+# Add bin/ to PATH
+if [ -d ~/.dotfiles/bin ]; then
+    export PATH=$PATH:~/.dotfiles/bin
+elif [ -d ~/dotfiles/bin ]; then
+    export PATH=$PATH:~/dotfiles/bin
+fi
