@@ -343,6 +343,10 @@ nnoremap <silent> <leader>U :call <SID>underline(1)<CR>
 "" Easy grep
 nnoremap <silent> gr :silent grep! -r <cword> *<CR>
 
+"" Prev/next match during incremental search
+cnoremap <expr> <Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-g>' : '<C-z>'
+cnoremap <expr> <S-Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-t>' : '<S-Tab>'
+
 " --------------------------------------------------------------------------------
 " Autocommands
 " --------------------------------------------------------------------------------
