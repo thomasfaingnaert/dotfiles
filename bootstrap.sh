@@ -178,6 +178,9 @@ EOF
 
     # Restore current working directory
     popd
+
+    # Install GUI
+    sudo apt-get install -y neovim-qt
 }
 
 feature_dotfiles()
