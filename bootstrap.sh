@@ -154,6 +154,32 @@ EOF
     popd
 }
 
+feature_neovim_git()
+{
+    # Install dependencies
+    sudo apt-get install -y ninja-build gettext libtool libtool-bin autoconf \
+                            automake cmake g++ pkg-config unzip
+
+    # Clone Neovim repository
+    mkdir -p ~/src
+    pushd ~/src
+    git clone https://github.com/neovim/neovim neovim
+    cd neovim
+
+    # Compilation and installation
+    make -j$(nproc) CMAKE_BUILD_TYPE=RelWithDebInfo
+
+    sudo apt-get install -y checkinstall
+    cat >description-pak <<EOF
+Neovim (compiled from source)
+EOF
+
+    sudo checkinstall -y --pkgname neovim-git --pkgversion "1.0" --maintainer "Thomas Faingnaert" --provides neovim
+
+    # Restore current working directory
+    popd
+}
+
 feature_dotfiles()
 {
     # Install dependencies
@@ -230,6 +256,7 @@ whiptail --title "Select Features" --checklist --notags --separate-output \
     yaru        "Yaru theme for Ubuntu" ON \
     vim         "Vim (repositories)" ON \
     vim_git     "Vim (from source)" OFF \
+    neovim_git  "Neovim (from source)" OFF \
     dotfiles    "Dotfiles" ON \
     keepassxc   "KeepassXC" ON \
     skype       "Skype" ON \
