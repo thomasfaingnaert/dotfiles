@@ -97,6 +97,7 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 set autoindent
+set shiftround
 
 "" Search
 set hlsearch
