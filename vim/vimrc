@@ -130,6 +130,7 @@ set formatoptions+=j
 set hidden
 set lazyredraw
 set autoread
+set showcmd
 set spelllang=en_gb
 set nrformats-=octal
 set path+=**
