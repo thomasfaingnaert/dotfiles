@@ -268,7 +268,6 @@ nmap <leader>b :ls<CR>:buffer <C-z><SID>deselect_wildmenu_option
 nmap <leader>s :ls<CR>:vert sbuffer <C-z><SID>deselect_wildmenu_option
 nmap <leader>d :ls<CR>:bdelete <C-z><SID>deselect_wildmenu_option
 
-
 "" Fugitive
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>ge :Gedit<CR>
