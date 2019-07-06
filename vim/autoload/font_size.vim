@@ -1,5 +1,5 @@
 " Save the default font
-if !exists("s:default_font")
+if !exists('s:default_font')
     let s:default_font = &guifont
 endif
 

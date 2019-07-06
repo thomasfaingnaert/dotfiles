@@ -8,7 +8,7 @@ function! window_move#window_move(key)
     let l:current_window = winnr()
 
     " Execute movement
-    execute "wincmd " . a:key
+    execute 'wincmd ' . a:key
 
     " Check if we have changed window
     if (l:current_window == winnr())
@@ -20,6 +20,6 @@ function! window_move#window_move(key)
         endif
 
         " Move to that new split
-        execute "wincmd " . a:key
+        execute 'wincmd ' . a:key
     endif
 endfunction

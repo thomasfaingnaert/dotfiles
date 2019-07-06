@@ -10,12 +10,12 @@ function! underline#underline(above) abort
     if l:char != 27
         " Underline current line with chosen character
         if a:above
-            execute "t-1 \| snomagic/\\./" . nr2char(l:char) . "/ge"
+            execute 't-1 | snomagic/\./' . nr2char(l:char) . '/ge'
 
             " Because of the extra line, we want the cursor one down
             let l:pos[1] += 1
         else
-            execute "t. \| snomagic/\\./" . nr2char(l:char) . "/ge"
+            execute 't. | snomagic/\./' . nr2char(l:char) . '/ge'
         endif
     endif
 
