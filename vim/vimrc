@@ -134,7 +134,9 @@ set nrformats-=octal
 set path+=**
 
 " This fixes netrw-gx and :Gbrowse not working in gVim
-let g:netrw_browsex_viewer="setsid xdg-open"
+if has('unix')
+    let g:netrw_browsex_viewer="setsid xdg-open"
+endif
 
 " Set shell to cmd.exe (this is needed to use gVim as difftool in Windows)
 if has('win32')
