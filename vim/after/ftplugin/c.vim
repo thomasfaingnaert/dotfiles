@@ -39,5 +39,5 @@ if executable('clang-format')
 
     let b:undo_ftplugin .= '|' .
                 \ 'setlocal equalprg< |' .
-                \ 'autocmd! cpp_auto_format'
+                \ 'execute ''autocmd! cpp_auto_format'''
 endif
