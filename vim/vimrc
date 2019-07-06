@@ -355,11 +355,3 @@ augroup lsp_float_colours
         autocmd User lsp_float_opened call nvim_win_set_option(lsp#ui#vim#output#getpreviewwinid(), 'winhighlight', 'Normal:PopupWindowDark')
     endif
 augroup end
-
-" --------------------------------------------------------------------------------
-" Local overrides
-" --------------------------------------------------------------------------------
-
-if filereadable($HOME . "/.vimrc.local")
-    execute "source " . $HOME . "/.vimrc.local"
-endif
