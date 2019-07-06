@@ -292,6 +292,10 @@ cnoremap <C-p> <Up>
 nmap <Space><Space> <Plug>quick_replace
 xmap <Space><Space> <Plug>quick_replace
 
+"" Sort operator
+nmap gs <Plug>operator_sort
+xmap gs <Plug>operator_sort
+
 "" Quickly switch between alternate files
 nnoremap <expr> <BS> exists(':A') ? ':A<CR>' : '<C-^>'
 
