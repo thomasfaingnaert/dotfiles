@@ -329,16 +329,11 @@ augroup strip_whitespace
     autocmd BufWritePre * call preserve_state#execute("%s/\\s\\+$//e")
 augroup end
 
-"" Automatically source vimrc
-augroup auto_source_vimrc
+"" Vimrc
+augroup vimrc
     autocmd!
-    execute 'autocmd BufWritePost ' . g:mydotfiles . '/vim/vimrc' . ' source $MYVIMRC'
-augroup end
-
-"" Set folding for vimrc
-augroup folding_vimrc
-    autocmd!
-    execute 'autocmd BufReadPre ' . g:mydotfiles . '/vim/vimrc setlocal foldmethod=expr foldexpr=vimrc_folding#foldexpr() foldtext=vimrc_folding#foldtext()'
+    execute 'autocmd BufReadPre   ' . g:mydotfiles . '/vim/vimrc setlocal foldmethod=expr foldexpr=vimrc_folding#foldexpr() foldtext=vimrc_folding#foldtext()'
+    execute 'autocmd BufWritePost ' . g:mydotfiles . '/vim/vimrc source $MYVIMRC'
 augroup end
 
 "" Automatically open quickfix
