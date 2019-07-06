@@ -71,13 +71,13 @@ endif
 
 "" System-dependent settings
 """ Temporary directories
-if !exists('g:myruntime')
-    let g:myruntime = split(&rtp, ',')[0]
+if !exists('s:myruntime')
+    let s:myruntime = split(&rtp, ',')[0]
 end
 
-let &backupdir = g:myruntime . '/backup//'
-let &directory = g:myruntime . '/swap//'
-let &undodir = g:myruntime . '/undo//'
+let &backupdir = s:myruntime . '/backup//'
+let &directory = s:myruntime . '/swap//'
+let &undodir = s:myruntime . '/undo//'
 
 """ Dotfiles
 if !exists('g:mydotfiles')
