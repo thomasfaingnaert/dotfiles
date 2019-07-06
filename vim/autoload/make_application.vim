@@ -8,11 +8,11 @@ function! make_application#make_application() abort
     endif
 
     " Build and run the project (filetype dependent)
-    if &filetype == 'python'
+    if &filetype ==# 'python'
         !python %
-    elseif &filetype == 'sh'
+    elseif &filetype ==# 'sh'
         !bash %
-    elseif &filetype == 'vim'
+    elseif &filetype ==# 'vim'
         source %
     else
         make
