@@ -19,7 +19,7 @@ augroup tex_autosort_usepackage
     autocmd BufWritePre <buffer> :SortPackages
 augroup end
 
-let b:undo_ftplugin .= '|' .
-            \ 'execute ''autocmd! tex_autowrite'' |' .
-            \ 'delcommand SortPackages |' .
-            \ 'execute ''autocmd! tex_autosort_usepackage'''
+let b:undo_ftplugin .=
+            \ '| execute ''autocmd! tex_autowrite''' .
+            \ '| delcommand SortPackages' .
+            \ '| execute ''autocmd! tex_autosort_usepackage'''

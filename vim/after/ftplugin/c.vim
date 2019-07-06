@@ -14,10 +14,10 @@ if executable('clangd')
     nnoremap <buffer> <C-]> :LspDefinition<CR>
     nnoremap <buffer> <F2> :LspRename<CR>
 
-    let b:undo_ftplugin .= '|' .
-                \ 'setlocal omnifunc< keywordprg< |' .
-                \ 'nunmap <buffer> <C-]>|' .
-                \ 'nunmap <buffer> <F2>'
+    let b:undo_ftplugin .=
+                \ '| setlocal omnifunc< keywordprg<' .
+                \ '| nunmap <buffer> <C-]>' .
+                \ '| nunmap <buffer> <F2>'
 endif
 
 if executable('clang-format')
@@ -37,7 +37,7 @@ if executable('clang-format')
         autocmd BufWritePre <buffer> call preserve_state#execute("silent normal gg=G")
     augroup end
 
-    let b:undo_ftplugin .= '|' .
-                \ 'setlocal equalprg< |' .
-                \ 'execute ''autocmd! cpp_auto_format'''
+    let b:undo_ftplugin .=
+                \ '| setlocal equalprg<' .
+                \ '| execute ''autocmd! cpp_auto_format'''
 endif
