@@ -346,7 +346,7 @@ augroup auto_open_quickfix
     autocmd QuickFixCmdPost    l* nested lwindow
 augroup end
 
-" Customize popup window colours
+"" Customize popup window colours
 augroup lsp_float_colours
     autocmd!
     if !has('nvim')
