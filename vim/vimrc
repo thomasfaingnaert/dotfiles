@@ -72,7 +72,7 @@ endif
 "" System-dependent settings
 """ Temporary directories
 if !exists('s:myruntime')
-    let s:myruntime = split(&rtp, ',')[0]
+    let s:myruntime = split(&runtimepath, ',')[0]
 end
 
 let &backupdir = s:myruntime . '/backup//'
