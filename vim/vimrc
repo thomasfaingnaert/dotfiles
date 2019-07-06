@@ -327,18 +327,6 @@ augroup strip_whitespace
     autocmd BufWritePre * call preserve_state#execute("%s/\\s\\+$//e")
 augroup end
 
-"" LaTeX - autowrite files
-augroup autowrite_latex_files
-    autocmd!
-    autocmd FileType tex autocmd! autowrite_latex_files CursorHold,CursorHoldI <buffer> call <SID>autowrite_latex()
-augroup end
-
-"" LaTeX - auto sort usepackage
-augroup autosort_latex_usepackage
-    autocmd!
-    autocmd FileType tex autocmd! autosort_latex_usepackage BufWritePre <buffer> call preserve_state#execute('g/\n\n^\\usepackage/+2 normal gsip')
-augroup end
-
 "" Automatically source vimrc
 augroup auto_source_vimrc
     autocmd!
@@ -367,17 +355,6 @@ augroup lsp_float_colours
         autocmd User lsp_float_opened call nvim_win_set_option(lsp#ui#vim#output#getpreviewwinid(), 'winhighlight', 'Normal:PopupWindowDark')
     endif
 augroup end
-
-" --------------------------------------------------------------------------------
-" Functions
-" --------------------------------------------------------------------------------
-
-"" Autowrite LaTeX files
-function! s:autowrite_latex()
-    if filereadable(expand('%')) && b:vimtex.compiler.is_running()
-        execute "silent update"
-    endif
-endfunction
 
 " --------------------------------------------------------------------------------
 " Local overrides
