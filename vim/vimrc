@@ -359,18 +359,6 @@ augroup strip_whitespace
     autocmd BufWritePre * call <SID>preserve_state("%s/\\s\\+$//e")
 augroup end
 
-"" Don't automatically continue comment when pressing enter
-augroup no_continue_comment
-    autocmd!
-    autocmd FileType * setlocal formatoptions-=r
-augroup end
-
-"" Ruby - two space indentation
-augroup ruby_indentation
-    autocmd!
-    autocmd FileType ruby setlocal shiftwidth=2 softtabstop=2
-augroup end
-
 "" LaTeX - autowrite files
 augroup autowrite_latex_files
     autocmd!
@@ -395,54 +383,11 @@ augroup folding_vimrc
     execute 'autocmd BufReadPre ' . g:mydotfiles . '/vim/vimrc setlocal foldmethod=expr foldexpr=VimrcFoldExpr() foldtext=VimrcFoldText()'
 augroup end
 
-"" Language server protocol (vim-lsp)
-""" Python
-" pip install python-language-server
-if executable('pyls')
-    augroup vim_lsp_python
-        autocmd!
-        autocmd User lsp_setup call lsp#register_server({
-                    \ 'name': 'pyls',
-                    \ 'cmd': {server_info->['pyls']},
-                    \ 'whitelist': ['python'],
-                    \ })
-        autocmd FileType python setlocal omnifunc=lsp#complete
-        autocmd FileType python setlocal keywordprg=:LspHover
-        autocmd FileType python nnoremap <buffer> <C-]> :LspDefinition<CR>
-    augroup end
-endif
-
-""" C++
-" Windows: http://releases.llvm.org/download.html
-" Ubuntu:
-" sudo apt install clang-tools-7
-" sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-7 100
-if executable('clangd')
-    augroup vim_lsp_cpp
-        autocmd!
-        autocmd User lsp_setup call lsp#register_server({
-                    \ 'name': 'clangd',
-                    \ 'cmd': {server_info->['clangd']},
-                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
-                    \ })
-        autocmd FileType c,cpp,objc,objcpp,cc setlocal omnifunc=lsp#complete
-        autocmd FileType c,cpp,objc,objcpp,cc setlocal keywordprg=:LspHover
-        autocmd FileType c,cpp,objc,objcpp,cc nnoremap <buffer> <C-]> :LspDefinition<CR>
-        autocmd FileType c,cpp,objc,objcpp,cc nnoremap <buffer> <F2> :LspRename<CR>
-    augroup end
-endif
-
 "" C++ formatting
 augroup cpp_auto_format
     autocmd!
     autocmd FileType c,cpp let &l:equalprg = "clang-format -style='" . json_encode(s:clang_format_settings) . "'"
     autocmd FileType c,cpp autocmd BufWritePre <buffer> call <SID>preserve_state("silent normal gg=G")
-augroup end
-
-"" Asciidoc - comments
-augroup asciidoc_comments
-    autocmd!
-    autocmd FileType asciidoc setlocal commentstring=//\ %s
 augroup end
 
 "" Automatically open quickfix
