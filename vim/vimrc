@@ -297,11 +297,6 @@ xmap <Space><Space> <Plug>quick_replace
 "" Quickly switch between alternate files
 nnoremap <expr> <BS> exists(':A') ? ':A<CR>' : '<C-^>'
 
-"" Don't fill in completion with omnicompletion
-inoremap <expr> <SID>completeopt_longest_off <SID>set_completeopt_longest(0)
-inoremap <expr> <SID>completeopt_longest_on <SID>set_completeopt_longest(1)
-inoremap <script> <C-x><C-o> <SID>completeopt_longest_on<C-x><C-o><SID>completeopt_longest_off
-
 "" Increase and reset font size
 nnoremap <M-+> :call font_size#increment(+1)<CR>
 nnoremap <M--> :call font_size#increment(-1)<CR>
@@ -382,16 +377,6 @@ function! s:autowrite_latex()
     if filereadable(expand('%')) && b:vimtex.compiler.is_running()
         execute "silent update"
     endif
-endfunction
-
-"" Toggle completeopt longest
-function! s:set_completeopt_longest(enable)
-    if a:enable
-        set completeopt+=longest
-    else
-        set completeopt-=longest
-    endif
-    return ''
 endfunction
 
 " --------------------------------------------------------------------------------
