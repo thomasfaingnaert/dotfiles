@@ -237,7 +237,6 @@ let maplocalleader = "\\"
 nnoremap <leader>e :browse edit<CR>
 nnoremap <leader>w :update<CR>
 nnoremap <leader>v :execute ':edit ' . g:mydotfiles . '/vim/vimrc'<CR>
-nnoremap <leader>r :source $MYVIMRC<CR>
 nnoremap <leader>l :set list!<CR>
 nnoremap <leader>h :nohlsearch<CR>
 nnoremap <silent> <leader>= :call preserve_state#execute("silent normal gg=G")<CR>
