@@ -20,7 +20,6 @@ Plug 'lervag/vimtex'
 Plug 'machakann/vim-sandwich'
 Plug 'junegunn/vim-easy-align'
 
-Plug 'christoomey/vim-sort-motion'
 Plug 'markonm/traces.vim'
 
 Plug 'prabirshrestha/async.vim'
