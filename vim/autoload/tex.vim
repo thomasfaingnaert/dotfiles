@@ -1,4 +1,4 @@
-function! tex#sort_packages()
+function! tex#sort_packages() abort
     let l:options = ''
                 \ . '/'
                 \ .     '\('

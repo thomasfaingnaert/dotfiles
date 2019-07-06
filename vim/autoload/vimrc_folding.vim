@@ -1,4 +1,4 @@
-function! vimrc_folding#foldexpr()
+function! vimrc_folding#foldexpr() abort
     let l:thisline = getline(v:lnum)
 
     " Level 2 and level 3 folds
@@ -22,7 +22,7 @@ function! vimrc_folding#foldexpr()
     return '='
 endfunction
 
-function! vimrc_folding#foldtext()
+function! vimrc_folding#foldtext() abort
     let l:level = v:foldlevel
     let l:foldsize = v:foldend - v:foldstart
     let l:linecount = '(' . l:foldsize . (foldsize == 1 ? ' line' : ' lines') . ')'

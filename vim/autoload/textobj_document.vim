@@ -1,4 +1,4 @@
-function! textobj_document#select_i()
+function! textobj_document#select_i() abort
     " Go to the end of the file, and search backwards for a non-empty line
     normal! G
     call search('^.', 'bcW')

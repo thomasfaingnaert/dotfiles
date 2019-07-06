@@ -1,5 +1,5 @@
 "" Format paragraph: all sentences on new line
-function! format_paragraph#format_paragraph(type, ...)
+function! format_paragraph#format_paragraph(type, ...) abort
     " Join all lines, taking care to not remove paragraph breaks.
     " This is accomplished by only joining lines with at least one non-space
     " character.

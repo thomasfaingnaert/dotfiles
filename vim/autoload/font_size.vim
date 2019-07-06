@@ -4,7 +4,7 @@ if !exists('s:default_font')
 endif
 
 " Increment/decrement fontsize
-function! font_size#increment(amount)
+function! font_size#increment(amount) abort
     let l:min_font_size = 8
     let l:max_font_size = 60
 
@@ -26,7 +26,7 @@ function! font_size#increment(amount)
 endfunction
 
 " Reset default fontsize
-function! font_size#reset()
+function! font_size#reset() abort
     let &guifont = s:default_font
     set lines=999 columns=999
 endfunction
