@@ -282,7 +282,7 @@ nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
 "" Make
-nnoremap <silent> <F7> :call <SID>make_application()<CR>
+nnoremap <silent> <F7> :call make_application#make_application()<CR>
 
 "" Emacs-style command-line editing
 cnoremap <C-a> <Home>
@@ -455,27 +455,6 @@ function! s:set_completeopt_longest(enable)
         set completeopt-=longest
     endif
     return ''
-endfunction
-
-"" Make and run current application
-function! s:make_application() abort
-    " Clear screen
-    if has('win32')
-        silent !cls
-    else
-        silent !clear
-    endif
-
-    " Build and run the project (filetype dependent)
-    if &filetype == 'python'
-        !python %
-    elseif &filetype == 'sh'
-        !bash %
-    elseif &filetype == 'vim'
-        source %
-    else
-        make
-    endif
 endfunction
 
 "" Increase and reset font size
