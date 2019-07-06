@@ -291,24 +291,8 @@ cnoremap <C-n> <Down>
 cnoremap <C-p> <Up>
 
 "" Faster search and replace
-nmap <silent> <Space><Space> :call <SID>save_word()<CR>:set operatorfunc=<SID>quick_replace<CR>g@
-vmap <silent> <Space><Space> :<C-u>call <SID>quick_replace(visualmode(), 1)<CR>
-
-nnoremap v :call <SID>save_word()<CR>v
-nnoremap V :call <SID>save_word()<CR>V
-nnoremap <C-v> :call <SID>save_word()<CR><C-v>
-
-function! s:save_word()
-    let s:word = expand('<cword>')
-endfunction
-
-function! s:quick_replace(type, ...)
-    if a:0
-        call feedkeys(":'<,'>s/\\<" . s:word . "\\>//g\<Left>\<Left>")
-    else
-        call feedkeys(":'[,']s/\\<" . s:word . "\\>//g\<Left>\<Left>")
-    endif
-endfunction
+nmap <Space><Space> <Plug>quick_replace
+xmap <Space><Space> <Plug>quick_replace
 
 "" Quickly switch between alternate files
 nnoremap <expr> <BS> exists(':A') ? ':A<CR>' : '<C-^>'
