@@ -23,10 +23,8 @@ Plug 'junegunn/vim-easy-align'
 Plug 'christoomey/vim-sort-motion'
 Plug 'markonm/traces.vim'
 
-Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 Plug 'thomasfaingnaert/vim-lsp-snippets'
 Plug 'thomasfaingnaert/vim-lsp-ultisnips'
