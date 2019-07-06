@@ -221,27 +221,26 @@ nnoremap <C-M-k> <C-w>K
 nnoremap <C-M-l> <C-w>L
 
 "" Move lines up and down
-nnoremap <A-j> :move +1<CR>==
-nnoremap <A-k> :move -2<CR>==
+nnoremap <silent> <A-j> :move +1<CR>==
+nnoremap <silent> <A-k> :move -2<CR>==
 
-inoremap <A-j> <Esc>:move +1<CR>==gi
-inoremap <A-k> <Esc>:move -2<CR>==gi
+inoremap <silent> <A-j> <Esc>:move +1<CR>==gi
+inoremap <silent> <A-k> <Esc>:move -2<CR>==gi
 
-xnoremap <A-j> :move '>+1<CR>gv=gv
-xnoremap <A-k> :move '<-2<CR>gv=gv
+xnoremap <silent> <A-j> :move '>+1<CR>gv=gv
+xnoremap <silent> <A-k> :move '<-2<CR>gv=gv
 
 "" Leader
 let mapleader = " "
 let maplocalleader = "\\"
 
-nnoremap <leader>e :browse edit<CR>
-nnoremap <leader>w :update<CR>
-nnoremap <leader>v :execute ':edit ' . g:mydotfiles . '/vim/vimrc'<CR>
-nnoremap <leader>l :set list!<CR>
-nnoremap <leader>h :nohlsearch<CR>
 nnoremap <silent> <leader>= :call preserve_state#execute("silent normal gg=G")<CR>
-nnoremap <leader>c :lcd %:h<CR>
-nnoremap <leader>p :set spell!<CR>:set spell?<CR>
+nnoremap <silent> <leader>c :lcd %:h<CR>
+nnoremap <silent> <leader>e :browse edit<CR>
+nnoremap <silent> <leader>h :nohlsearch<CR>
+nnoremap <silent> <leader>l :set list!<CR>
+nnoremap <silent> <leader>v :execute ':edit ' . g:mydotfiles . '/vim/vimrc'<CR>
+nnoremap <silent> <leader>w :update<CR>
 
 " Deselect selected wildmenu option, if any
 cnoremap <expr> <SID>deselect_wildmenu_option wildmenumode() ? "\<S-Tab>" : ""
@@ -251,13 +250,13 @@ nmap <leader>s :ls<CR>:vert sbuffer <C-z><SID>deselect_wildmenu_option
 nmap <leader>d :ls<CR>:bdelete <C-z><SID>deselect_wildmenu_option
 
 "" Fugitive
-nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>ge :Gedit<CR>
-nnoremap <leader>gw :Gwrite<CR>
-nnoremap <leader>gr :Gread<CR>
-nnoremap <leader>gp :Gpush<CR>
-nnoremap <leader>gc :Glcd<CR>
-nnoremap <leader>gb :Gbrowse<CR>
+nnoremap <silent> <leader>gb :Gbrowse<CR>
+nnoremap <silent> <leader>gc :Glcd<CR>
+nnoremap <silent> <leader>ge :Gedit<CR>
+nnoremap <silent> <leader>gp :Gpush<CR>
+nnoremap <silent> <leader>gr :Gread<CR>
+nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gw :Gwrite<CR>
 
 "" Easy align
 nmap ga <Plug>(EasyAlign)
@@ -300,7 +299,7 @@ nnoremap <silent> <leader>U :call underline#underline(1)<CR>
 nnoremap <silent> gr :silent grep! -r <cword> *<CR>
 
 "" Prev/next match during incremental search
-cnoremap <expr> <Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-g>' : '<C-z>'
+cnoremap <expr> <Tab>   getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-g>' : '<C-z>'
 cnoremap <expr> <S-Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-t>' : '<S-Tab>'
 
 " --------------------------------------------------------------------------------
