@@ -65,7 +65,8 @@ if has('gui_running')
     set guioptions-=L
 endif
 
-"" Temporary directories
+"" System-dependent settings
+""" Temporary directories
 if !exists('s:myruntime')
     let s:myruntime = split(&runtimepath, ',')[0]
 end
@@ -73,6 +74,15 @@ end
 let &backupdir = s:myruntime . '/backup//'
 let &directory = s:myruntime . '/swap//'
 let &undodir = s:myruntime . '/undo//'
+
+""" Dotfiles
+if !exists('g:mydotfiles')
+    if has('win32')
+        let g:mydotfiles = '~/dotfiles'
+    else
+        let g:mydotfiles = '~/.dotfiles'
+    endif
+end
 
 "" Line numbers
 set relativenumber
@@ -241,7 +251,7 @@ let maplocalleader = "\\"
 
 nnoremap <leader>e :browse edit<CR>
 nnoremap <leader>w :update<CR>
-nnoremap <leader>v :edit $MYVIMRC<CR>
+nnoremap <leader>v :execute ':edit ' . g:mydotfiles . '/vim/vimrc'<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
 nnoremap <leader>l :set list!<CR>
 nnoremap <leader>h :nohlsearch<CR>
@@ -319,11 +329,16 @@ augroup strip_whitespace
     autocmd BufWritePre * call preserve_state#execute("%s/\\s\\+$//e")
 augroup end
 
-"" Vimrc
-augroup vimrc
+"" Automatically source vimrc
+augroup auto_source_vimrc
     autocmd!
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
-    autocmd BufReadPre $MYVIMRC setlocal foldmethod=expr foldexpr=vimrc_folding#foldexpr() foldtext=vimrc_folding#foldtext()
+    execute 'autocmd BufWritePost ' . g:mydotfiles . '/vim/vimrc' . ' source $MYVIMRC'
+augroup end
+
+"" Set folding for vimrc
+augroup folding_vimrc
+    autocmd!
+    execute 'autocmd BufReadPre ' . g:mydotfiles . '/vim/vimrc setlocal foldmethod=expr foldexpr=vimrc_folding#foldexpr() foldtext=vimrc_folding#foldtext()'
 augroup end
 
 "" Automatically open quickfix
