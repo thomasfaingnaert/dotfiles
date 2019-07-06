@@ -16,7 +16,7 @@ if executable('clangd')
 
     let b:undo_ftplugin .= '|' .
                 \ 'setlocal omnifunc< keywordprg< |' .
-                \ 'nunmap <buffer> <C-]> |' .
+                \ 'nunmap <buffer> <C-]>|' .
                 \ 'nunmap <buffer> <F2>'
 endif
 
