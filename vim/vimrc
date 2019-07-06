@@ -147,16 +147,6 @@ endif
 set wildignore+=*/build/*
 set wildignore+=*/docs/*
 
-"" Set clang-format options
-let s:clang_format_settings = {
-            \       "BasedOnStyle": "LLVM",
-            \       "AccessModifierOffset": -4,
-            \       "AllowShortFunctionsOnASingleLine": "Inline",
-            \       "BreakBeforeBraces": "Allman",
-            \       "IncludeBlocks": "Regroup",
-            \       "IndentWidth": 4
-            \   }
-
 " --------------------------------------------------------------------------------
 " Plugin settings
 " --------------------------------------------------------------------------------
@@ -267,7 +257,7 @@ nnoremap <leader>v :execute ':edit ' . g:mydotfiles . '/vim/vimrc'<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
 nnoremap <leader>l :set list!<CR>
 nnoremap <leader>h :nohlsearch<CR>
-nnoremap <silent> <leader>= :call <SID>preserve_state("silent normal gg=G")<CR>
+nnoremap <silent> <leader>= :call preserve_state#execute("silent normal gg=G")<CR>
 nnoremap <leader>c :lcd %:h<CR>
 nnoremap <leader>p :set spell!<CR>:set spell?<CR>
 
@@ -356,7 +346,7 @@ cnoremap <expr> <S-Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-t>' :
 "" Automatically strip whitespace
 augroup strip_whitespace
     autocmd!
-    autocmd BufWritePre * call <SID>preserve_state("%s/\\s\\+$//e")
+    autocmd BufWritePre * call preserve_state#execute("%s/\\s\\+$//e")
 augroup end
 
 "" LaTeX - autowrite files
@@ -368,7 +358,7 @@ augroup end
 "" LaTeX - auto sort usepackage
 augroup autosort_latex_usepackage
     autocmd!
-    autocmd FileType tex autocmd! autosort_latex_usepackage BufWritePre <buffer> call <SID>preserve_state('g/\n\n^\\usepackage/+2 normal gsip')
+    autocmd FileType tex autocmd! autosort_latex_usepackage BufWritePre <buffer> call preserve_state#execute('g/\n\n^\\usepackage/+2 normal gsip')
 augroup end
 
 "" Automatically source vimrc
@@ -381,13 +371,6 @@ augroup end
 augroup folding_vimrc
     autocmd!
     execute 'autocmd BufReadPre ' . g:mydotfiles . '/vim/vimrc setlocal foldmethod=expr foldexpr=VimrcFoldExpr() foldtext=VimrcFoldText()'
-augroup end
-
-"" C++ formatting
-augroup cpp_auto_format
-    autocmd!
-    autocmd FileType c,cpp let &l:equalprg = "clang-format -style='" . json_encode(s:clang_format_settings) . "'"
-    autocmd FileType c,cpp autocmd BufWritePre <buffer> call <SID>preserve_state("silent normal gg=G")
 augroup end
 
 "" Automatically open quickfix
@@ -410,16 +393,6 @@ augroup end
 " --------------------------------------------------------------------------------
 " Functions
 " --------------------------------------------------------------------------------
-
-"" Preserve "state" and execute command
-" (Source: http://vimcasts.org/episodes/tidying-whitespace/)
-function! s:preserve_state(command)
-    let l:win_view = winsaveview()
-    let l:last_search = getreg('/')
-    execute 'keepjumps ' . a:command
-    call winrestview(l:win_view)
-    call setreg('/', l:last_search)
-endfunction
 
 "" Autowrite LaTeX files
 function! s:autowrite_latex()
