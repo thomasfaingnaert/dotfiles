@@ -302,6 +302,12 @@ nnoremap <silent> gr :silent grep! -r <cword> *<CR>
 cnoremap <expr> <Tab>   getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-g>' : '<C-z>'
 cnoremap <expr> <S-Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-t>' : '<S-Tab>'
 
+"" Document textobject
+xmap ad <Plug>textobj_document_a
+omap ad <Plug>textobj_document_a
+xmap id <Plug>textobj_document_i
+omap id <Plug>textobj_document_i
+
 " --------------------------------------------------------------------------------
 " Autocommands
 " --------------------------------------------------------------------------------
