@@ -6,8 +6,10 @@ call plug#begin()
 
 Plug 'iCyMind/NeoSolarized'
 
-if has('python3') | Plug 'SirVer/ultisnips' | endif
-Plug 'honza/vim-snippets'
+if has('python3')
+    Plug 'SirVer/ultisnips'
+    Plug 'honza/vim-snippets'
+endif
 
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
