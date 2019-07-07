@@ -236,6 +236,7 @@ xnoremap <silent> <A-k> :move '<-2<CR>gv=gv
 let mapleader = " "
 let maplocalleader = "\\"
 
+nnoremap <silent> <leader>  <Nop>
 nnoremap <silent> <leader>= :call preserve_state#execute("silent normal gg=G")<CR>
 nnoremap <silent> <leader>c :lcd %:h<CR>
 nnoremap <silent> <leader>e :browse edit<CR>
