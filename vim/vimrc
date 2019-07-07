@@ -242,7 +242,7 @@ nnoremap <silent> <leader>e :browse edit<CR>
 nnoremap <silent> <leader>h :nohlsearch<CR>
 nnoremap <silent> <leader>l :set list!<CR>
 nnoremap <silent> <leader>v :execute ':edit ' . g:mydotfiles . '/vim/vimrc'<CR>
-nnoremap <silent> <leader>w :update<CR>
+nnoremap <silent> <leader>w :if filereadable(expand('%')) <Bar> update <Bar> else <Bar> write <Bar> endif<CR>
 
 " Deselect selected wildmenu option, if any
 cnoremap <expr> <SID>deselect_wildmenu_option wildmenumode() ? "\<S-Tab>" : ""
