@@ -4,6 +4,12 @@ alias g='git'
 alias getclip='xclip -selection clipboard -o'
 alias setclip='xclip -selection clipboard'
 
+# Remove and watch logfile
+rmtail()
+{
+    rm $1 && touch $1 && tail -f $1
+}
+
 # Used to access git completion functions from within this script
 if [ -f /usr/share/bash-completion/completions/git ]; then
     source /usr/share/bash-completion/completions/git
