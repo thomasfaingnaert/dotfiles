@@ -317,6 +317,9 @@ omap al <Plug>textobj_line_a
 xmap il <Plug>textobj_line_i
 omap il <Plug>textobj_line_i
 
+"" Close last unmatched pair
+imap <C-l> <Plug>insert_match
+
 "" Clipboard toggle (clipboard+=unnamedplus)
 command ClipboardToggle
             \   if &clipboard =~# 'unnamedplus' |
