@@ -4,7 +4,7 @@ function! insert_match#insert_match()
     let l:col_last = 0
     let l:end_last = ''
 
-    for [l:start, l:end] in [['(', ')'], ['{', '}'], ['[', ']']]
+    for [l:start, l:end] in [['(', ')'], ['{', '}'], ['\[', ']']]
         let [l:line, l:col] = searchpairpos(l:start, '', l:end, 'bWn')
 
         " Did we find a match?
