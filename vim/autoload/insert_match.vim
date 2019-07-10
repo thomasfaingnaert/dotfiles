@@ -4,7 +4,8 @@ function! insert_match#insert_match()
     let l:col_last = 0
     let l:end_last = ''
 
-    for [l:start, l:end] in [['(', ')'], ['{', '}'], ['\[', ']']]
+    for l:pair in [['(', ')'], ['{', '}'], ['\[', ']'], ['<\w\+>', '</\w\+>', "</\<C-x>\<C-o>\<Esc>==gi"]]
+        let [l:start, l:end, l:insert] = [l:pair[0], l:pair[1], len(l:pair) < 3 ? l:pair[1] : l:pair[2]]
         let [l:line, l:col] = searchpairpos(l:start, '', l:end, 'bWn')
 
         " Did we find a match?
@@ -13,7 +14,7 @@ function! insert_match#insert_match()
             let l:is_later = (l:line > l:line_last) || (l:line == l:line_last && l:col > l:col_last)
 
             if l:is_later
-                let [l:line_last, l:col_last, l:end_last] = [l:line, l:col, l:end]
+                let [l:line_last, l:col_last, l:end_last] = [l:line, l:col, l:insert]
             endif
         endif
     endfor
