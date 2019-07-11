@@ -305,22 +305,19 @@ nnoremap <silent> gr :silent grep! -r <cword> *<CR>
 cnoremap <expr> <Tab>   getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-g>' : '<C-z>'
 cnoremap <expr> <S-Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-t>' : '<S-Tab>'
 
-"" Document textobject
+"" Textobjects
 xmap ad <Plug>textobj_document_a
 omap ad <Plug>textobj_document_a
 xmap id <Plug>textobj_document_i
 omap id <Plug>textobj_document_i
 
-"" Line textobject
 xmap al <Plug>textobj_line_a
 omap al <Plug>textobj_line_a
 xmap il <Plug>textobj_line_i
 omap il <Plug>textobj_line_i
 
-"" Close last unmatched pair
+"" Insert mode pairs
 imap <C-l> <Plug>insert_match
-
-"" Avoid retyping certain characters in insert mode
 inoremap <expr> ) insert_skip#insert_skip(')')
 inoremap <expr> } insert_skip#insert_skip('}')
 inoremap <expr> " insert_skip#insert_skip('"')
