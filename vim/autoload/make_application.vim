@@ -14,6 +14,8 @@ function! make_application#make_application() abort
         !bash %
     elseif &filetype ==# 'vim'
         source %
+    elseif &filetype ==# 'asciidoc'
+        !asciidoctor %
     else
         make
     endif
