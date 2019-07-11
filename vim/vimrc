@@ -320,6 +320,12 @@ omap il <Plug>textobj_line_i
 "" Close last unmatched pair
 imap <C-l> <Plug>insert_match
 
+"" Avoid retyping certain characters in insert mode
+inoremap <expr> ) insert_skip#insert_skip(')')
+inoremap <expr> } insert_skip#insert_skip('}')
+inoremap <expr> " insert_skip#insert_skip('"')
+inoremap <expr> ' insert_skip#insert_skip("'")
+
 "" Clipboard toggle (clipboard+=unnamedplus)
 command ClipboardToggle
             \   if &clipboard =~# 'unnamedplus' |
