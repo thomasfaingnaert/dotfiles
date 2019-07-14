@@ -135,7 +135,7 @@ set path+=**
 
 " This fixes netrw-gx and :Gbrowse not working in gVim
 if has('unix')
-    let g:netrw_browsex_viewer="setsid xdg-open"
+    let g:netrw_browsex_viewer='setsid xdg-open'
 endif
 
 " Set shell to cmd.exe (this is needed to use gVim as difftool in Windows)
@@ -152,14 +152,14 @@ set wildignore+=*/docs/*
 " --------------------------------------------------------------------------------
 
 "" UltiSnips
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-let g:UltiSnipsEditSplit = "vertical"
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+let g:UltiSnipsEditSplit = 'vertical'
 
 "" vim-tex
 " Use LaTeX by default
-let g:tex_flavor = "latex"
+let g:tex_flavor = 'latex'
 
 " Don't automatically open/close the quickfix window in tex files
 " When using autowrite and latexmk pvc, it is annoying and it breaks
@@ -182,24 +182,24 @@ runtime macros/sandwich/keymap/surround.vim
 
 "" vim-projectionist
 let g:projectionist_heuristics = {
-            \   "include/*.h|src/*.cpp": {
-            \       "include/*.h": {
-            \           "alternate": "src/{}.cpp",
-            \           "type": "header"
+            \   'include/*.h|src/*.cpp': {
+            \       'include/*.h': {
+            \           'alternate': 'src/{}.cpp',
+            \           'type': 'header'
             \       },
-            \       "src/*.cpp": {
-            \           "alternate": "include/{}.h",
-            \           "type": "source"
+            \       'src/*.cpp': {
+            \           'alternate': 'include/{}.h',
+            \           'type': 'source'
             \       }
             \   },
-            \   "*.h&*.cpp": {
-            \       "*.h": {
-            \           "alternate": "{}.cpp",
-            \           "type": "header"
+            \   '*.h&*.cpp': {
+            \       '*.h': {
+            \           'alternate': '{}.cpp',
+            \           'type': 'header'
             \       },
-            \       "*.cpp": {
-            \           "alternate": "{}.h",
-            \           "type": "source"
+            \       '*.cpp': {
+            \           'alternate': '{}.h',
+            \           'type': 'source'
             \       }
             \   }}
 
@@ -233,8 +233,8 @@ xnoremap <silent> <A-j> :move '>+1<CR>gv=gv
 xnoremap <silent> <A-k> :move '<-2<CR>gv=gv
 
 "" Leader
-let mapleader = " "
-let maplocalleader = "\\"
+let mapleader = ' '
+let maplocalleader = '\'
 
 nnoremap <silent> <leader>  <Nop>
 nnoremap <silent> <leader>= :call preserve_state#execute("silent normal gg=G")<CR>
