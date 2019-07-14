@@ -1,4 +1,4 @@
-function! insert_match#insert_match()
+function! insert_match#insert_match() abort
     " Position of last unmatched pair
     let l:line_last = 0
     let l:col_last = 0
