@@ -299,7 +299,7 @@ nnoremap <silent> <leader>u :call underline#underline(0)<CR>
 nnoremap <silent> <leader>U :call underline#underline(1)<CR>
 
 "" Easy grep
-nnoremap <silent> gr :silent grep! -r <cword> *<CR>
+nnoremap <silent> gr :silent grep! -r '<cword>' *<CR>
 
 "" Prev/next match during incremental search
 cnoremap <expr> <Tab>   getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-g>' : '<C-z>'
