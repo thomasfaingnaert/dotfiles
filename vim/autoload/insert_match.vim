@@ -4,8 +4,8 @@ function! insert_match#insert_match()
     let l:col_last = 0
     let l:end_last = ''
 
-    for l:pair in [['(', ')'], ['{', '}'], ['\[', ']'], ['<\w\+>', '</\w\+>', "</\<C-x>\<C-o>\<Esc>==gi"]]
-        let [l:start, l:end, l:insert] = [l:pair[0], l:pair[1], len(l:pair) < 3 ? l:pair[1] : l:pair[2]]
+    for [l:start, l:end; l:rest] in [['(', ')'], ['{', '}'], ['\[', ']'], ['<\w\+>', '</\w\+>', "</\<C-x>\<C-o>\<Esc>==gi"]]
+        let l:insert = empty(l:rest) ? l:end : l:rest[0]
         let [l:line, l:col] = searchpairpos(l:start, '', l:end, 'bWn')
 
         " Did we find a match?
