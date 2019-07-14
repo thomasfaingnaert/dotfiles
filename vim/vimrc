@@ -278,9 +278,12 @@ cnoremap <C-p> <Up>
 nmap <Space><Space> <Plug>quick_replace
 xmap <Space><Space> <Plug>quick_replace
 
-"" Sort operator
+"" Operators
 nmap gs <Plug>operator_sort
 xmap gs <Plug>operator_sort
+
+nmap gr <Plug>operator_grep
+xmap gr <Plug>operator_grep
 
 "" Quickly switch between alternate files
 nnoremap <expr> <BS> exists(':A') ? ':A<CR>' : '<C-^>'
@@ -297,9 +300,6 @@ vnoremap Q :<C-u>call format_paragraph#format_paragraph(visualmode(), 1)<CR>
 "" Underline current line
 nnoremap <silent> <leader>u :call underline#underline(0)<CR>
 nnoremap <silent> <leader>U :call underline#underline(1)<CR>
-
-"" Easy grep
-nnoremap <silent> gr :silent grep! -r '<cword>' *<CR>
 
 "" Prev/next match during incremental search
 cnoremap <expr> <Tab>   getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-g>' : '<C-z>'
