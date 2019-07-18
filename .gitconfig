@@ -25,6 +25,8 @@
 	pl = pull
 	ps = push
 	psu = push --set-upstream origin HEAD
+	rb = rebase
+	rbi = rebase --interactive
 	st = status
 	ugent = config user.email thomas.faingnaert@ugent.be
 	wc = log --graph --abbrev-commit --decorate --date=relative --format=tformat:'%C(bold blue)%h%C(reset) - %C(dim white)%an%C(reset) %C(bold green)(%ar)%C(reset) - %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)' --patch --perl-regexp --author='^((?!Thomas Faingnaert|tfaingna).*)$'
