@@ -19,6 +19,9 @@ augroup tex_autosort_usepackage
     autocmd BufWritePre <buffer> :SortPackages
 augroup end
 
+if !exists('b:undo_ftplugin')
+    let b:undo_ftplugin = 'if 0|endif'
+endif
 let b:undo_ftplugin .=
             \ '| execute ''autocmd! tex_autowrite''' .
             \ '| delcommand SortPackages' .
