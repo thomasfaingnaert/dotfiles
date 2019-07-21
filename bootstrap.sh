@@ -103,15 +103,6 @@ feature_vim_git()
         libcairo2-dev libx11-dev libxpm-dev libxt-dev \
         python3-dev
 
-    # Get the python3 config dir
-    local python3_version=$(python3 --version | sed 's/[^0-9]*\([0-9]*\.[0-9]*\).*/\1/')
-    local python3_config_dir="/usr/lib/python${python3_version}/config-${python3_version}m-x86_64-linux-gnu"
-
-    if [ ! -d "${python3_config_dir}" ]; then
-        echo "Python 3 configuration directory '${python3_config_dir}' not found!"
-        return
-    fi
-
     # Clone Vim repository
     mkdir -p ~/src
     pushd ~/src
@@ -127,7 +118,6 @@ feature_vim_git()
     ./configure --with-features=huge \
                 --enable-multibyte \
                 --enable-python3interp=yes \
-                --with-python3-config-dir=${python3_config_dir} \
                 --enable-gui=gtk2 \
                 --enable-cscope \
                 --prefix=/usr/local
