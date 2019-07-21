@@ -113,6 +113,9 @@ feature_vim_git()
     else
         # Go to Vim directory
         pushd ~/src/vim
+
+        # First clean up
+        make distclean
     fi
 
     # What Vim version are we building?
