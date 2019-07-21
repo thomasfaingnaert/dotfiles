@@ -94,20 +94,26 @@ feature_vim()
 
 feature_vim_git()
 {
-    # Create a directory to store .desktop files, if it doesn't exist already
-    sudo mkdir -p /usr/local/share/applications
+    # Only do this is we haven't cloned Vim already
+    if [ ! -d ~/src/vim ]; then
+        # Create a directory to store .desktop files, if it doesn't exist already
+        sudo mkdir -p /usr/local/share/applications
 
-    # Install dependencies
-    sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
-        libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
-        libcairo2-dev libx11-dev libxpm-dev libxt-dev \
-        python3-dev
+        # Install dependencies
+        sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
+            libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
+            libcairo2-dev libx11-dev libxpm-dev libxt-dev \
+            python3-dev
 
-    # Clone Vim repository
-    mkdir -p ~/src
-    pushd ~/src
-    git clone https://github.com/vim/vim.git vim
-    cd vim
+        # Clone Vim repository
+        mkdir -p ~/src
+        pushd ~/src
+        git clone https://github.com/vim/vim.git vim
+        cd vim
+    else
+        # Go to Vim directory
+        pushd ~/src/vim
+    fi
 
     # What Vim version are we building?
     local git_tag=$(git describe --abbrev=0 --tags) # v8.1.1000
