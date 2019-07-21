@@ -140,8 +140,12 @@ EOF
     # Set compiled Vim as default
     sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 1
     sudo update-alternatives --set editor /usr/local/bin/vim
+
     sudo update-alternatives --install /usr/bin/vi vi /usr/local/bin/vim 1
     sudo update-alternatives --set vi /usr/local/bin/vim
+
+    sudo update-alternatives --install /usr/bin/gvim gvim /usr/local/bin/vim 1
+    sudo update-alternatives --set gvim /usr/local/bin/vim
 
     # Get rid of warning when starting gvim
     sudo apt-get install -y libcanberra-gtk-module
