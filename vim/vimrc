@@ -315,7 +315,7 @@ inoremap <expr> " insert_skip#insert_skip('"')
 inoremap <expr> ' insert_skip#insert_skip("'")
 
 "" Clipboard toggle (clipboard+=unnamedplus)
-command ClipboardToggle
+command! ClipboardToggle
             \   if &clipboard =~# 'unnamedplus' |
             \       set clipboard-=unnamedplus |
             \   else |
