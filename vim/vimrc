@@ -344,7 +344,7 @@ augroup end
 "" Vimrc
 augroup vimrc
     autocmd!
-    execute 'autocmd BufReadPre   ' . g:mydotfiles . '/vim/vimrc setlocal foldmethod=expr foldexpr=vimrc_folding#foldexpr() foldtext=vimrc_folding#foldtext()'
+    execute 'autocmd BufReadPre   ' . g:mydotfiles . '/vim/vimrc setlocal foldmethod=expr foldexpr=vimrc_editing#foldexpr() foldtext=vimrc_editing#foldtext()'
     execute 'autocmd BufWritePost ' . g:mydotfiles . '/vim/vimrc source $MYVIMRC'
 augroup end
 
