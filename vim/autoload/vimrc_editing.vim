@@ -1,7 +1,8 @@
 let s:dotfiles = has('win32') ? '~/dotfiles' : '~/.dotfiles'
+let s:myvimrc = s:dotfiles . '/vim/vimrc'
 
 function! vimrc_editing#edit_vimrc() abort
-    execute 'edit ' . s:dotfiles . '/vim/vimrc'
+    execute 'edit ' . s:myvimrc
 endfunction
 
 function! vimrc_editing#foldexpr() abort
