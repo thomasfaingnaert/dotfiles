@@ -77,15 +77,6 @@ let &backupdir = s:myruntime . '/backup//'
 let &directory = s:myruntime . '/swap//'
 let &undodir = s:myruntime . '/undo//'
 
-""" Dotfiles
-if !exists('g:mydotfiles')
-    if has('win32')
-        let g:mydotfiles = '~/dotfiles'
-    else
-        let g:mydotfiles = '~/.dotfiles'
-    endif
-end
-
 "" Line numbers
 set relativenumber
 set number
@@ -242,7 +233,7 @@ nnoremap <silent> <leader>c :lcd %:h<CR>
 nnoremap <silent> <leader>e :browse edit<CR>
 nnoremap <silent> <leader>h :nohlsearch<CR>
 nnoremap <silent> <leader>l :set list!<CR>
-nnoremap <silent> <leader>v :execute ':edit ' . g:mydotfiles . '/vim/vimrc'<CR>
+nmap     <silent> <leader>v <Plug>edit_vimrc
 nnoremap <silent> <leader>w :if filereadable(expand('%')) <Bar> update <Bar> else <Bar> write <Bar> endif<CR>
 
 " Deselect selected wildmenu option, if any
@@ -339,13 +330,6 @@ command ClipboardToggle
 augroup strip_whitespace
     autocmd!
     autocmd BufWritePre * call preserve_state#execute("%s/\\s\\+$//e")
-augroup end
-
-"" Vimrc
-augroup vimrc
-    autocmd!
-    execute 'autocmd BufReadPre   ' . g:mydotfiles . '/vim/vimrc setlocal foldmethod=expr foldexpr=vimrc_editing#foldexpr() foldtext=vimrc_editing#foldtext()'
-    execute 'autocmd BufWritePost ' . g:mydotfiles . '/vim/vimrc source $MYVIMRC'
 augroup end
 
 "" Automatically open quickfix

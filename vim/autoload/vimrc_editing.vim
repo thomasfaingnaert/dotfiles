@@ -1,3 +1,9 @@
+let s:dotfiles = has('win32') ? '~/dotfiles' : '~/.dotfiles'
+
+function! vimrc_editing#edit_vimrc() abort
+    execute 'edit ' . s:dotfiles . '/vim/vimrc'
+endfunction
+
 function! vimrc_editing#foldexpr() abort
     let l:thisline = getline(v:lnum)
 
