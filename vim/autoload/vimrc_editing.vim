@@ -2,7 +2,20 @@ let s:dotfiles = has('win32') ? '~/dotfiles' : '~/.dotfiles'
 let s:myvimrc = s:dotfiles . '/vim/vimrc'
 
 function! vimrc_editing#edit_vimrc() abort
-    execute 'edit ' . s:myvimrc
+    if expand('%:p') !=# expand(s:myvimrc)
+        execute 'edit ' . s:myvimrc
+
+        " Set working directory to directory of vimrc
+        lcd %:h
+    else
+        " Restore old working directory, but only if it hasn't changed
+        if getcwd() ==# expand('%:p:h')
+            lcd -
+        endif
+
+        write
+        bdelete
+    endif
 endfunction
 
 function! vimrc_editing#foldexpr() abort
