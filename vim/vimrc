@@ -257,7 +257,7 @@ nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
 "" Make
-nnoremap <silent> <F7> :call make_application#make_application()<CR>
+nmap <F7> <Plug>make_application
 
 "" Emacs-style command-line editing
 cnoremap <C-a> <Home>
