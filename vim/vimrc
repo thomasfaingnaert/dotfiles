@@ -216,6 +216,28 @@ inoremap <silent> <A-k> <Esc>:move -2<CR>==gi
 xnoremap <silent> <A-j> :move '>+1<CR>gv=gv
 xnoremap <silent> <A-k> :move '<-2<CR>gv=gv
 
+"" Quickly switch between alternate files
+nnoremap <expr> <BS> exists(':A') ? ':A<CR>' : '<C-^>'
+
+"" Increase and reset font size
+nmap <M-+> <Plug>font_size_increase
+nmap <M--> <Plug>font_size_decrease
+nmap <M-=> <Plug>font_size_reset
+
+"" Make
+nmap <F7> <Plug>make_application
+
+"" Commandline
+" Prev/next match during incremental search
+cnoremap <expr> <Tab>   getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-g>' : '<C-z>'
+cnoremap <expr> <S-Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-t>' : '<S-Tab>'
+
+" Emacs-style command-line editing
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-n> <Down>
+cnoremap <C-p> <Up>
+
 "" Leader
 let mapleader = ' '
 let maplocalleader = '\'
@@ -247,45 +269,21 @@ nnoremap <silent> <leader>gr :Gread<CR>
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gw :Gwrite<CR>
 
-"" Easy align
+"" Operators
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
-
-"" Make
-nmap <F7> <Plug>make_application
-
-"" Emacs-style command-line editing
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-cnoremap <C-n> <Down>
-cnoremap <C-p> <Up>
-
-"" Faster search and replace
-nmap <Space><Space> <Plug>operator_quick_replace
-xmap <Space><Space> <Plug>operator_quick_replace
-
-"" Operators
-nmap gs <Plug>operator_sort
-xmap gs <Plug>operator_sort
 
 nmap gr <Plug>operator_grep
 xmap gr <Plug>operator_grep
 
-"" Quickly switch between alternate files
-nnoremap <expr> <BS> exists(':A') ? ':A<CR>' : '<C-^>'
+nmap gs <Plug>operator_sort
+xmap gs <Plug>operator_sort
 
-"" Increase and reset font size
-nmap <M-+> <Plug>font_size_increase
-nmap <M--> <Plug>font_size_decrease
-nmap <M-=> <Plug>font_size_reset
-
-"" Format paragraph so all sentences are on a different line
 nmap Q <Plug>operator_format_paragraph
 xmap Q <Plug>operator_format_paragraph
 
-"" Prev/next match during incremental search
-cnoremap <expr> <Tab>   getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-g>' : '<C-z>'
-cnoremap <expr> <S-Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-t>' : '<S-Tab>'
+nmap <Space><Space> <Plug>operator_quick_replace
+xmap <Space><Space> <Plug>operator_quick_replace
 
 "" Textobjects
 xmap ad <Plug>textobj_document_a
