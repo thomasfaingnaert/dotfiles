@@ -289,8 +289,8 @@ nmap Q <Plug>operator_format_paragraph
 xmap Q <Plug>operator_format_paragraph
 
 "" Underline current line
-nnoremap <silent> <leader>u :call underline#underline(0)<CR>
-nnoremap <silent> <leader>U :call underline#underline(1)<CR>
+nmap <leader>u <Plug>underline_above
+nmap <leader>U <Plug>underline_below
 
 "" Prev/next match during incremental search
 cnoremap <expr> <Tab>   getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-g>' : '<C-z>'
