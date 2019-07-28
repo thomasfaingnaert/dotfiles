@@ -1,6 +1,7 @@
 " Autowrite LaTeX files
 function! s:autowrite_latex()
-    if filereadable(expand('%')) && b:vimtex.compiler.is_running()
+    if filereadable(expand('%')) && exists('*b:vimtex.compiler.is_running')
+                \ && b:vimtex.compiler.is_running()
         execute 'silent update'
     endif
 endfunction
