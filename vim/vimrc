@@ -285,8 +285,8 @@ nmap <M--> <Plug>font_size_decrease
 nmap <M-=> <Plug>font_size_reset
 
 "" Format paragraph so all sentences are on a different line
-nnoremap Q :set operatorfunc=format_paragraph#format_paragraph<CR>g@
-vnoremap Q :<C-u>call format_paragraph#format_paragraph(visualmode(), 1)<CR>
+nmap Q <Plug>operator_format_paragraph
+xmap Q <Plug>operator_format_paragraph
 
 "" Underline current line
 nnoremap <silent> <leader>u :call underline#underline(0)<CR>
