@@ -39,3 +39,11 @@ call s:register_server('pyls', {
             \ 'cmd': {server_info->['pyls']},
             \ 'whitelist': ['python'],
             \ })
+
+" sudo npm install -g typescript-language-server
+call s:register_server('typescript-language-server', {
+                \ 'name': 'typescript',
+                \ 'cmd': {server_info->['typescript-language-server', '--stdio']},
+                \ 'whitelist': ['javascript'],
+                \ 'config': { 'filter': { 'name': 'prefix' } }
+                \ })
