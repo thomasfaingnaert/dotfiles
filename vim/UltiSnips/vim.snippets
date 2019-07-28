@@ -1,0 +1,47 @@
+global !p
+def get_script_type():
+    abs_path = vim.eval('expand("%:p")')
+    path_components = os.path.normpath(abs_path).split(os.sep)
+
+    script_types = ['plugin', 'ftplugin']
+
+    for comp in reversed(path_components):
+        if comp in script_types:
+            return comp
+endglobal
+
+snippet once "Script guard" b
+if exists('g:${1:variable}')
+    finish
+endif
+let g:$1 = 1
+
+
+endsnippet
+
+context "get_script_type() == 'plugin'"
+snippet once "Script guard (plugin)" be
+if exists('g:${1:loaded_`!p snip.rv = snip.basename`}')
+    finish
+endif
+let g:$1 = 1
+
+
+endsnippet
+
+context "get_script_type() == 'ftplugin'"
+snippet once "Script guard (ftplugin)" be
+" Only do this when not done yet for this buffer
+if exists('b:did_ftplugin')
+    finish
+endif
+let b:did_ftplugin = 1
+
+
+endsnippet
+
+context "get_script_type() == 'ftplugin'"
+snippet undo "Undo filetype plugin" b
+let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe')
+            \ . '| $1'
+endsnippet
