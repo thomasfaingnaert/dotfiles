@@ -151,11 +151,6 @@ let g:UltiSnipsEditSplit = 'vertical'
 " Use LaTeX by default
 let g:tex_flavor = 'latex'
 
-" Don't automatically open/close the quickfix window in tex files
-" When using autowrite and latexmk pvc, it is annoying and it breaks
-" UltiSnips
-let g:vimtex_quickfix_mode = 0
-
 " Use SumatraPDF in Windows
 if has('win32')
     let g:vimtex_view_general_viewer = 'SumatraPDF'
