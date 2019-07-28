@@ -120,7 +120,7 @@ set autoread
 set showcmd
 set spelllang=en_gb
 set nrformats-=octal
-set path+=**
+set path=.,,**
 
 " This fixes netrw-gx and :Gbrowse not working in gVim
 if has('unix')
