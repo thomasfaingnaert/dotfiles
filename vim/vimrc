@@ -8,7 +8,6 @@ Plug 'iCyMind/NeoSolarized'
 
 if has('python3')
     Plug 'SirVer/ultisnips'
-    Plug 'honza/vim-snippets'
 endif
 
 Plug 'tpope/vim-commentary'
