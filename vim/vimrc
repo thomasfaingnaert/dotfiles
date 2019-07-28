@@ -280,9 +280,9 @@ xmap gr <Plug>operator_grep
 nnoremap <expr> <BS> exists(':A') ? ':A<CR>' : '<C-^>'
 
 "" Increase and reset font size
-nnoremap <M-+> :call font_size#increment(+1)<CR>
-nnoremap <M--> :call font_size#increment(-1)<CR>
-nnoremap <M-=> :call font_size#reset()<CR>
+nmap <M-+> <Plug>font_size_increase
+nmap <M--> <Plug>font_size_decrease
+nmap <M-=> <Plug>font_size_reset
 
 "" Format paragraph so all sentences are on a different line
 nnoremap Q :set operatorfunc=format_paragraph#format_paragraph<CR>g@
