@@ -16,7 +16,8 @@ function! operator_grep#operator_grep(type) abort
     endif
 
     " Perform grep
-    silent execute 'grep! -r ' . shellescape(@") . ' *'
+    let l:search_term = escape(@", '#%')
+    silent execute 'grep! -r ' . shellescape(l:search_term) . ' *'
 
     " Restore unnamed register
     let @" = l:old_unnamed_reg
