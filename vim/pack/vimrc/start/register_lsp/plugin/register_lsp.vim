@@ -33,7 +33,7 @@ call s:register_server('clangd', {
             \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
             \ })
 
-" sudo pip install python-language-server
+" sudo pip install python-language-server[all]
 call s:register_server('pyls', {
             \ 'name': 'pyls',
             \ 'cmd': {server_info->['pyls']},
