@@ -73,9 +73,9 @@ if !exists('s:myruntime')
     let s:myruntime = split(&runtimepath, ',')[0]
 end
 
-let &backupdir = s:myruntime . '/backup//'
-let &directory = s:myruntime . '/swap//'
-let &undodir = s:myruntime . '/undo//'
+let &backupdir = s:myruntime . '/cache/backup//'
+let &directory = s:myruntime . '/cache/swap//'
+let &undodir = s:myruntime . '/cache/undo//'
 
 "" Line numbers
 set relativenumber

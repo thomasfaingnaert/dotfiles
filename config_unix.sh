@@ -7,9 +7,9 @@ ln -sfn "$(pwd)/vim" ~/.vim
 ln -sfn "$(pwd)/nvim" ~/.config/nvim
 
 mkdir -p ~/.vim/autoload \
-         ~/.vim/backup \
-         ~/.vim/swap \
-         ~/.vim/undo
+         ~/.vim/cache/backup \
+         ~/.vim/cache/swap \
+         ~/.vim/cache/undo
 
 curl -fLsSo ~/.vim/autoload/plug.vim --create-dirs \
 	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

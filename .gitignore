@@ -1,9 +1,6 @@
 vim/autoload/plug.vim
-vim/cquery-cache
 vim/plugged/
-vim/backup/
-vim/swap/
-vim/undo/
+vim/cache/
 vim/.netrwhist
 vim/spell/*.spl
 vim/spell/*.sug

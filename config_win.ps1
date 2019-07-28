@@ -8,9 +8,9 @@ foreach ($link in $links)
 New-Item -ItemType Junction -Path $HOME -Name vimfiles -Value vim
 
 md -Force ~\vimfiles\autoload
-md -Force ~\vimfiles\backup
-md -Force ~\vimfiles\swap
-md -Force ~\vimfiles\undo
+md -Force ~\vimfiles\cache\backup
+md -Force ~\vimfiles\cache\swap
+md -Force ~\vimfiles\cache\undo
 
 $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 (New-Object Net.WebClient).DownloadFile(
