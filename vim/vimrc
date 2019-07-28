@@ -266,8 +266,8 @@ cnoremap <C-n> <Down>
 cnoremap <C-p> <Up>
 
 "" Faster search and replace
-nmap <Space><Space> <Plug>quick_replace
-xmap <Space><Space> <Plug>quick_replace
+nmap <Space><Space> <Plug>operator_quick_replace
+xmap <Space><Space> <Plug>operator_quick_replace
 
 "" Operators
 nmap gs <Plug>operator_sort
