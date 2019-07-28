@@ -226,6 +226,8 @@ nnoremap <silent> <leader>c :lcd %:h<CR>
 nnoremap <silent> <leader>e :browse edit<CR>
 nnoremap <silent> <leader>h :nohlsearch<CR>
 nnoremap <silent> <leader>l :set list!<CR>
+nmap     <silent> <leader>u <Plug>underline_above
+nmap     <silent> <leader>U <Plug>underline_below
 nmap     <silent> <leader>v <Plug>edit_vimrc
 nnoremap <silent> <leader>w :if filereadable(expand('%')) <Bar> update <Bar> else <Bar> write <Bar> endif<CR>
 
@@ -280,10 +282,6 @@ nmap <M-=> <Plug>font_size_reset
 "" Format paragraph so all sentences are on a different line
 nmap Q <Plug>operator_format_paragraph
 xmap Q <Plug>operator_format_paragraph
-
-"" Underline current line
-nmap <leader>u <Plug>underline_above
-nmap <leader>U <Plug>underline_below
 
 "" Prev/next match during incremental search
 cnoremap <expr> <Tab>   getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<C-g>' : '<C-z>'
