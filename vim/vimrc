@@ -136,7 +136,6 @@ endif
 "" Set wildignore
 set wildignore+=*/build/*
 set wildignore+=*/docs/*
-set wildignore+=*/plugged/*
 
 " --------------------------------------------------------------------------------
 " Plugin settings
