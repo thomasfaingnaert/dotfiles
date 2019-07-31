@@ -41,6 +41,7 @@ call s:register_server('pyls', {
             \ 'whitelist': ['python'],
             \ })
 
+" sudo apt install npm
 " sudo npm install -g typescript-language-server
 call s:register_server('typescript-language-server', {
                 \ 'name': 'typescript',
