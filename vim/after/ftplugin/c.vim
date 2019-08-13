@@ -1,16 +1,3 @@
-" Language server
-if executable('clangd')
-    setlocal omnifunc=lsp#complete
-    setlocal keywordprg=:LspHover
-    nnoremap <buffer> <C-]> :LspDefinition<CR>
-    nnoremap <buffer> <F2> :LspRename<CR>
-
-    let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe')
-                \ . '| setlocal omnifunc< keywordprg<'
-                \ . '| nunmap <buffer> <C-]>'
-                \ . '| nunmap <buffer> <F2>'
-endif
-
 if executable('clang-format')
     let s:clang_format_settings = {
                 \       'BasedOnStyle': 'LLVM',

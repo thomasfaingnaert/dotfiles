@@ -1,5 +1,4 @@
-" Language server
-if executable('typescript-language-server')
+function! register_lsp#do_ftplugin() abort
     setlocal omnifunc=lsp#complete
     setlocal keywordprg=:LspHover
     nnoremap <buffer> <C-]> :LspDefinition<CR>
@@ -9,4 +8,4 @@ if executable('typescript-language-server')
                 \ . '| setlocal omnifunc< keywordprg<'
                 \ . '| nunmap <buffer> <C-]>'
                 \ . '| nunmap <buffer> <F2>'
-endif
+endfunction
