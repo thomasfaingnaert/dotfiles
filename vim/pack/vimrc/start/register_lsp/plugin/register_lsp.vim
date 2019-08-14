@@ -51,6 +51,7 @@ call s:register_server('pyls', {
 
 " sudo apt install npm
 " sudo npm install -g typescript-language-server
+" sudo npm install -g typescript
 call s:register_server('typescript-language-server', {
             \ 'name': 'typescript',
             \ 'cmd': {server_info->['typescript-language-server', '--stdio']},
