@@ -78,3 +78,7 @@ fi
 if [ -z "$LANG" ]; then
     export LANG=C
 fi
+
+# Docker
+alias docker='sudo docker'
+alias docker-compose='sudo docker-compose'
