@@ -251,6 +251,12 @@ feature_texlive()
     sudo apt-get install -y texlive-latex-extra
 }
 
+feature_docker()
+{
+    # Install docker and docker-compose
+    sudo apt install -y docker.io docker-compose
+}
+
 feature_kvm()
 {
     # Install QEMU KVM
@@ -267,7 +273,7 @@ function join_by { local IFS="$1"; shift; printf "$*"; }
 # Ask the user what they want to install
 features=$(
 whiptail --title "Select Features" --checklist --notags --separate-output \
-    "Choose the features to install:" 22 36 16 \
+    "Choose the features to install:" 23 36 17 \
     dualboot    "Dual boot fixes" ON \
     gnome       "GNOME config" ON \
     locale      "Locale settings" ON \
@@ -283,6 +289,7 @@ whiptail --title "Select Features" --checklist --notags --separate-output \
     cpp_dev     "C++ Development" ON \
     screencasts "Peek and Screenkey" OFF \
     texlive     "TeX Live" OFF \
+    docker      "Docker" ON \
     kvm         "KVM" OFF \
     3>&1 1>&2 2>&3)
 
