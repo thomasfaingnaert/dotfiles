@@ -248,7 +248,7 @@ feature_screencasts()
 feature_texlive()
 {
     # Install texlive
-    sudo apt-get install -y texlive-full
+    sudo apt-get install -y texlive-latex-extra
 }
 
 feature_kvm()
