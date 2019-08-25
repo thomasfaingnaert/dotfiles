@@ -278,19 +278,19 @@ whiptail --title "Select Features" --checklist --notags --separate-output \
     gnome       "GNOME config" ON \
     locale      "Locale settings" ON \
     yaru        "Yaru theme for Ubuntu" ON \
-    vim         "Vim (repositories)" ON \
-    vim_git     "Vim (from source)" OFF \
-    neovim_git  "Neovim (from source)" OFF \
+    vim         "Vim (repositories)" OFF \
+    vim_git     "Vim (from source)" ON \
+    neovim_git  "Neovim (from source)" ON \
     dotfiles    "Dotfiles" ON \
     keepassxc   "KeepassXC" ON \
     skype       "Skype" ON \
     vlc         "VLC" ON \
-    slack       "Slack" OFF \
+    slack       "Slack" ON \
     cpp_dev     "C++ Development" ON \
-    screencasts "Peek and Screenkey" OFF \
-    texlive     "TeX Live" OFF \
+    screencasts "Peek and Screenkey" ON \
+    texlive     "TeX Live" ON \
     docker      "Docker" ON \
-    kvm         "KVM" OFF \
+    kvm         "KVM" ON \
     3>&1 1>&2 2>&3)
 
 if [ $? -ne 0 ]; then
