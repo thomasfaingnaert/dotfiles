@@ -4,6 +4,7 @@
 [merge]
 	tool = gvimdiff
 [mergetool]
+	keepBackup = false
 	prompt = false
 [diff]
 	tool = gvimdiff
