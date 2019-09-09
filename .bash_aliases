@@ -82,3 +82,17 @@ fi
 # Docker
 alias docker='sudo docker'
 alias docker-compose='sudo docker-compose'
+
+# Prompt
+# Based on Ubuntu default ~/.bashrc
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;33m\]$(__git_ps1)\[\033[00m\]\$ '
+
+# If this is an xterm set the title to user@host:dir
+# Source: Ubuntu default ~/.bashrc
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
