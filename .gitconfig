@@ -2,6 +2,7 @@
 	name = Thomas Faingnaert
 	useConfigOnly = true
 [merge]
+	conflictstyle = diff3
 	tool = gvimdiff
 [mergetool]
 	keepBackup = false
