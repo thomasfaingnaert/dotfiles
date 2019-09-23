@@ -16,6 +16,8 @@ function! make_application#make_application() abort
         source %
     elseif &filetype ==# 'asciidoc'
         !asciidoctor %
+    elseif &filetype ==# 'julia'
+        !julia %
     else
         make
     endif
