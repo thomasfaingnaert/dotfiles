@@ -30,6 +30,8 @@ Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 
 Plug 'vim-scripts/DoxygenToolkit.vim'
 
+Plug 'JuliaEditorSupport/julia-vim'
+
 call plug#end()
 
 " --------------------------------------------------------------------------------
