@@ -228,10 +228,13 @@ feature_slack()
 feature_cpp_dev()
 {
     # Install C++ tools
-    sudo apt-get install -y build-essential cmake checkinstall clang-7 clang-tools-7
+    sudo apt-get install -y build-essential cmake checkinstall clang-7 clang-tools-7 clang-format-7
 
     # Use clangd-7 as 'clangd'
     sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-7 100
+
+    # Use clang-format-7 as 'clang-format'
+    sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-7 100
 }
 
 feature_screencasts()
