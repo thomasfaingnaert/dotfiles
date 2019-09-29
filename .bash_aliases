@@ -96,3 +96,6 @@ xterm*|rxvt*)
 *)
     ;;
 esac
+
+# Use gvim as EDITOR for the Julia REPL
+export JULIA_EDITOR='gvim --remote-silent'
