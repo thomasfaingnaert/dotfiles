@@ -19,3 +19,6 @@ if command -v vim >/dev/null 2>&1; then
 else
     echo "Skipping Vim configuration: Vim is not in PATH."
 fi
+
+mkdir -p ~/.julia/config
+ln -sf "$(pwd)/julia/startup.jl" ~/.julia/config/startup.jl
