@@ -251,7 +251,7 @@ feature_screencasts()
 feature_texlive()
 {
     # Install texlive
-    sudo apt-get install -y texlive-latex-extra latexmk
+    sudo apt-get install -y texlive-latex-extra texlive-science latexmk
 }
 
 feature_docker()
