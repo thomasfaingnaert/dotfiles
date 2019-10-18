@@ -115,8 +115,6 @@ set listchars=eol:¬,tab:▸\ ,trail:·,precedes:←,extends:→
 set backspace=indent,eol,start
 set wildmenu
 set wildcharm=<C-z>
-set scrolloff=5
-set sidescrolloff=5
 set formatoptions+=j
 set hidden
 set lazyredraw
