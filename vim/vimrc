@@ -32,6 +32,7 @@ Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 Plug 'vim-scripts/DoxygenToolkit.vim'
 
 Plug 'JuliaEditorSupport/julia-vim'
+Plug 'rhysd/vim-llvm'
 
 call plug#end()
 
