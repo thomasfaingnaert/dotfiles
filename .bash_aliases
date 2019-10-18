@@ -99,3 +99,6 @@ esac
 
 # Use gvim as EDITOR for the Julia REPL
 export JULIA_EDITOR='gvim --remote-silent'
+
+# Print LLVM bitcode for CUDA
+alias cuda-llvm='clang++ --cuda-gpu-arch=sm_70 --cuda-device-only -emit-llvm -S'
