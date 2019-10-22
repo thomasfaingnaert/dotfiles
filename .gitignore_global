@@ -34,5 +34,9 @@ out/
 *.bbl
 *.blg
 
+# BibLaTeX
+*.bcf
+*.run.xml
+
 # Citrix
 .access^
