@@ -40,3 +40,6 @@ out/
 
 # Citrix
 .access^
+
+# Pygments
+_minted-*/
