@@ -105,3 +105,6 @@ alias cuda-llvm='clang++ --cuda-gpu-arch=sm_70 --cuda-device-only -emit-llvm -S'
 
 # Julia
 alias jl='julia'
+
+# Python
+alias py='python'
