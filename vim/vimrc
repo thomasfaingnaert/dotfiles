@@ -227,6 +227,9 @@ nmap <M-+> <Plug>font_size_increase
 nmap <M--> <Plug>font_size_decrease
 nmap <M-=> <Plug>font_size_reset
 
+"" Set font size
+nnoremap <silent> yof :set guifont=*<CR>
+
 "" Make
 nmap <F7> <Plug>make_application
 
