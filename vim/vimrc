@@ -189,6 +189,10 @@ let g:projectionist_heuristics = {
             \       }
             \   }}
 
+"" vim-lsp
+" Don't show diagnostics highlight
+let g:lsp_textprop_enabled = 0
+
 " --------------------------------------------------------------------------------
 " Mappings
 " --------------------------------------------------------------------------------
