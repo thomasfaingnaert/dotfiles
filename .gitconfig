@@ -25,6 +25,7 @@
 	l = log --graph --abbrev-commit --decorate --date=relative --format=tformat:'%C(bold blue)%h%C(reset) - %C(dim white)%an%C(reset) %C(bold green)(%ar)%C(reset) - %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)'
 	m = merge
 	pl = pull
+	pr = !"pr() { git fetch $(git remote | grep ^upstream || echo origin) pull/$1/head:pr/$1 && git checkout pr/$1; }; pr"
 	ps = push
 	psu = push --set-upstream origin HEAD
 	rb = rebase
