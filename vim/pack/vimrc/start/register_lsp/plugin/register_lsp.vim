@@ -14,9 +14,6 @@ augroup end
 function! s:register_server(executable, options)
     if executable(a:executable)
         let s:servers[a:executable] = a:options
-
-        let l:ft = join(a:options['whitelist'], ',')
-        execute 'autocmd register_lsp_ftplugin FileType ' . l:ft  ' call register_lsp#do_ftplugin()'
     endif
 endfunction
 

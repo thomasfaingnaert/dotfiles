@@ -347,3 +347,16 @@ augroup lsp_float_colours
         autocmd User lsp_float_opened call nvim_win_set_option(lsp#ui#vim#output#getpreviewwinid(), 'winhighlight', 'Normal:PopupWindowDark')
     endif
 augroup end
+
+"" Settings for LSP-enabled buffers
+function! s:on_lsp_buffer_enabled()
+    setlocal omnifunc=lsp#complete
+    setlocal keywordprg=:LspHover
+    nnoremap <buffer> <C-]> :LspDefinition<CR>
+    nnoremap <buffer> <F2> :LspRename<CR>
+endfunction
+
+augroup lsp_buffer_settings
+    autocmd!
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup end
