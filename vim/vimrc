@@ -262,7 +262,7 @@ nmap     <silent> <leader>u <Plug>underline_above
 nmap     <silent> <leader>U <Plug>underline_below
 nmap     <silent> <leader>v <Plug>edit_vimrc
 nnoremap <silent> <leader>w :if filereadable(expand('%')) <Bar> update <Bar> else <Bar> write <Bar> endif<CR>
-nnoremap <silent> <leader>y gg"+yG
+nnoremap <silent> <leader>y :call preserve_state#execute('silent normal! gg"+yG')<CR>
 
 " Deselect selected wildmenu option, if any
 cnoremap <expr> <SID>deselect_wildmenu_option wildmenumode() ? "\<S-Tab>" : ""
