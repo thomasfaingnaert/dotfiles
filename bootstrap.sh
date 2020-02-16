@@ -248,10 +248,13 @@ feature_screencasts()
     sudo apt-get install -y screenkey slop
 }
 
-feature_texlive()
+feature_documents()
 {
     # Install texlive
     sudo apt-get install -y texlive-full
+
+    # Install pandoc
+    sudo apt-get install -y pandoc
 }
 
 feature_docker()
@@ -291,7 +294,7 @@ whiptail --title "Select Features" --checklist --notags --separate-output \
     slack       "Slack" ON \
     cpp_dev     "C++ Development" ON \
     screencasts "Peek and Screenkey" ON \
-    texlive     "TeX Live" ON \
+    documents   "Document creation" ON \
     docker      "Docker" ON \
     kvm         "KVM" OFF \
     3>&1 1>&2 2>&3)
