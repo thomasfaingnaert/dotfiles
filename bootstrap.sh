@@ -283,7 +283,7 @@ whiptail --title "Select Features" --checklist --notags --separate-output \
     yaru        "Yaru theme for Ubuntu" ON \
     vim         "Vim (repositories)" OFF \
     vim_git     "Vim (from source)" ON \
-    neovim_git  "Neovim (from source)" ON \
+    neovim_git  "Neovim (from source)" OFF \
     dotfiles    "Dotfiles" ON \
     keepassxc   "KeepassXC" ON \
     skype       "Skype" ON \
@@ -293,7 +293,7 @@ whiptail --title "Select Features" --checklist --notags --separate-output \
     screencasts "Peek and Screenkey" ON \
     texlive     "TeX Live" ON \
     docker      "Docker" ON \
-    kvm         "KVM" ON \
+    kvm         "KVM" OFF \
     3>&1 1>&2 2>&3)
 
 if [ $? -ne 0 ]; then
