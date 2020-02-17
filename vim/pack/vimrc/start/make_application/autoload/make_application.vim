@@ -19,8 +19,8 @@ function! make_application#make_application() abort
     elseif &filetype ==# 'julia'
         !julia %
     elseif &filetype ==# 'markdown'
-        !pandoc % -o %:r.pdf
-        !xdg-open %:r.pdf &
+        silent !pandoc % -o %:r.pdf
+        silent !xdg-open %:r.pdf &
     else
         make
     endif
