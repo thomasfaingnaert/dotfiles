@@ -18,6 +18,8 @@ function! make_application#make_application() abort
         !asciidoctor %
     elseif &filetype ==# 'julia'
         !julia %
+    elseif &filetype ==# 'markdown'
+        !pandoc % -o %:r.pdf
     else
         make
     endif
