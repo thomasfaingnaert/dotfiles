@@ -20,6 +20,7 @@ function! make_application#make_application() abort
         !julia %
     elseif &filetype ==# 'markdown'
         !pandoc % -o %:r.pdf
+        !xdg-open %:r.pdf &
     else
         make
     endif
