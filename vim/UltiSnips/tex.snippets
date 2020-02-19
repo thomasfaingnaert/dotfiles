@@ -5,6 +5,7 @@ snippet doc "Document" b
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage[dutch]{babel}
+\usepackage{cleveref}
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
 \usepackage{pgfplots}
@@ -12,6 +13,12 @@ snippet doc "Document" b
 \usepackage{siunitx}
 \usepackage{tikz}
 \usepackage{xparse}
+
+% Needs to be loaded after all other packages
+\usepackage[hidelinks]{hyperref}
+
+% Needs to be loaded after hyperref
+\usepackage[capitalise,nameinlink,noabbrev]{cleveref}
 
 \pgfplotsset{compat=1.15}
 
