@@ -259,8 +259,8 @@ feature_documents()
 
 feature_docker()
 {
-    # Install docker and docker-compose
-    sudo apt install -y docker.io docker-compose
+    # Install docker
+    sudo apt install -y docker.io
 }
 
 feature_kvm()
