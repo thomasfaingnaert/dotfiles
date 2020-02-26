@@ -22,4 +22,4 @@ highlight clear DiffDelete
 highlight DiffAdd    ctermbg=85  guibg=#e6ffed
 highlight DiffChange ctermbg=230 guibg=#fffbdd
 highlight DiffText   ctermbg=222 guibg=#f2e496
-highlight DiffDelete ctermbg=167 guibg=#ffeef0
+highlight DiffDelete ctermbg=167 guibg=#ffdddd
