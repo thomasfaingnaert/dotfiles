@@ -3,3 +3,8 @@ snippet #! "Shebang" b
 set -Eeuo pipefail
 `!p snip.rv = '\n'`
 endsnippet
+
+# Source: https://stackoverflow.com/questions/59895/how-to-get-the-source-directory-of-a-bash-script-from-within-the-script-itself
+snippet dir "Directory of Bash script" w
+"$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+endsnippet
