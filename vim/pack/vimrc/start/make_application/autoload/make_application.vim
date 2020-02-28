@@ -21,6 +21,8 @@ function! make_application#make_application() abort
     elseif &filetype ==# 'markdown'
         silent !pandoc % -o %:r.pdf
         silent !xdg-open %:r.pdf &
+    elseif &filetype ==# 'dot'
+        !xdot %
     else
         make
     endif
