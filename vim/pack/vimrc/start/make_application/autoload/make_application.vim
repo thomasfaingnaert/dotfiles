@@ -22,7 +22,8 @@ function! make_application#make_application() abort
         silent !pandoc % -o %:r.pdf
         silent !xdg-open %:r.pdf &
     elseif &filetype ==# 'dot'
-        !xdot %
+        silent !dot -Tpdf % -o %:r.pdf
+        silent !xdg-open %:r.pdf &
     else
         make
     endif
