@@ -19,8 +19,14 @@ out/
 *.aux
 *.fdb_latexmk
 *.fls
+*.glg
+*.glo
+*.gls
 *.idx
+*.ist
+*.lof
 *.log
+*.lot
 *.out
 *.pdf
 *.synctex.gz
