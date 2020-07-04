@@ -347,8 +347,8 @@ main()
         dualboot    "Dual boot fixes" ON \
         gnome       "GNOME config" ON \
         locale      "Locale settings" ON \
-        vim         "Vim (repositories)" OFF \
-        vim_git     "Vim (from source)" ON \
+        vim         "Vim (repositories)" ON \
+        vim_git     "Vim (from source)" OFF \
         neovim_git  "Neovim (from source)" OFF \
         dotfiles    "Dotfiles" ON \
         keepassxc   "KeepassXC" ON \
