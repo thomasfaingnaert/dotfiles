@@ -113,26 +113,17 @@ feature_dualboot()
 
 feature_gnome()
 {
-    # Enable click-to-minimize
-    gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
-
     # Show battery percentage on the top bar
     gsettings set org.gnome.desktop.interface show-battery-percentage true
 
-    # Set alt-tab to switch between windows, not applications
-    gsettings set org.gnome.desktop.wm.keybindings switch-applications "[]"
-    gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "[]"
-    gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Super>Tab','<Alt>Tab']"
-    gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Shift><Super>Tab','<Shift><Alt>Tab']"
-
     # Change PrtScr to save to clipboard by default; to save to file, use Ctrl
-    gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot '<Ctrl>Print'
-    gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot '<Ctrl><Alt>Print'
-    gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot '<Ctrl><Shift>Print'
+    gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot "['<Ctrl>Print']"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot "['<Ctrl><Alt>Print']"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "['<Ctrl><Shift>Print']"
 
-    gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot-clip 'Print'
-    gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot-clip '<Alt>Print'
-    gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot-clip '<Shift>Print'
+    gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot-clip "['Print']"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot-clip "['<Alt>Print']"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot-clip "['<Shift>Print']"
 }
 
 feature_locale()
