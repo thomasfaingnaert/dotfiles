@@ -1,4 +1,87 @@
 #!/usr/bin/env bash
+set -Eeuo pipefail
+
+#############
+# CONSTANTS #
+#############
+
+orange='\e[0;33m'
+nc='\e[0m'
+red='\e[0;31m'
+green='\e[0;32m'
+purple='\e[0;35m'
+grey='\e[0;37m'
+bold='\e[1m'
+underline='\e[4m'
+
+####################
+# HELPER FUNCTIONS #
+####################
+
+print_header()
+{
+    local HEADER="$1"
+    printf "$purple$bold • $HEADER\n\n$nc"
+}
+
+print_subheader()
+{
+    local SUBHEADER="$1"
+    printf "$purple   ${underline}$SUBHEADER\n\n$nc"
+}
+
+execute()
+{
+    local COMMAND="$1"
+    local MESSAGE="${2:-$1}"
+
+    local errfile="$(mktemp /tmp/bootstrap-XXXXXXXX.err)"
+    local exitcode=0
+
+    # Run the command
+    eval $COMMAND > /dev/null 2> "$errfile" &
+
+    # Show spinner
+    local pid="$!"
+
+    local i=1
+    local sp="/-\|"
+    echo -n ' '
+
+    while kill -0 "$pid" &> /dev/null; do
+        spinner="${sp:i++%${#sp}:1}"
+        printf "\r   $grey[$spinner] $MESSAGE$nc"
+        sleep 0.2
+    done
+    printf "\r"
+
+    # Check return status
+    wait "$pid" || exitcode="$?"
+
+    if [ "$exitcode" -eq 0 ]; then
+        printf "$green   [✔] $MESSAGE\n$nc"
+    else
+        printf "$red   [X] $MESSAGE\n$nc"
+
+        printf "$red   ┌ \n$nc"
+        while read -r line; do
+            printf "$red   │ $line\n$nc"
+        done < "$errfile"
+        printf "$red   └ \n$nc"
+    fi
+
+    rm $errfile
+
+    return $exitcode
+}
+
+# Join array
+# Source: https://stackoverflow.com/questions/1527049/how-can-i-join-elements-of-an-array-in-bash
+join_by() { local IFS="$1"; shift; printf "$*"; }
+
+############
+# FEATURES #
+############
 
 favorites=(
     "'firefox.desktop'"
@@ -257,39 +340,53 @@ feature_kvm()
     sudo apt-get install -y virt-manager
 }
 
-# Join array
-# Source: https://stackoverflow.com/questions/1527049/how-can-i-join-elements-of-an-array-in-bash
-function join_by { local IFS="$1"; shift; printf "$*"; }
+########
+# MAIN #
+########
 
-# Ask the user what they want to install
-features=$(
-whiptail --title "Select Features" --checklist --notags --separate-output \
-    "Choose the features to install:" 23 36 16 \
-    dualboot    "Dual boot fixes" ON \
-    gnome       "GNOME config" ON \
-    locale      "Locale settings" ON \
-    vim         "Vim (repositories)" OFF \
-    vim_git     "Vim (from source)" ON \
-    neovim_git  "Neovim (from source)" OFF \
-    dotfiles    "Dotfiles" ON \
-    keepassxc   "KeepassXC" ON \
-    skype       "Skype" ON \
-    vlc         "VLC" ON \
-    slack       "Slack" ON \
-    cpp_dev     "C++ Development" ON \
-    screencasts "Peek and Screenkey" ON \
-    documents   "Document creation" ON \
-    docker      "Docker" ON \
-    kvm         "KVM" OFF \
-    3>&1 1>&2 2>&3)
+main()
+{
+    # Kill all background jobs when the shell script exits
+    trap 'kill $(jobs -p) &>/dev/null' EXIT
 
-if [ $? -ne 0 ]; then
-    exit
-fi
+    # Ask the user what they want to install
+    features=$(
+    whiptail --title "Select Features" --checklist --notags --separate-output \
+        "Choose the features to install:" 23 36 16 \
+        dualboot    "Dual boot fixes" ON \
+        gnome       "GNOME config" ON \
+        locale      "Locale settings" ON \
+        vim         "Vim (repositories)" OFF \
+        vim_git     "Vim (from source)" ON \
+        neovim_git  "Neovim (from source)" OFF \
+        dotfiles    "Dotfiles" ON \
+        keepassxc   "KeepassXC" ON \
+        skype       "Skype" ON \
+        vlc         "VLC" ON \
+        slack       "Slack" ON \
+        cpp_dev     "C++ Development" ON \
+        screencasts "Peek and Screenkey" ON \
+        documents   "Document creation" ON \
+        docker      "Docker" ON \
+        kvm         "KVM" OFF \
+        3>&1 1>&2 2>&3)
 
-for feature in $features; do
-    feature_${feature}
-done
+    if [ $? -ne 0 ]; then
+        exit
+    fi
 
-# Set favourites
-gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
+    print_header "Install selected features"
+
+    local i=1
+    local numfeatures=$(wc -w <<< "$features")
+
+    for feature in $features; do
+        execute feature_${feature} "Feature $i of $numfeatures: $feature" || true
+        i=$((i+1))
+    done
+
+    # Set favourites
+    gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
+}
+
+main
