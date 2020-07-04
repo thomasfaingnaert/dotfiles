@@ -71,21 +71,6 @@ feature_locale()
                        LC_IDENTIFICATION="${LOCALE}"
 }
 
-feature_yaru()
-{
-    # Install Yaru
-    sudo snap install communitheme
-
-    # Set GDM theme to Yaru
-    sudo update-alternatives --install /usr/share/gnome-shell/theme/gdm3.css gdm3.css /snap/communitheme/current/share/gnome-shell/theme/Communitheme/gnome-shell.css 15
-
-    # Use Yaru as default user session for the current user
-    sudo sed -i '/^\[User\]$/,/^\[/ s/^\(XSession=\).*$/\1ubuntu-communitheme-snap/' /var/lib/AccountsService/users/${USER}
-
-    # Change cursor theme to DMZ-White
-    gsettings set org.gnome.desktop.interface cursor-theme 'DMZ-White'
-}
-
 feature_vim()
 {
     # Install dependencies
@@ -279,11 +264,10 @@ function join_by { local IFS="$1"; shift; printf "$*"; }
 # Ask the user what they want to install
 features=$(
 whiptail --title "Select Features" --checklist --notags --separate-output \
-    "Choose the features to install:" 23 36 17 \
+    "Choose the features to install:" 23 36 16 \
     dualboot    "Dual boot fixes" ON \
     gnome       "GNOME config" ON \
     locale      "Locale settings" ON \
-    yaru        "Yaru theme for Ubuntu" ON \
     vim         "Vim (repositories)" OFF \
     vim_git     "Vim (from source)" ON \
     neovim_git  "Neovim (from source)" OFF \
