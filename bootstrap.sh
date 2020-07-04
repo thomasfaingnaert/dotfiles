@@ -202,12 +202,10 @@ feature_cpp_dev()
 feature_screencasts()
 {
     # Install peek
-    sudo add-apt-repository -y ppa:peek-developers/stable
-    sudo apt-get update
     sudo apt-get install -y peek
 
     # Install screenkey
-    sudo apt-get install -y screenkey slop
+    sudo apt-get install -y screenkey
 }
 
 feature_documents()
