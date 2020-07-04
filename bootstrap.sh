@@ -148,7 +148,7 @@ feature_locale()
 feature_vim()
 {
     # Install dependencies
-    sudo apt-get install -y vim vim-gnome
+    sudo apt-get install -y vim vim-gtk3
 }
 
 feature_vim_git()
