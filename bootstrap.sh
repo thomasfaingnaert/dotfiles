@@ -192,14 +192,11 @@ feature_slack()
 
 feature_cpp_dev()
 {
-    # Install C++ tools
-    sudo apt-get install -y build-essential cmake checkinstall clang-9 clang-tools-9 clang-format-9
+    # Install LLVM tools
+    sudo apt-get install -y clang clangd clang-format
 
-    # Use clangd-9 as 'clangd'
-    sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-9 100
-
-    # Use clang-format-9 as 'clang-format'
-    sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-9 100
+    # Install cmake
+    sudo apt-get install -y cmake
 }
 
 feature_screencasts()
