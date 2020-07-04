@@ -151,100 +151,6 @@ feature_vim()
     sudo apt-get install -y vim vim-gtk3
 }
 
-feature_vim_git()
-{
-    # Only do this is we haven't cloned Vim already
-    if [ ! -d ~/src/vim ]; then
-        # Create a directory to store .desktop files, if it doesn't exist already
-        sudo mkdir -p /usr/local/share/applications
-
-        # Install dependencies
-        sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
-            libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
-            libcairo2-dev libx11-dev libxpm-dev libxt-dev \
-            python3-dev
-
-        # Clone Vim repository
-        mkdir -p ~/src
-        pushd ~/src
-        git clone https://github.com/vim/vim.git vim
-        cd vim
-    else
-        # Go to Vim directory
-        pushd ~/src/vim
-
-        # First clean up
-        make distclean
-    fi
-
-    # What Vim version are we building?
-    local git_tag=$(git describe --abbrev=0 --tags) # v8.1.1000
-    local vim_version=$(echo ${git_tag} | sed 's/^[^0-9]//') # 8.1.1000
-    local vim_short_version=$(echo ${vim_version} | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1\2/') # 81
-
-    # Config, compilation and install
-    ./configure --with-features=huge \
-                --enable-multibyte \
-                --enable-python3interp=yes \
-                --enable-gui=gtk2 \
-                --enable-cscope \
-                --prefix=/usr/local
-
-    make -j$(nproc) VIMRUNTIMEDIR=/usr/local/share/vim/vim${vim_short_version}
-
-    sudo apt-get install -y checkinstall
-    cat >description-pak <<EOF
-Vi IMproved - enhanced vi editor - with GUI (compiled from source)
-EOF
-
-    sudo checkinstall -y --pkgname vim-git --pkgversion "${vim_version}" --maintainer "Thomas Faingnaert" --provides vim
-
-    # Set compiled Vim as default
-    sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 1
-    sudo update-alternatives --set editor /usr/local/bin/vim
-
-    sudo update-alternatives --install /usr/bin/vi vi /usr/local/bin/vim 1
-    sudo update-alternatives --set vi /usr/local/bin/vim
-
-    sudo update-alternatives --install /usr/bin/gvim gvim /usr/local/bin/vim 1
-    sudo update-alternatives --set gvim /usr/local/bin/vim
-
-    # Get rid of warning when starting gvim
-    sudo apt-get install -y libcanberra-gtk-module
-
-    # Restore current working directory
-    popd
-}
-
-feature_neovim_git()
-{
-    # Install dependencies
-    sudo apt-get install -y ninja-build gettext libtool libtool-bin autoconf \
-                            automake cmake g++ pkg-config unzip
-
-    # Clone Neovim repository
-    mkdir -p ~/src
-    pushd ~/src
-    git clone https://github.com/neovim/neovim neovim
-    cd neovim
-
-    # Compilation and installation
-    make -j$(nproc) CMAKE_BUILD_TYPE=RelWithDebInfo
-
-    sudo apt-get install -y checkinstall
-    cat >description-pak <<EOF
-Neovim (compiled from source)
-EOF
-
-    sudo checkinstall -y --pkgname neovim-git --pkgversion "1.0" --maintainer "Thomas Faingnaert" --provides neovim
-
-    # Restore current working directory
-    popd
-
-    # Install GUI
-    sudo apt-get install -y neovim-qt
-}
-
 feature_dotfiles()
 {
     # Install dependencies
@@ -343,13 +249,11 @@ main()
     # Ask the user what they want to install
     features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-        "Choose the features to install:" 23 36 16 \
+        "Choose the features to install:" 20 33 14 \
         dualboot    "Dual boot fixes" ON \
         gnome       "GNOME config" ON \
         locale      "Locale settings" ON \
         vim         "Vim (repositories)" ON \
-        vim_git     "Vim (from source)" OFF \
-        neovim_git  "Neovim (from source)" OFF \
         dotfiles    "Dotfiles" ON \
         keepassxc   "KeepassXC" ON \
         skype       "Skype" ON \
