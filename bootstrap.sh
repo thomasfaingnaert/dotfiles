@@ -75,6 +75,23 @@ execute()
     return $exitcode
 }
 
+ask_question()
+{
+    local MESSAGE="$1"
+
+    while true; do
+        printf "$orange   [?] $MESSAGE (y/n) $nc"
+        read -n1 response
+        printf '\n'
+
+        case $response in
+            [Yy]) return 0;;
+            [Nn]) return 1;;
+            *) ;;
+        esac
+    done
+}
+
 prompt_sudo()
 {
     # Prompt for sudo password
@@ -246,6 +263,13 @@ set_favourites()
     gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
 }
 
+ask_for_reboot()
+{
+    if ask_question "Do you want to reboot?"; then
+        sudo reboot
+    fi
+}
+
 main()
 {
     # Kill all background jobs when the shell script exits
@@ -290,6 +314,10 @@ main()
     # Set favourites & cleanup
     print_header "Finalise bootstrap"
     execute set_favourites "Setting favourite applications"
+    execute 'sudo apt-get autoremove' "APT (autoremove)"
+
+    # Ask if user wants to reboot
+    ask_for_reboot
 }
 
 main
