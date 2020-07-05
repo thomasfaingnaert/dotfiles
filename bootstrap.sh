@@ -241,6 +241,11 @@ feature_docker()
 # MAIN #
 ########
 
+set_favourites()
+{
+    gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
+}
+
 main()
 {
     # Kill all background jobs when the shell script exits
@@ -282,8 +287,9 @@ main()
         i=$((i+1))
     done
 
-    # Set favourites
-    gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
+    # Set favourites & cleanup
+    print_header "Finalise bootstrap"
+    execute set_favourites "Setting favourite applications"
 }
 
 main
