@@ -75,6 +75,21 @@ execute()
     return $exitcode
 }
 
+prompt_sudo()
+{
+    # Prompt for sudo password
+    print_header "Prompt for sudo password"
+    sudo -v &> /dev/null
+    printf '\n'
+
+    # Keep sudo session alive
+    while true; do
+        sleep 300
+        sudo -n true
+        kill -0 "$$" || exit
+    done &> /dev/null &
+}
+
 # Join array
 # Source: https://stackoverflow.com/questions/1527049/how-can-i-join-elements-of-an-array-in-bash
 join_by() { local IFS="$1"; shift; printf "$*"; }
@@ -254,6 +269,9 @@ main()
     if [ $? -ne 0 ]; then
         exit
     fi
+
+    # Ask for sudo password
+    prompt_sudo
 
     print_header "Install selected features"
 
