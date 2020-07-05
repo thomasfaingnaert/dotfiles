@@ -258,6 +258,13 @@ feature_docker()
 # MAIN #
 ########
 
+update_packages()
+{
+    print_header 'Update packages'
+    execute 'sudo apt-get update -y' 'APT (update)'
+    execute 'sudo apt-get dist-upgrade -y' 'APT (dist-upgrade)'
+}
+
 set_favourites()
 {
     gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
@@ -277,6 +284,9 @@ main()
 
     # Ask for sudo password
     prompt_sudo
+
+    # Update packages
+    update_packages
 
     # Ask the user what they want to install
     features=$(
@@ -314,7 +324,7 @@ main()
     # Set favourites & cleanup
     print_header "Finalise bootstrap"
     execute set_favourites "Setting favourite applications"
-    execute 'sudo apt-get autoremove' "APT (autoremove)"
+    execute 'sudo apt-get autoremove -y' "APT (autoremove)"
 
     # Ask if user wants to reboot
     ask_for_reboot
