@@ -185,7 +185,7 @@ feature_vim()
 feature_dotfiles()
 {
     # Install dependencies
-    sudo apt-get install -y curl
+    sudo apt-get install -y curl xclip
 
     # Install dotfiles
     ./config_unix.sh
@@ -281,6 +281,41 @@ ask_for_reboot()
     fi
 }
 
+wait_for_github_ssh()
+{
+    local RETVAL=0
+
+    while true; do
+        ssh -T git@github.com || RETVAL=$?
+
+        if [[ $RETVAL -eq 1 ]]; then
+            break
+        fi
+
+        sleep 5
+    done &> /dev/null
+}
+
+generate_ssh_key()
+{
+    print_header 'Generate SSH key'
+
+    if [[ -f ~/.ssh/id_rsa ]]; then
+        printf "$grey   [-] Skipped: SSH key already exists\n$nc"
+        return 0
+    fi
+
+    sudo apt-get install -y xclip &>/dev/null
+    ssh-keygen -q -t rsa -b 4096 -f ~/.ssh/id_rsa
+    xclip -sel c < ~/.ssh/id_rsa.pub
+
+    printf "$grey       SSH key copied to clipboard. You can add the SSH key to your account on https://github.com/settings/ssh/new.\n$nc"
+    xdg-open 'https://github.com/settings/ssh/new'
+
+    execute wait_for_github_ssh 'Test SSH connection to GitHub'
+    git -C "$(dirname "${BASH_SOURCE[0]}")" remote set-url origin git@github.com:thomasfaingnaert/dotfiles.git
+}
+
 main()
 {
     # Kill all background jobs when the shell script exits
@@ -324,6 +359,9 @@ main()
         execute feature_${feature} "Feature $i of $numfeatures: $feature" || true
         i=$((i+1))
     done
+
+    # Generate SSH key
+    generate_ssh_key
 
     # Set favourites & cleanup
     print_header "Finalise bootstrap"
