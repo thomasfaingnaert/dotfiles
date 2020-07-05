@@ -220,7 +220,7 @@ feature_documents()
 feature_docker()
 {
     # Install docker
-    sudo apt install -y docker.io
+    sudo apt-get install -y docker.io
 }
 
 ########
