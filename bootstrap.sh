@@ -21,7 +21,7 @@ underline='\e[4m'
 print_header()
 {
     local HEADER="$1"
-    printf "$purple$bold • $HEADER\n\n$nc"
+    printf "\n$purple$bold • $HEADER\n\n$nc"
 }
 
 print_subheader()
@@ -80,7 +80,6 @@ prompt_sudo()
     # Prompt for sudo password
     print_header "Prompt for sudo password"
     sudo -v &> /dev/null
-    printf '\n'
 
     # Keep sudo session alive
     while true; do
