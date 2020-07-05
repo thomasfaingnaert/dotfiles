@@ -247,6 +247,9 @@ main()
     # Kill all background jobs when the shell script exits
     trap 'kill $(jobs -p) &>/dev/null' EXIT
 
+    # Ask for sudo password
+    prompt_sudo
+
     # Ask the user what they want to install
     features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
@@ -269,9 +272,6 @@ main()
     if [ $? -ne 0 ]; then
         exit
     fi
-
-    # Ask for sudo password
-    prompt_sudo
 
     print_header "Install selected features"
 
