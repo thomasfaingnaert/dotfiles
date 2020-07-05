@@ -261,8 +261,11 @@ feature_docker()
 update_packages()
 {
     print_header 'Update packages'
-    execute 'sudo apt-get update -y' 'APT (update)'
-    execute 'sudo apt-get dist-upgrade -y' 'APT (dist-upgrade)'
+
+    if ask_question "Do you want to update system packages?"; then
+        execute 'sudo apt-get update -y' 'APT (update)'
+        execute 'sudo apt-get dist-upgrade -y' 'APT (dist-upgrade)'
+    fi
 }
 
 set_favourites()
