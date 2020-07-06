@@ -281,37 +281,6 @@ ask_for_reboot()
     fi
 }
 
-wait_for_github_ssh()
-{
-    local RETVAL=0
-
-    while true; do
-        ssh -T git@github.com || RETVAL=$?
-
-        if [[ $RETVAL -eq 1 ]]; then
-            break
-        fi
-
-        sleep 5
-    done &> /dev/null
-}
-
-generate_ssh_key()
-{
-    print_header 'Generate SSH key'
-
-    if [[ ! -f ~/.ssh/id_rsa ]]; then
-        sudo apt-get install -y curl &>/dev/null
-        ssh-keygen -q -t rsa -b 4096 -f ~/.ssh/id_rsa
-    fi
-
-    curl --silent --output /dev/null --show-error --fail --user thomasfaingnaert --data "{\"title\":\"$(hostname)\", \"key\":\"$(cat ~/.ssh/id_rsa.pub)\"}" https://api.github.com/user/keys
-    printf '\n'
-
-    execute wait_for_github_ssh 'Test SSH connection to GitHub'
-    git -C "$(dirname "${BASH_SOURCE[0]}")" remote set-url origin git@github.com:thomasfaingnaert/dotfiles.git
-}
-
 main()
 {
     # Kill all background jobs when the shell script exits
@@ -355,9 +324,6 @@ main()
         execute feature_${feature} "Feature $i of $numfeatures: $feature" || true
         i=$((i+1))
     done
-
-    # Generate SSH key
-    generate_ssh_key
 
     # Set favourites & cleanup
     print_header "Finalise bootstrap"
