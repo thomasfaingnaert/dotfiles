@@ -306,7 +306,7 @@ generate_ssh_key()
     fi
 
     curl --silent --output /dev/null --show-error --fail --user thomasfaingnaert --data "{\"title\":\"$(hostname)\", \"key\":\"$(cat ~/.ssh/id_rsa.pub)\"}" https://api.github.com/user/keys
-    print '\n'
+    printf '\n'
 
     execute wait_for_github_ssh 'Test SSH connection to GitHub'
     git -C "$(dirname "${BASH_SOURCE[0]}")" remote set-url origin git@github.com:thomasfaingnaert/dotfiles.git
