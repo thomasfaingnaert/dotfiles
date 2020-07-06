@@ -258,17 +258,6 @@ feature_docker()
 # MAIN #
 ########
 
-update_packages()
-{
-    print_header 'Update packages'
-
-    execute 'sudo apt-get update -y' 'APT (update)'
-
-    if ask_question "Do you want to update system packages?"; then
-        execute 'sudo apt-get dist-upgrade -y' 'APT (dist-upgrade)'
-    fi
-}
-
 set_favourites()
 {
     gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
@@ -288,9 +277,6 @@ main()
 
     # Ask for sudo password
     prompt_sudo
-
-    # Update packages
-    update_packages
 
     # Ask the user what they want to install
     features=$(
