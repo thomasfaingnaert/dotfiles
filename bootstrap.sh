@@ -114,14 +114,6 @@ join_by() { local IFS="$1"; shift; printf "$*"; }
 # FEATURES #
 ############
 
-favorites=(
-    "'firefox.desktop'"
-    "'org.gnome.Nautilus.desktop'"
-    "'gvim.desktop'"
-    "'skype_skypeforlinux.desktop'"
-    "'slack_slack.desktop'"
-)
-
 feature_dualboot()
 {
     # Make Linux store the time in local timezone instead of UTC, so the time does not jump
@@ -155,6 +147,17 @@ feature_gnome()
     gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot-clip "['Print']"
     gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot-clip "['<Alt>Print']"
     gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot-clip "['<Shift>Print']"
+
+    # Favourite applications
+    local favorites=(
+        "'firefox.desktop'"
+        "'org.gnome.Nautilus.desktop'"
+        "'gvim.desktop'"
+        "'skype_skypeforlinux.desktop'"
+        "'slack_slack.desktop'"
+    )
+
+    gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
 }
 
 feature_locale()
@@ -258,11 +261,6 @@ feature_docker()
 # MAIN #
 ########
 
-set_favourites()
-{
-    gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
-}
-
 ask_for_reboot()
 {
     if ask_question "Do you want to reboot?"; then
@@ -310,10 +308,6 @@ main()
         execute feature_${feature} "Feature $i of $numfeatures: $feature" || true
         i=$((i+1))
     done
-
-    # Set favourites & cleanup
-    print_header "Finalise bootstrap"
-    execute set_favourites "Setting favourite applications"
 
     # Ask if user wants to reboot
     ask_for_reboot
