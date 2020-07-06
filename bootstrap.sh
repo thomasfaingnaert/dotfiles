@@ -314,7 +314,6 @@ main()
     # Set favourites & cleanup
     print_header "Finalise bootstrap"
     execute set_favourites "Setting favourite applications"
-    execute 'sudo apt-get autoremove -y' "APT (autoremove)"
 
     # Ask if user wants to reboot
     ask_for_reboot
