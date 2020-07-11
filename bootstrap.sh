@@ -136,6 +136,9 @@ feature_dualboot()
 
 feature_gnome()
 {
+    # Enable click-to-minimize
+    gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
+
     # Show battery percentage on the top bar
     gsettings set org.gnome.desktop.interface show-battery-percentage true
 
