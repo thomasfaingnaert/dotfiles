@@ -7,9 +7,11 @@ if executable('clang-format')
     augroup end
 
     setlocal shiftwidth=2 softtabstop=2 smartindent
+    setlocal formatoptions-=o
+    setlocal formatoptions-=r
 
     let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe')
                 \ . '| setlocal equalprg<'
                 \ . '| execute ''autocmd! cpp_auto_format'''
-                \ . '| setlocal shiftwidth< softtabstop< smartindent<'
+                \ . '| setlocal shiftwidth< softtabstop< smartindent< formatoptions<'
 endif
