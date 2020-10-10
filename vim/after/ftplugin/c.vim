@@ -1,14 +1,5 @@
 if executable('clang-format')
-    let s:clang_format_settings = {
-                \       'BasedOnStyle': 'LLVM',
-                \       'AccessModifierOffset': -4,
-                \       'AllowShortFunctionsOnASingleLine': 'Inline',
-                \       'BreakBeforeBraces': 'Allman',
-                \       'IncludeBlocks': 'Regroup',
-                \       'IndentWidth': 4
-                \   }
-
-    let &l:equalprg = "clang-format -style='" . json_encode(s:clang_format_settings) . "'"
+    let &l:equalprg = "clang-format"
 
     augroup cpp_auto_format
         autocmd!
