@@ -108,3 +108,11 @@ alias jl='julia'
 
 # Python
 alias py='python'
+
+# Use ninja for CMake
+if command -v ninja >/dev/null 2>&1; then
+    export CMAKE_GENERATOR=Ninja
+fi
+
+# Export compile commands for CMake
+export CMAKE_EXPORT_COMPILE_COMMANDS=ON
