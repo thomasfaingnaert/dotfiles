@@ -310,10 +310,6 @@ omap il <Plug>textobj_line_i
 
 "" Insert mode pairs
 imap <C-l> <Plug>insert_match
-inoremap <expr> ) insert_skip#insert_skip(')')
-inoremap <expr> } insert_skip#insert_skip('}')
-inoremap <expr> " insert_skip#insert_skip('"')
-inoremap <expr> ' insert_skip#insert_skip("'")
 
 "" Clipboard toggle (clipboard+=unnamedplus)
 command! ClipboardToggle
