@@ -1,6 +1,9 @@
-# include .bashrc if it exists
-if [ -f "$HOME/.bashrc" ]; then
-    . "$HOME/.bashrc"
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+	. "$HOME/.bashrc"
+    fi
 fi
 
 # set PATH so it includes user's private bin if it exists
@@ -49,6 +52,6 @@ if command -v clang++ >/dev/null 2>&1; then
 fi
 
 # local overrides
-if [ -f "$HOME/.bash_profile.local" ]; then
-    . "$HOME/.bash_profile.local"
+if [ -f "$HOME/.profile.local" ]; then
+    . "$HOME/.profile.local"
 fi
