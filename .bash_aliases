@@ -125,3 +125,8 @@ fi
 if command -v clang++ >/dev/null 2>&1; then
     export CCX=clang++
 fi
+
+# Include user's local bin in PATH
+if [ -d "$HOME/bin" ]; then
+    export PATH="$HOME/bin:$PATH"
+fi
