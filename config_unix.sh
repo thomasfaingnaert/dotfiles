@@ -1,5 +1,6 @@
 #!/bin/sh
 ln -sf "$(pwd)/.bash_aliases" ~/.bash_aliases
+ln -sf "$(pwd)/.bash_profile" ~/.bash_profile
 ln -sf "$(pwd)/.gitconfig" ~/.gitconfig
 ln -sf "$(pwd)/.gitignore_global" ~/.gitignore_global
 
