@@ -23,6 +23,11 @@ elif [ -d ~/dotfiles/bin ]; then
     export PATH=$PATH:~/dotfiles/bin
 fi
 
+# Allow changing path locally
+if [ -f "$HOME/.profile.path" ]; then
+    . "$HOME/.profile.path"
+fi
+
 # Use gvim as EDITOR for the Julia REPL
 export JULIA_EDITOR='gvim --remote-silent'
 
