@@ -116,3 +116,12 @@ fi
 
 # Export compile commands for CMake
 export CMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+# Use clang as a compiler (if in path)
+if command -v clang >/dev/null 2>&1; then
+    export CC=clang
+fi
+
+if command -v clang++ >/dev/null 2>&1; then
+    export CCX=clang++
+fi
