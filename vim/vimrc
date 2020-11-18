@@ -125,6 +125,7 @@ set spelllang=en_gb
 set nrformats-=octal
 set path=.,,**
 set nojoinspaces
+set isfname-==
 
 " This fixes netrw-gx and :Gbrowse not working in gVim
 if has('unix')
