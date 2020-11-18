@@ -23,3 +23,6 @@ fi
 
 mkdir -p ~/.julia/config
 ln -sf "$(pwd)/julia/startup.jl" ~/.julia/config/startup.jl
+
+mkdir -p ~/.config/gdb
+ln -sf "$(pwd)/.gdbinit" ~/.gdbinit
