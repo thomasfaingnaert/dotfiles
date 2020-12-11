@@ -1,0 +1,5 @@
+snippet install "apt-get install" b
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    ${1:PACKAGES} \
+    && rm -rf /var/lib/apt/lists/*
+endsnippet
