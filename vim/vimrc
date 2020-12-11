@@ -196,6 +196,13 @@ let g:projectionist_heuristics = {
 " Don't show diagnostics highlight
 let g:lsp_textprop_enabled = 0
 
+"" vim-easy-align
+let g:easy_align_delimiters = {
+            \ '\': {
+            \   'pattern': '\\$'
+            \ }
+            \ }
+
 " --------------------------------------------------------------------------------
 " Mappings
 " --------------------------------------------------------------------------------
