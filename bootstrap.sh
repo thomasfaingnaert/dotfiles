@@ -161,6 +161,19 @@ feature_gnome()
     )
 
     gsettings set org.gnome.shell favorite-apps $(printf '['; join_by ',' "${favorites[@]}"; printf ']')
+
+    # Get default terminal profile ID
+    profile=$(gsettings get org.gnome.Terminal.ProfilesList default)
+
+    # Remove leading and trailing single quotes
+    profile=${profile:1:-1}
+
+    # Disable 'Use colors from system theme'
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile}/ use-theme-colors false
+
+    # Set foreground and background colour to mimic VSCode's dark theme
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile}/ foreground-color 'rgb(212,212,212)'
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile}/ background-color 'rgb(30,30,30)'
 }
 
 feature_locale()
