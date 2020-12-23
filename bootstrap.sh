@@ -273,6 +273,15 @@ feature_docker()
     sudo apt-get install -y docker.io
 }
 
+feature_kvm()
+{
+    # Install QEMU KVM
+    sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
+
+    # Install virt-manager
+    sudo apt-get install -y virt-manager
+}
+
 ########
 # MAIN #
 ########
@@ -295,7 +304,7 @@ main()
     # Ask the user what they want to install
     features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-        "Choose the features to install:" 21 32 13 \
+        "Choose the features to install:" 21 35 14 \
         dualboot    "Dual boot fixes" ON \
         gnome       "GNOME config" ON \
         locale      "Locale settings" ON \
@@ -309,6 +318,7 @@ main()
         screencasts "Peek and Screenkey" ON \
         documents   "Document creation" ON \
         docker      "Docker" ON \
+        kvm         "KVM" ON \
         3>&1 1>&2 2>&3)
 
     if [ $? -ne 0 ]; then
