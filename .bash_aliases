@@ -66,13 +66,28 @@ v()
 
 # Prompt
 # Based on Ubuntu default ~/.bashrc
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;33m\]$(__git_ps1)\[\033[00m\]\$ '
 
-# If this is an xterm set the title to user@host:dir
-# Source: Ubuntu default ~/.bashrc
+red='\[\033[01;31m\]'
+green='\[\033[01;32m\]'
+yellow='\[\033[01;33m\]'
+blue='\[\033[01;34m\]'
+nc='\[\033[00m\]'
+
+# Print return code of last command if non-zero
+PS1="${red}\$(retval="\$?" ; if [[ \$retval -ne 0 ]]; then echo \"[\${retval}] \"; fi)${nc}"
+
+# user@host:~/directory (master)$ |
+PS1="${PS1}${green}\u@\h${nc}:${blue}\w${yellow}\$(__git_ps1)${nc}\$ "
+
+# If this is an xterm set the title
+# Based on Ubuntu default ~/.bashrc
+
+title_begin="\[\e]0;"
+title_end="\a\]"
+
 case "$TERM" in
 xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    PS1="${title_begin}\u@\h: \w${title_end}${PS1}"
     ;;
 *)
     ;;
