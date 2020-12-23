@@ -60,7 +60,7 @@ if has('gui_running')
         if has('win32')
             set guifont=Consolas:h11
         else
-            set guifont=Monospace\ 11
+            set guifont=Ubuntu\ Mono\ Regular\ 18
         endif
     endif
 
