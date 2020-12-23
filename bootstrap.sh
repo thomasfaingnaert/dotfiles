@@ -247,6 +247,9 @@ feature_cpp_dev()
 
     # Install cmake
     sudo apt-get install -y cmake
+
+    # Install ninja
+    sudo apt-get install -y ninja-build
 }
 
 feature_screencasts()
