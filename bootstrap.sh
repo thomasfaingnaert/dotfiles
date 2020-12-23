@@ -175,6 +175,10 @@ feature_gnome()
     # Remove leading and trailing single quotes
     profile=${profile:1:-1}
 
+    # Set terminal font size
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile}/ use-system-font false
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile}/ font 'Ubuntu Mono Regular 18'
+
     # Disable 'Use colors from system theme'
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile}/ use-theme-colors false
 
