@@ -38,6 +38,9 @@ execute()
     local errfile="$(mktemp /tmp/bootstrap-XXXXXXXX.err)"
     local exitcode=0
 
+    # Remember start time
+    local starttime=$(date +%s)
+
     # Run the command
     eval $COMMAND > /dev/null 2> "$errfile" &
 
@@ -58,10 +61,14 @@ execute()
     # Check return status
     wait "$pid" || exitcode="$?"
 
+    # Calculate running time (in seconds)
+    local endtime=$(date +%s)
+    local runtime=$((endtime-starttime))
+
     if [ "$exitcode" -eq 0 ]; then
-        printf "$green   [✔] $MESSAGE\n$nc"
+        printf "$green   [✔] $MESSAGE ($runtime s)\n$nc"
     else
-        printf "$red   [X] $MESSAGE\n$nc"
+        printf "$red   [X] $MESSAGE ($runtime s)\n$nc"
 
         printf "$red   ┌ \n$nc"
         while read -r line; do
