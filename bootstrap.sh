@@ -158,6 +158,23 @@ feature_gnome()
     gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot-clip "['<Alt>Print']"
     gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot-clip "['<Shift>Print']"
 
+    # Unmap default CTRL+ALT+T binding
+    gsettings set org.gnome.settings-daemon.plugins.media-keys terminal '@as []'
+
+    # Remap CTRL+ALT+T to launch terminal maximised
+    # Only remap when the user has not added any mappings himself
+    local current_mappings=$(gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings)
+
+    if [[ "${current_mappings}" == "@as []" ]]; then
+        # Add custom keybind
+        gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+
+        # Set the properties of the new keybind (name, command, shortcut)
+        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Launch terminal (maximized)'
+        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'gnome-terminal --window --maximize'
+        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Primary><Alt>t'
+    fi
+
     # Favourite applications
     local favorites=(
         "'firefox.desktop'"
