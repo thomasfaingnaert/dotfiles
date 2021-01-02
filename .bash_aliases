@@ -235,12 +235,16 @@ Usage: bin-add [OPTIONS] <PATH...>
 Add symlinks to ~/bin.
 
 Options:
--h, --help      Show this help.
--n, --dry-run   Only show what would be added, but do not actually add anything.
+-h, --help              Show this help.
+-n, --dry-run           Only show what would be added, but do not actually add anything.
+-p, --prefix PREFIX     Prefix to add before every symlink's name (default is empty string).
+-s, --suffix SUFFIX     Suffix to add after every symlink's name (default is empty string).
 EOF
     }
 
     local dry_run=false
+    local prefix=""
+    local suffix=""
 
     local positional=()
     while [[ $# -gt 0 ]]; do
@@ -251,6 +255,14 @@ EOF
             -n|--dry-run)
                 dry_run=true
                 shift
+                ;;
+            -p|--prefix)
+                prefix=$2
+                shift; shift
+                ;;
+            -s|--suffix)
+                suffix=$2
+                shift; shift
                 ;;
             -*)
                 usage; return 1
@@ -273,7 +285,7 @@ EOF
         done
     else
         for path in "$@"; do
-            find "$path" -type f -executable -exec ln -s {} ~/bin \;
+            find "$path" -type f -executable -exec sh -c "ln -s {} ~/bin/${prefix}\$(basename {})${suffix}" \;
         done
     fi
 }
