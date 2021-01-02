@@ -101,3 +101,111 @@ alias jl='julia'
 
 # Python
 alias py='python'
+
+# Utility functions to manage symlinks in ~/bin.
+
+# Garbage collection: remove dangling
+bin-gc()
+{
+    usage()
+    {
+        cat <<EOF >&2
+Usage: bin-gc [OPTIONS]
+
+Remove dangling symlinks from ~/bin.
+
+Options:
+-h, --help          Show this help.
+-n, --dry-run       Only show what would be removed, but do not actually remove anything.
+-f, --force         bin-gc will refuse to remove anything unless this option is given.
+EOF
+    }
+
+    local dry_run=false
+    local force=false
+
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -h|--help)
+                usage; return 1
+                shift
+                ;;
+            -n|--dry-run)
+                dry_run=true
+                shift
+                ;;
+            -f|--force)
+                force=true
+                shift
+                ;;
+
+            *)
+                usage; return 1
+                shift
+                ;;
+        esac
+    done
+
+    if [[ "$dry_run" = true ]]; then
+        find ~/bin -xtype l
+        return 0
+    elif [[ "$force" = true ]]; then
+        find ~/bin -xtype l -delete
+        return 0
+    else
+        usage
+        return 1
+    fi
+}
+
+# Add: add symlinks
+bin-add()
+{
+    usage()
+    {
+        cat <<EOF >&2
+Usage: bin-add [OPTIONS] <PATH...>
+
+Add symlinks to ~/bin.
+
+Options:
+-h, --help      Show this help.
+-n, --dry-run   Only show what would be added, but do not actually add anything.
+EOF
+    }
+
+    local dry_run=false
+
+    local positional=()
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -h|--help)
+                usage; return 1
+                shift
+                ;;
+            -n|--dry-run)
+                dry_run=true
+                shift
+                ;;
+            *)
+                positional+=("$1")
+                shift
+                ;;
+        esac
+    done
+    set -- "${positional[@]}"
+
+    if [[ $# -eq 0 ]]; then
+        usage; return 1
+    fi
+
+    if [[ "$dry_run" = true ]]; then
+        for path in "$@"; do
+            find "$path" -type f -executable
+        done
+    else
+        for path in "$@"; do
+            find "$path" -type f -executable -exec ln -s {} ~/bin \;
+        done
+    fi
+}
