@@ -124,11 +124,11 @@ EOF
     local dry_run=false
     local force=false
 
+    local positional=()
     while [[ $# -gt 0 ]]; do
         case $1 in
             -h|--help)
-                usage; return 1
-                shift
+                usage; return 0
                 ;;
             -n|--dry-run)
                 dry_run=true
@@ -138,13 +138,20 @@ EOF
                 force=true
                 shift
                 ;;
-
-            *)
+            -*)
                 usage; return 1
+                ;;
+            *)
+                positional+=("$1")
                 shift
                 ;;
         esac
     done
+    set -- "${positional[@]}"
+
+    if [[ $# -ne 0 ]]; then
+        usage; return 1
+    fi
 
     if [[ "$dry_run" = true ]]; then
         find ~/bin -maxdepth 1 -xtype l
@@ -153,8 +160,67 @@ EOF
         find ~/bin -maxdepth 1 -xtype l -delete
         return 0
     else
-        usage
-        return 1
+        usage; return 1
+    fi
+}
+
+# Rm: remove symlinks
+bin-rm()
+{
+    usage()
+    {
+        cat <<EOF >&2
+Usage: bin-rm [OPTIONS] <PATTERN>
+
+Remove all symlinks from ~/bin that match the given PATTERN.
+
+Options:
+-h, --help          Show this help.
+-n, --dry-run       Only show what would be removed, but do not actually remove anything.
+-f, --force         bin-rm will refuse to remove anything unless this option is given.
+EOF
+    }
+
+    local dry_run=false
+    local force=false
+
+    local positional=()
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -h|--help)
+                usage; return 0
+                ;;
+            -n|--dry-run)
+                dry_run=true
+                shift
+                ;;
+            -f|--force)
+                force=true
+                shift
+                ;;
+            -*)
+                usage; return 1
+                ;;
+            *)
+                positional+=("$1")
+                shift
+                ;;
+        esac
+    done
+    set -- "${positional[@]}"
+
+    if [[ $# -ne 1 ]]; then
+        usage; return 1
+    fi
+
+    if [[ "$dry_run" = true ]]; then
+        find ~/bin -maxdepth 1 -type l -lname "$1"
+        return 0
+    elif [[ "$force" = true ]]; then
+        find ~/bin -maxdepth 1 -type l -lname "$1" -delete
+        return 0
+    else
+        usage; return 1
     fi
 }
 
@@ -180,12 +246,14 @@ EOF
     while [[ $# -gt 0 ]]; do
         case $1 in
             -h|--help)
-                usage; return 1
-                shift
+                usage; return 0
                 ;;
             -n|--dry-run)
                 dry_run=true
                 shift
+                ;;
+            -*)
+                usage; return 1
                 ;;
             *)
                 positional+=("$1")
