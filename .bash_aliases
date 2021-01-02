@@ -289,3 +289,13 @@ EOF
         done
     fi
 }
+
+bin-ls()
+{
+    local bold_cyan="\033[1;36m"
+    local bold_green="\033[1;32m"
+    local nc="\033[0m"
+    local filename_width=40
+
+    find ~/bin -maxdepth 1 -type l -printf "${bold_cyan}%-${filename_width}p${nc} -> ${bold_green}%l\n" | sort -k 3 | less -R
+}
