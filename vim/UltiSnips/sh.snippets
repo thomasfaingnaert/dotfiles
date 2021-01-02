@@ -8,3 +8,40 @@ endsnippet
 snippet pwd "Directory of Bash script" w
 "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 endsnippet
+
+# Source: https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
+snippet args "Parse command-line arguments in Bash" b
+usage()
+{
+    cat <<EOF >&2
+Usage: \$0 [OPTIONS]
+
+TODO: Short description.
+
+Options:
+-h, --help          Show this help.
+EOF
+}
+
+positional=()
+while [[ $# -gt 0 ]]; do
+    case \$1 in
+        -h|--help)
+            usage
+            shift
+            ;;
+        *)
+            positional+=("\$1")
+            shift
+            ;;
+    esac
+done
+set -- "${positional[@]}"
+
+if [[ $# -ne 0 ]]; then
+    usage
+    exit 1
+fi
+
+$0
+endsnippet
