@@ -147,10 +147,10 @@ EOF
     done
 
     if [[ "$dry_run" = true ]]; then
-        find ~/bin -xtype l
+        find ~/bin -maxdepth 1 -xtype l
         return 0
     elif [[ "$force" = true ]]; then
-        find ~/bin -xtype l -delete
+        find ~/bin -maxdepth 1 -xtype l -delete
         return 0
     else
         usage
