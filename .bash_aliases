@@ -213,7 +213,7 @@ EOF
         usage; return 1
     fi
 
-    local directory="$(realpath "$1")"
+    local directory="$(readlink -f "$1")"
 
     if [[ "$dry_run" = true ]]; then
         find ~/bin -maxdepth 1 -type l -print0 |
@@ -297,7 +297,7 @@ EOF
         done
     else
         for path in "$@"; do
-            find "$path" -type f -executable -exec sh -c "ln -s {} ~/bin/${prefix}\$(basename {})${suffix}" \;
+            find "$path" -type f -executable -exec sh -c "ln -rs \$(readlink -f {}) ~/bin/${prefix}\$(basename {})${suffix}" \;
         done
     fi
 }
