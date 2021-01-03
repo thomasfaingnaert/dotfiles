@@ -202,6 +202,11 @@ feature_gnome()
     # Set foreground and background colour to mimic VSCode's dark theme
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile}/ foreground-color 'rgb(212,212,212)'
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile}/ background-color 'rgb(30,30,30)'
+
+    # Configure dash to dock
+    gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
+    gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 32
+    gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
 }
 
 feature_locale()
