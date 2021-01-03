@@ -314,6 +314,9 @@ feature_docker()
 {
     # Install docker
     sudo apt-get install -y docker.io
+
+    # Install docker-compose
+    sudo apt-get install -y docker-compose
 }
 
 feature_kvm()
