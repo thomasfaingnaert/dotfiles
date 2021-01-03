@@ -243,6 +243,13 @@ feature_dotfiles()
     ./config_unix.sh
 }
 
+feature_skeleton()
+{
+    # Create directories in home
+    mkdir -p ~/bin/store
+    mkdir -p ~/dev/{personal,work,deps}
+}
+
 feature_keepassxc()
 {
     # Install KeepassXC
@@ -346,12 +353,13 @@ main()
     # Ask the user what they want to install
     features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-        "Choose the features to install:" 22 35 15 \
+        "Choose the features to install:" 23 35 16 \
         dualboot    "Dual boot fixes" ON \
         gnome       "GNOME config" ON \
         locale      "Locale settings" ON \
         vim         "Vim (repositories)" ON \
         dotfiles    "Dotfiles" ON \
+        skeleton    "Home directory skeleton" ON \
         keepassxc   "KeepassXC" ON \
         skype       "Skype" ON \
         vlc         "VLC" ON \
