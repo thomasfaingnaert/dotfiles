@@ -181,12 +181,10 @@ Remove all symlinks from ~/bin that point to the given DIRECTORY.
 Options:
 -h, --help          Show this help.
 -n, --dry-run       Only show what would be removed, but do not actually remove anything.
--f, --force         bin-rm will refuse to remove anything unless this option is given.
 EOF
     }
 
     local dry_run=false
-    local force=false
 
     local positional=()
     while [[ $# -gt 0 ]]; do
@@ -196,10 +194,6 @@ EOF
                 ;;
             -n|--dry-run)
                 dry_run=true
-                shift
-                ;;
-            -f|--force)
-                force=true
                 shift
                 ;;
             -*)
@@ -231,7 +225,7 @@ EOF
                 fi
             done
         return 0
-    elif [[ "$force" = true ]]; then
+    else
         find ~/bin -maxdepth 1 -type l -print0 |
             while IFS= read -r -d '' f; do
                 if [[ "$(readlink -f $f)" == ${directory}/* ]]; then
@@ -239,8 +233,6 @@ EOF
                 fi
             done
         return 0
-    else
-        usage; return 1
     fi
 }
 
