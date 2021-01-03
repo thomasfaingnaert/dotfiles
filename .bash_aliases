@@ -139,7 +139,9 @@ EOF
                 shift
                 ;;
             -*)
-                usage; return 1
+                echo "Unknown command-line option '$1'."
+                echo "Try 'bin-gc --help' for more information."
+                return 1
                 ;;
             *)
                 positional+=("$1")
@@ -150,7 +152,9 @@ EOF
     set -- "${positional[@]}"
 
     if [[ $# -ne 0 ]]; then
-        usage; return 1
+        echo "Expected 0 positional arguments, but got $#."
+        echo "Try 'bin-gc --help' for more information."
+        return 1
     fi
 
     if [[ "$dry_run" = true ]]; then
@@ -199,7 +203,9 @@ EOF
                 shift
                 ;;
             -*)
-                usage; return 1
+                echo "Unknown command-line option '$1'."
+                echo "Try 'bin-rm --help' for more information."
+                return 1
                 ;;
             *)
                 positional+=("$1")
@@ -210,7 +216,9 @@ EOF
     set -- "${positional[@]}"
 
     if [[ $# -ne 1 ]]; then
-        usage; return 1
+        echo "Expected 1 positional argument, but got $#."
+        echo "Try 'bin-rm --help' for more information."
+        return 1
     fi
 
     local directory="$(readlink -f "$1")"
@@ -277,7 +285,9 @@ EOF
                 shift; shift
                 ;;
             -*)
-                usage; return 1
+                echo "Unknown command-line option '$1'."
+                echo "Try 'bin-add --help' for more information."
+                return 1
                 ;;
             *)
                 positional+=("$1")
@@ -288,7 +298,9 @@ EOF
     set -- "${positional[@]}"
 
     if [[ $# -eq 0 ]]; then
-        usage; return 1
+        echo "Expected at least one positional argument, but got $#."
+        echo "Try 'bin-add --help' for more information."
+        return 1
     fi
 
     if [[ "$dry_run" = true ]]; then
@@ -302,8 +314,46 @@ EOF
     fi
 }
 
+# Ls: list symlinks
 bin-ls()
 {
+    usage()
+    {
+        cat <<EOF >&2
+Usage: bin-ls [OPTIONS]
+
+List symlinks in ~/bin.
+
+Options:
+-h, --help          Show this help.
+EOF
+    }
+
+    positional=()
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -h|--help)
+                usage; return 0
+                ;;
+            -*)
+                echo "Unknown command-line option '$1'."
+                echo "Try 'bin-ls --help' for more information."
+                return 1
+                ;;
+            *)
+                positional+=("$1")
+                shift
+                ;;
+        esac
+    done
+    set -- "${positional[@]}"
+
+    if [[ $# -ne 0 ]]; then
+        echo "Expected 0 positional arguments, but got $#."
+        echo "Try 'bin-ls --help' for more information."
+        return 1
+    fi
+
     local bold_cyan="\033[1;36m"
     local bold_green="\033[1;32m"
     local nc="\033[0m"
