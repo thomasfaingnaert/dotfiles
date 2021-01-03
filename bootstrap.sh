@@ -282,11 +282,43 @@ feature_slack()
 
 feature_cpp_dev()
 {
-    # Install LLVM tools
-    sudo apt-get install -y clang clangd clang-format
+    # Add the LLVM apt repository
+    local llvm_version=11
+    local distro=$(lsb_release -is)-$(lsb_release -sr)
+
+    if [[ "$distro" == "Ubuntu-20.04" ]]; then
+        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+
+        # Only add deb once
+        if ! grep -q "^deb https://apt.llvm.org/focal/ llvm-toolchain-focal-${llvm_version} main" /etc/apt/sources.list; then
+            sudo add-apt-repository -y "deb https://apt.llvm.org/focal/ llvm-toolchain-focal-${llvm_version} main"
+            sudo apt-get update
+        fi
+    else
+        echo "C++ development feature only works for Ubuntu 20.04 LTS." >&2
+        return 1
+    fi
+
+    # clang
+    sudo apt-get install -y clang-${llvm_version}
+
+    # clangd
+    sudo apt-get install -y clangd-${llvm_version}
+
+    # clang-format
+    sudo apt-get install -y clang-format-${llvm_version}
+
+    # Set these tools as default
+    for program in clang clangd clang-format; do
+        sudo update-alternatives --install /usr/bin/${program} ${program} $(which ${program}-${llvm_version}) 100
+        sudo update-alternatives --set ${program} $(which ${program}-${llvm_version})
+    done
 
     # Install cmake
     sudo apt-get install -y cmake
+
+    # Install GNU make
+    sudo apt-get install -y make
 
     # Install ninja
     sudo apt-get install -y ninja-build
