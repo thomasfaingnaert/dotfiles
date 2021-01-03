@@ -353,3 +353,8 @@ EOF
 
     find ~/bin -maxdepth 1 -type l -printf "${bold_cyan}%-${filename_width}P${nc} -> ${bold_green}%l\n" | sort -k 3 | less -R
 }
+
+# direnv
+if command -v direnv >/dev/null 2>&1; then
+    eval "$(direnv hook bash)"
+fi

@@ -318,6 +318,12 @@ feature_kvm()
     sudo apt-get install -y virt-manager
 }
 
+feature_direnv()
+{
+    # Install direnv
+    sudo apt-get install -y direnv
+}
+
 ########
 # MAIN #
 ########
@@ -340,7 +346,7 @@ main()
     # Ask the user what they want to install
     features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-        "Choose the features to install:" 21 35 14 \
+        "Choose the features to install:" 22 35 15 \
         dualboot    "Dual boot fixes" ON \
         gnome       "GNOME config" ON \
         locale      "Locale settings" ON \
@@ -355,6 +361,7 @@ main()
         documents   "Document creation" ON \
         docker      "Docker" ON \
         kvm         "KVM" ON \
+        direnv      "direnv" ON \
         3>&1 1>&2 2>&3)
 
     if [ $? -ne 0 ]; then

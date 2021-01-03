@@ -49,3 +49,6 @@ out/
 
 # Pygments
 _minted-*/
+
+# direnv
+.envrc
