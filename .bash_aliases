@@ -170,9 +170,9 @@ bin-rm()
     usage()
     {
         cat <<EOF >&2
-Usage: bin-rm [OPTIONS] <PATTERN>
+Usage: bin-rm [OPTIONS] <DIRECTORY>
 
-Remove all symlinks from ~/bin that match the given PATTERN.
+Remove all symlinks from ~/bin that point to the given DIRECTORY.
 
 Options:
 -h, --help          Show this help.
@@ -213,11 +213,24 @@ EOF
         usage; return 1
     fi
 
+    # remove trailing slashes
+    local directory="${1%/}"
+
     if [[ "$dry_run" = true ]]; then
-        find ~/bin -maxdepth 1 -type l -lname "$1"
+        find ~/bin -maxdepth 1 -type l -print0 |
+            while IFS= read -r -d '' f; do
+                if [[ "$(readlink -f $f)" == ${directory}/* ]]; then
+                    echo $f
+                fi
+            done
         return 0
     elif [[ "$force" = true ]]; then
-        find ~/bin -maxdepth 1 -type l -lname "$1" -delete
+        find ~/bin -maxdepth 1 -type l -print0 |
+            while IFS= read -r -d '' f; do
+                if [[ "$(readlink -f $f)" == ${directory}/* ]]; then
+                    rm $f
+                fi
+            done
         return 0
     else
         usage; return 1
