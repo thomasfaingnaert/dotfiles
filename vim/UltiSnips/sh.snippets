@@ -30,7 +30,9 @@ while [[ $# -gt 0 ]]; do
             usage; exit 0
             ;;
         -*)
-            usage; exit 1
+            echo "Unknown command-line option '\$1'."
+            echo "Try '\$0 --help' for more information."
+            exit 1
             ;;
         *)
             positional+=("\$1")
@@ -41,7 +43,9 @@ done
 set -- "${positional[@]}"
 
 if [[ $# -ne 0 ]]; then
-    usage; exit 1
+    echo "Expected 0 positional arguments, but got $#."
+    echo "Try '\$0 --help' for more information."
+    exit 1
 fi
 
 $0
