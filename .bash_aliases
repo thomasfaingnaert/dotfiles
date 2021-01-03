@@ -309,5 +309,5 @@ bin-ls()
     local nc="\033[0m"
     local filename_width=40
 
-    find ~/bin -maxdepth 1 -type l -printf "${bold_cyan}%-${filename_width}p${nc} -> ${bold_green}%l\n" | sort -k 3 | less -R
+    find ~/bin -maxdepth 1 -type l -printf "${bold_cyan}%-${filename_width}P${nc} -> ${bold_green}%l\n" | sort -k 3 | less -R
 }
