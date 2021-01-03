@@ -230,14 +230,17 @@ feature_locale()
 
 feature_vim()
 {
-    # Install dependencies
-    sudo apt-get install -y vim vim-gtk3
+    sudo apt-get install -y \
+        vim                 \
+        vim-gtk3
 }
 
 feature_dotfiles()
 {
     # Install dependencies
-    sudo apt-get install -y curl xclip
+    sudo apt-get install -y \
+        curl                \
+        xclip
 
     # Install dotfiles
     ./config_unix.sh
@@ -294,38 +297,33 @@ feature_cpp_dev()
 
 feature_screencasts()
 {
-    # Install peek
-    sudo apt-get install -y peek
-
-    # Install screenkey
-    sudo apt-get install -y screenkey
+    sudo apt-get install -y \
+        peek                \
+        screenkey
 }
 
 feature_documents()
 {
-    # Install texlive
-    sudo apt-get install -y texlive-full
-
-    # Install pandoc
-    sudo apt-get install -y pandoc
+    sudo apt-get install -y \
+        texlive-full        \
+        pandoc
 }
 
 feature_docker()
 {
-    # Install docker
-    sudo apt-get install -y docker.io
-
-    # Install docker-compose
-    sudo apt-get install -y docker-compose
+    sudo apt-get install -y \
+        docker.io           \
+        docker-compose
 }
 
 feature_kvm()
 {
-    # Install QEMU KVM
-    sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
-
-    # Install virt-manager
-    sudo apt-get install -y virt-manager
+    sudo apt-get install -y   \
+        qemu-kvm              \
+        libvirt-daemon-system \
+        libvirt-clients       \
+        bridge-utils          \
+        virt-manager
 }
 
 feature_direnv()
