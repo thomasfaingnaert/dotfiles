@@ -265,13 +265,13 @@ feature_skype()
 feature_vlc()
 {
     # Install VLC
-    sudo snap install vlc
+    sudo apt-get install -y vlc
 
     # Get MIME types for audio and video that vlc supports
-    local mimetypes=$(grep '^MimeType=' /var/lib/snapd/desktop/applications/vlc_vlc.desktop | sed 's/^MimeType=//; s/;/\n/g' | grep '^\(audio\|video\)/' | tr '\n' ' ')
+    local mimetypes=$(grep '^MimeType=' /usr/share/applications/vlc.desktop | sed 's/^MimeType=//; s/;/\n/g' | grep '^\(audio\|video\)/' | tr '\n' ' ')
 
     # Set VLC as default audio and video player for the supported filetypes
-    xdg-mime default vlc_vlc.desktop ${mimetypes}
+    xdg-mime default vlc.desktop ${mimetypes}
 }
 
 feature_slack()
