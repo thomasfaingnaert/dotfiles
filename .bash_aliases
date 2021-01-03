@@ -213,8 +213,7 @@ EOF
         usage; return 1
     fi
 
-    # remove trailing slashes
-    local directory="${1%/}"
+    local directory="$(realpath "$1")"
 
     if [[ "$dry_run" = true ]]; then
         find ~/bin -maxdepth 1 -type l -print0 |
