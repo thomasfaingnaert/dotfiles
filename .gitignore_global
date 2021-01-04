@@ -53,5 +53,8 @@ _minted-*/
 # direnv
 .envrc
 
+# direnv virtual environments for Python
+.direnv/
+
 # Python virtualenv
 virtualenv/
