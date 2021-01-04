@@ -53,14 +53,24 @@ o()
 
 v()
 {
-    num_servers=$(gvim --serverlist | wc -l)
-
-    if [ "$num_servers" -eq "0" ]; then
-        command gvim "$@"
-    elif [ "$#" -eq "0" ]; then
-        echo "Vim is already running"
+    if command -v nvim >/dev/null 2>&1; then
+        # neovim version
+        if command -v nvr >/dev/null 2>&1; then
+            command nvr -s "$@"
+        else
+            echo "nvr is not found. Install via pip3 install neovim-remote."
+        fi
     else
-        command gvim --remote-silent "$@"
+        # vim version
+        num_servers=$(gvim --serverlist | wc -l)
+
+        if [ "$num_servers" -eq "0" ]; then
+            command gvim "$@"
+        elif [ "$#" -eq "0" ]; then
+            echo "Vim is already running"
+        else
+            command gvim --remote-silent "$@"
+        fi
     fi
 }
 
