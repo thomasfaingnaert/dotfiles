@@ -235,6 +235,16 @@ feature_vim()
         vim-gtk3
 }
 
+feature_nvim()
+{
+    # Install neovim
+    sudo snap install nvim --classic
+
+    # Install nvr (neovim remote)
+    sudo apt-get install -y python3-pip
+    pip3 install neovim-remote
+}
+
 feature_dotfiles()
 {
     # Install dependencies
@@ -342,22 +352,23 @@ main()
     # Ask the user what they want to install
     features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-        "Choose the features to install:" 22 35 15 \
-        dualboot    "Dual boot fixes" ON \
-        gnome       "GNOME config" ON \
-        locale      "Locale settings" ON \
-        vim         "Vim (repositories)" ON \
-        dotfiles    "Dotfiles" ON \
-        skeleton    "Home directory skeleton" ON \
-        keepassxc   "KeepassXC" ON \
-        skype       "Skype" ON \
-        vlc         "VLC" ON \
-        slack       "Slack" ON \
-        screencasts "Peek and Screenkey" ON \
-        documents   "Document creation" ON \
-        docker      "Docker" ON \
-        kvm         "KVM" ON \
-        direnv      "direnv" ON \
+        "Choose the features to install:" 23 35 16                            \
+        dualboot    "Dual boot fixes" ON                                      \
+        gnome       "GNOME config" ON                                         \
+        locale      "Locale settings" ON                                      \
+        vim         "Vim (repositories)" ON                                   \
+        nvim        "Neovim (snap)" ON                                        \
+        dotfiles    "Dotfiles" ON                                             \
+        skeleton    "Home directory skeleton" ON                              \
+        keepassxc   "KeepassXC" ON                                            \
+        skype       "Skype" ON                                                \
+        vlc         "VLC" ON                                                  \
+        slack       "Slack" ON                                                \
+        screencasts "Peek and Screenkey" ON                                   \
+        documents   "Document creation" ON                                    \
+        docker      "Docker" ON                                               \
+        kvm         "KVM" ON                                                  \
+        direnv      "direnv" ON                                               \
         3>&1 1>&2 2>&3)
 
     if [ $? -ne 0 ]; then
