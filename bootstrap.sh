@@ -283,18 +283,6 @@ feature_slack()
     sudo snap install slack --classic
 }
 
-feature_cpp_dev()
-{
-    # Install software needed for C++ development
-    sudo apt-get install -y \
-        clang               \
-        clangd              \
-        clang-format        \
-        cmake               \
-        make                \
-        ninja-build
-}
-
 feature_screencasts()
 {
     sudo apt-get install -y \
@@ -354,7 +342,7 @@ main()
     # Ask the user what they want to install
     features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-        "Choose the features to install:" 23 35 16 \
+        "Choose the features to install:" 22 35 15 \
         dualboot    "Dual boot fixes" ON \
         gnome       "GNOME config" ON \
         locale      "Locale settings" ON \
@@ -365,7 +353,6 @@ main()
         skype       "Skype" ON \
         vlc         "VLC" ON \
         slack       "Slack" ON \
-        cpp_dev     "C++ Development" ON \
         screencasts "Peek and Screenkey" ON \
         documents   "Document creation" ON \
         docker      "Docker" ON \
