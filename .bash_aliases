@@ -42,6 +42,36 @@ for al in $aliases; do
     function_exists $complete_func && __git_complete g$al $complete_func
 done
 
+# gcd: cd relative to the git repository's root
+gcd()
+{
+    if ! git rev-parse --show-toplevel >/dev/null 2>/dev/null; then
+        echo 'Error: Not in a git repository.'
+        return 1
+    fi
+
+    toplevel="$(git rev-parse --show-toplevel)"
+    relative_path="$1"
+
+    cd "$toplevel/$1"
+}
+
+_gcd()
+{
+    if ! git rev-parse --show-toplevel >/dev/null 2>/dev/null; then
+        COMPREPLY=()
+        return 0
+    fi
+
+    toplevel="$(git rev-parse --show-toplevel)"
+
+    # $2 contains the word being completed
+    COMPREPLY=($(cd $toplevel && compgen -d -S "/" -- "$2"))
+    return 0
+}
+
+complete -o nospace -F _gcd gcd
+
 o()
 {
     if [ "$#" -eq "0" ]; then
