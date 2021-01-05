@@ -50,26 +50,22 @@ gcd()
         return 1
     fi
 
-    toplevel="$(git rev-parse --show-toplevel)"
-    relative_path="$1"
-
+    local toplevel="$(git rev-parse --show-toplevel)"
     cd "$toplevel/$1"
 }
 
 _gcd()
 {
     if ! git rev-parse --show-toplevel >/dev/null 2>/dev/null; then
-        COMPREPLY=()
-        return 0
+        return
     fi
 
-    toplevel="$(git rev-parse --show-toplevel)"
-
-    # $2 contains the word being completed
-    COMPREPLY=($(cd $toplevel && compgen -d -S "/" -- "$2"))
-    return 0
+    local toplevel="$(git rev-parse --show-toplevel)"
+    cd "$toplevel"
+    _cd
 }
 
+# We use the same options that are used for cd (obtained via complete -p cd).
 complete -o nospace -F _gcd gcd
 
 o()
