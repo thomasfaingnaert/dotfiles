@@ -394,3 +394,6 @@ EOF
 if command -v direnv >/dev/null 2>&1; then
     eval "$(direnv hook bash)"
 fi
+
+# preserve newlines in history, instead of adding semicolons
+shopt -s cmdhist lithist
