@@ -203,6 +203,9 @@ feature_gnome()
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile}/ foreground-color 'rgb(212,212,212)'
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile}/ background-color 'rgb(30,30,30)'
 
+    # Use 'CTRL+=' in GNOME terminal to zoom in (i.e. CTRL++, but without SHIFT)
+    gsettings set org.gnome.Terminal.Legacy.Keybindings:/org/gnome/terminal/legacy/keybindings/ zoom-in '<Primary>equal'
+
     # Configure dash to dock
     gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
     gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 32
