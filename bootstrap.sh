@@ -337,6 +337,54 @@ feature_direnv()
 # MAIN #
 ########
 
+usage()
+{
+    cat <<EOF >&2
+Usage: $0 [OPTIONS]
+
+Bootstrap script to install all software on a fresh Linux install.
+
+Options:
+-h, --help          Show this help.
+-o, --off           Do not select any options by default.
+EOF
+}
+
+# Default selection state for items (ON/OFF)
+DEFAULT_SELECTION="ON"
+
+parse_args()
+{
+    local positional=()
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -h|--help)
+                usage; exit 0
+                ;;
+            -o|--off)
+                DEFAULT_SELECTION="OFF"
+                shift
+                ;;
+            -*)
+                echo "Unknown command-line option '$1'."
+                echo "Try '$0 --help' for more information."
+                exit 1
+                ;;
+            *)
+                positional+=("$1")
+                shift
+                ;;
+        esac
+    done
+    set -- "${positional[@]}"
+
+    if [[ $# -ne 0 ]]; then
+        echo "Expected 0 positional arguments, but got $#."
+        echo "Try '$0 --help' for more information."
+        exit 1
+    fi
+}
+
 ask_for_reboot()
 {
     if ask_question "Do you want to reboot?"; then
@@ -356,22 +404,22 @@ main()
     features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
         "Choose the features to install:" 23 35 16                            \
-        dualboot    "Dual boot fixes" ON                                      \
-        gnome       "GNOME config" ON                                         \
-        locale      "Locale settings" ON                                      \
-        vim         "Vim (repositories)" ON                                   \
-        nvim        "Neovim (snap)" ON                                        \
-        dotfiles    "Dotfiles" ON                                             \
-        skeleton    "Home directory skeleton" ON                              \
-        keepassxc   "KeepassXC" ON                                            \
-        skype       "Skype" ON                                                \
-        vlc         "VLC" ON                                                  \
-        slack       "Slack" ON                                                \
-        screencasts "Peek and Screenkey" ON                                   \
-        documents   "Document creation" ON                                    \
-        docker      "Docker" ON                                               \
-        kvm         "KVM" ON                                                  \
-        direnv      "direnv" ON                                               \
+        dualboot    "Dual boot fixes" "$DEFAULT_SELECTION"                    \
+        gnome       "GNOME config" "$DEFAULT_SELECTION"                       \
+        locale      "Locale settings" "$DEFAULT_SELECTION"                    \
+        vim         "Vim (repositories)" "$DEFAULT_SELECTION"                 \
+        nvim        "Neovim (snap)" "$DEFAULT_SELECTION"                      \
+        dotfiles    "Dotfiles" "$DEFAULT_SELECTION"                           \
+        skeleton    "Home directory skeleton" "$DEFAULT_SELECTION"            \
+        keepassxc   "KeepassXC" "$DEFAULT_SELECTION"                          \
+        skype       "Skype" "$DEFAULT_SELECTION"                              \
+        vlc         "VLC" "$DEFAULT_SELECTION"                                \
+        slack       "Slack" "$DEFAULT_SELECTION"                              \
+        screencasts "Peek and Screenkey" "$DEFAULT_SELECTION"                 \
+        documents   "Document creation" "$DEFAULT_SELECTION"                  \
+        docker      "Docker" "$DEFAULT_SELECTION"                             \
+        kvm         "KVM" "$DEFAULT_SELECTION"                                \
+        direnv      "direnv" "$DEFAULT_SELECTION"                             \
         3>&1 1>&2 2>&3)
 
     if [ $? -ne 0 ]; then
@@ -392,4 +440,5 @@ main()
     ask_for_reboot
 }
 
+parse_args "$@"
 main
