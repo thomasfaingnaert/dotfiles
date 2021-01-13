@@ -22,7 +22,8 @@
 	dc = diff --cached
 	fa = fetch --all
 	hotmail = config user.email thomas.faingnaert@hotmail.com
-	l = log --graph --abbrev-commit --decorate --date=relative --format=tformat:'%C(bold blue)%h%C(reset) - %C(dim white)%an%C(reset) %C(bold green)(%ar)%C(reset) - %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)'
+	l = log --abbrev-commit --decorate --date=relative --format=tformat:'%C(bold blue)%h%C(reset) - %C(dim white)%an%C(reset) %C(bold green)(%ar)%C(reset) - %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)'
+	lg = l --graph
 	m = merge
 	pl = pull
 	pr = !"pr() { git fetch $(git remote | grep ^upstream || echo origin) pull/$1/head:pr/$1 && git checkout pr/$1; }; pr"
@@ -32,11 +33,11 @@
 	rbi = rebase --interactive
 	st = status
 	ugent = config user.email thomas.faingnaert@ugent.be
-	wc = log --graph --abbrev-commit --decorate --date=relative --format=tformat:'%C(bold blue)%h%C(reset) - %C(dim white)%an%C(reset) %C(bold green)(%ar)%C(reset) - %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)' --patch --perl-regexp --author='^((?!Thomas Faingnaert|tfaingna).*)$'
+	wc = log --abbrev-commit --decorate --date=relative --format=tformat:'%C(bold blue)%h%C(reset) - %C(dim white)%an%C(reset) %C(bold green)(%ar)%C(reset) - %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)' --patch --perl-regexp --author='^((?!Thomas Faingnaert|tfaingna).*)$'
 	wn = !"wn() { git l $1@{1}..$1@{0} \"$@\"; }; wn"
 [core]
 	excludesfile = ~/.gitignore_global
-[pager]
-	log = diff-highlight | compact-diff-headers | less
-	show = diff-highlight | compact-diff-headers | less
-	diff = diff-highlight | compact-diff-headers | less
+	pager = delta
+
+[delta]
+	syntax-theme = OneHalfDark
