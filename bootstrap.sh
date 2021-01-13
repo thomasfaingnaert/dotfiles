@@ -255,6 +255,19 @@ feature_dotfiles()
         curl                \
         xclip
 
+    # Install delta
+    DELTA_URL="https://github.com/dandavison/delta/releases/download/0.5.1/git-delta_0.5.1_amd64.deb"
+    DELTA_SHA="d796d3b75d690afd29fd426e7db3792724c0074b9c7b2d3aea59a3d78e735f42"
+
+    TMPDIR="$(mktemp -d)"
+    (
+        cd "$TMPDIR" &&                                                   \
+        wget "$DELTA_URL" &&                                              \
+        echo "$DELTA_SHA $(basename "$DELTA_URL")" | sha256sum --check && \
+        sudo apt-get install -y ./"$(basename "$DELTA_URL")"
+    )
+    rm -r "$TMPDIR"
+
     # Install dotfiles
     ./config_unix.sh
 }
