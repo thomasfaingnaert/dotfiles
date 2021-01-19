@@ -13,6 +13,14 @@ snippet cd "cd into directory of bash script" w
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 endsnippet
 
+snippet log "logging, printing warnings, and error messages" w
+# logging
+log()  { echo -e "\033[0;36m[LOG]\033[0m \$1" >&2; }
+warn() { echo -e "\033[0;33m[WRN]\033[0m \$1" >&2; }
+err()  { echo -e "\033[0;31m[ERR]\033[0m \$1" >&2; }
+die()  { err "\$1"; exit 1; }
+endsnippet
+
 # Source: https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 snippet args "Parse command-line arguments in Bash" b
 usage()
