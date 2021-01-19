@@ -9,6 +9,10 @@ snippet pwd "Directory of Bash script" w
 "$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 endsnippet
 
+snippet cd "cd into directory of bash script" w
+cd "$( dirname "${BASH_SOURCE[0]}" )"
+endsnippet
+
 # Source: https://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash
 snippet args "Parse command-line arguments in Bash" b
 usage()
