@@ -1,17 +1,5 @@
-if executable('clang-format')
-    let &l:equalprg = "clang-format"
+setlocal formatoptions-=o
+setlocal formatoptions-=r
 
-    augroup cpp_auto_format
-        autocmd!
-        autocmd BufWritePre <buffer> call preserve_state#execute("silent normal gg=G") | redraw!
-    augroup end
-
-    setlocal shiftwidth=2 softtabstop=2 smartindent
-    setlocal formatoptions-=o
-    setlocal formatoptions-=r
-
-    let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe')
-                \ . '| setlocal equalprg<'
-                \ . '| execute ''autocmd! cpp_auto_format'''
-                \ . '| setlocal shiftwidth< softtabstop< smartindent< formatoptions<'
-endif
+let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe')
+            \ . '| setlocal formatoptions<'
