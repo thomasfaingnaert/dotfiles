@@ -336,13 +336,6 @@ augroup strip_whitespace
     autocmd BufWritePre * call preserve_state#execute("%s/\\s\\+$//e")
 augroup end
 
-"" Automatically open quickfix
-augroup auto_open_quickfix
-    autocmd!
-    autocmd QuickFixCmdPost [^l]* nested cwindow
-    autocmd QuickFixCmdPost    l* nested lwindow
-augroup end
-
 "" Customize popup window colours
 augroup lsp_float_colours
     autocmd!
