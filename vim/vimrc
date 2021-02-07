@@ -266,6 +266,7 @@ nnoremap <silent> <leader>c :lcd %:h<CR>
 nnoremap <silent> <leader>e :browse edit<CR>
 nnoremap <silent> <leader>h :nohlsearch<CR>
 nnoremap <silent> <leader>l :set list!<CR>
+nnoremap <silent> <leader>t :terminal<CR>
 nmap     <silent> <leader>u <Plug>underline_above
 nmap     <silent> <leader>U <Plug>underline_below
 nmap     <silent> <leader>v <Plug>edit_vimrc
