@@ -100,6 +100,33 @@ v()
     fi
 }
 
+# pygments
+function pygmentize-html()
+{
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: pygmentize-html <language> [-o <output file>] [option...]"
+        return 1
+    fi;
+
+    lexer="$1"
+    shift
+
+    pygmentize -l $lexer -f html -O noclasses -O nobackground $@
+}
+
+function pygmentize-svg()
+{
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: pygmentize-svg <language> [-o <output file>] [option...]"
+        return 1
+    fi;
+
+    lexer="$1"
+    shift
+
+    pygmentize -l $lexer -f svg $@
+}
+
 # Prompt
 # Based on Ubuntu default ~/.bashrc
 
