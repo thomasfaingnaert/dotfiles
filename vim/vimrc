@@ -110,7 +110,6 @@ set statusline+=\ Line:\ %l/%L              " current line and total number of l
 set statusline+=\ Col:\ %c                  " column number
 
 "" Splitting windows
-set splitbelow
 set splitright
 
 "" Other
