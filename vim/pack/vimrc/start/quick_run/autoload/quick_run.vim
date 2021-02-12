@@ -41,11 +41,27 @@ function! quick_run#run(is_bang, ...)
     if !empty(l:winnrs)
         let l:winnr = l:winnrs[0]
 
-        call win_execute(l:winnr, 'let s:bufnr = term_start(l:expanded_cmd, {"curwin": 1})')
+        call win_execute(l:winnr, 'let s:bufnr = term_start(l:expanded_cmd, {"curwin": 1, "exit_cb" : function("s:on_exit")})')
     else
-        let s:bufnr = term_start(l:expanded_cmd, {'vertical': 1})
+        let s:bufnr = term_start(l:expanded_cmd, {'vertical': 1, 'exit_cb' : function('s:on_exit')})
 
         " Switch back to previous window
         wincmd w
     endif
+endfunction
+
+function! s:on_exit(job, status)
+    let l:winids = win_findbuf(s:bufnr)
+
+    if empty(l:winids)
+        return
+    endif
+
+    let l:winid = l:winids[0]
+
+    " Wait for buffer content to be up to date
+    call term_wait(s:bufnr, 1000)
+
+    " Populate quickfix window
+    call win_execute(l:winid, 'cgetbuffer')
 endfunction
