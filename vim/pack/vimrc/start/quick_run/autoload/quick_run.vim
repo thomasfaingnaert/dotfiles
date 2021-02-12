@@ -26,7 +26,12 @@ function! quick_run#run(is_bang, ...)
 
     " Map % to current buffer name etc
     let l:expanded_cmd = deepcopy(l:cmd)
-    call map(l:expanded_cmd, {_, val -> expand(val)})
+
+    " Regex of expandable strings
+    " Inspired by:
+    " https://github.com/tpope/vim-dispatch/blob/fe6a34322829e466a7e8ce710a6ac5eabddff9fd/autoload/dispatch.vim#L93-L109
+    let l:expandable = '[%#]\%(:[p8~.htreS]\)*'
+    call map(l:expanded_cmd, {_, val -> substitute(val, l:expandable, '\=expand(submatch(0))', 'g')})
 
     " Reuse previous window, if possible
     let l:winnrs = win_findbuf(s:bufnr)
@@ -40,5 +45,4 @@ function! quick_run#run(is_bang, ...)
         " Switch back to previous window
         wincmd w
     endif
-
 endfunction
