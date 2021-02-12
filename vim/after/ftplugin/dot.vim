@@ -4,3 +4,4 @@ nnoremap <buffer> <silent> \lv :silent call system('xdg-open ' . expand('%:r') .
 
 let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe')
             \ . '| unlet b:quick_run_command'
+            \ . '| nunmap <buffer> \lv'
