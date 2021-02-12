@@ -191,10 +191,6 @@ let g:projectionist_heuristics = {
             \       }
             \   }}
 
-"" vim-lsp
-" Don't show diagnostics highlight
-let g:lsp_textprop_enabled = 0
-
 "" vim-easy-align
 let g:easy_align_delimiters = {
             \ '\': {
