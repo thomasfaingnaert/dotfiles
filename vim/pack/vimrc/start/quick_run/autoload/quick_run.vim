@@ -35,7 +35,7 @@ function! quick_run#run(is_bang, ...)
 
         call win_execute(l:winnr, 'let s:bufnr = term_start(l:expanded_cmd, {"curwin": 1})')
     else
-        let s:bufnr = term_start(l:expanded_cmd)
+        let s:bufnr = term_start(l:expanded_cmd, {'vertical': 1})
 
         " Switch back to previous window
         wincmd w

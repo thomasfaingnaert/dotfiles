@@ -109,6 +109,10 @@ set statusline+=%=                          " right align
 set statusline+=\ Line:\ %l/%L              " current line and total number of lines
 set statusline+=\ Col:\ %c                  " column number
 
+"" Splitting windows
+set splitbelow
+set splitright
+
 "" Other
 set encoding=utf-8
 set listchars=eol:¬,tab:▸\ ,trail:·,precedes:←,extends:→
