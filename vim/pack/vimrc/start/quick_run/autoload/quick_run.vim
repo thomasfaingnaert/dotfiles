@@ -24,17 +24,21 @@ function! quick_run#run(is_bang, ...)
 
     let s:lastcmd = l:cmd
 
-    " Close previous buffer
-    if s:bufnr != -1
-        silent! execute 'bdelete' s:bufnr
-    endif
-
     " Map % to current buffer name etc
     let l:expanded_cmd = deepcopy(l:cmd)
     call map(l:expanded_cmd, {_, val -> expand(val)})
 
-    let s:bufnr = term_start(l:expanded_cmd)
+    " Reuse previous window, if possible
+    let l:winnrs = win_findbuf(s:bufnr)
+    if !empty(l:winnrs)
+        let l:winnr = l:winnrs[0]
 
-    " Switch back to previous window
-    wincmd w
+        call win_execute(l:winnr, 'let s:bufnr = term_start(l:expanded_cmd, {"curwin": 1})')
+    else
+        let s:bufnr = term_start(l:expanded_cmd)
+
+        " Switch back to previous window
+        wincmd w
+    endif
+
 endfunction
