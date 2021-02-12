@@ -1,5 +1,6 @@
 let s:bufnr = -1
 let s:lastcmd = []
+let s:title = ''
 
 function! quick_run#run(is_bang, ...)
     if a:is_bang
@@ -33,6 +34,9 @@ function! quick_run#run(is_bang, ...)
     let l:expandable = '[%#]\%(:[p8~.htreS]\)*'
     call map(l:expanded_cmd, {_, val -> substitute(val, l:expandable, '\=expand(submatch(0))', 'g')})
 
+    " Set title
+    let s:title = join(l:expanded_cmd)
+
     " Run using the shell, so we can do '&&' etc.
     let l:expanded_cmd = [&shell, &shellcmdflag, join(l:expanded_cmd)]
 
@@ -41,9 +45,9 @@ function! quick_run#run(is_bang, ...)
     if !empty(l:winnrs)
         let l:winnr = l:winnrs[0]
 
-        call win_execute(l:winnr, 'let s:bufnr = term_start(l:expanded_cmd, {"curwin": 1, "exit_cb" : function("s:on_exit")})')
+        call win_execute(l:winnr, 'let s:bufnr = term_start(l:expanded_cmd, {"curwin": 1, "exit_cb" : function("s:on_exit"), "term_name" : s:title})')
     else
-        let s:bufnr = term_start(l:expanded_cmd, {'vertical': 1, 'exit_cb' : function('s:on_exit')})
+        let s:bufnr = term_start(l:expanded_cmd, {'vertical': 1, 'exit_cb' : function('s:on_exit'), 'term_name' : s:title})
 
         " Switch back to previous window
         wincmd w
@@ -64,4 +68,7 @@ function! s:on_exit(job, status)
 
     " Populate quickfix window
     call win_execute(l:winid, 'cgetbuffer')
+
+    " Set quickfix title
+    call setqflist([], 'a', {'title': s:title})
 endfunction
