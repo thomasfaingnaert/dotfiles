@@ -33,6 +33,9 @@ function! quick_run#run(is_bang, ...)
     let l:expandable = '[%#]\%(:[p8~.htreS]\)*'
     call map(l:expanded_cmd, {_, val -> substitute(val, l:expandable, '\=expand(submatch(0))', 'g')})
 
+    " Run using the shell, so we can do '&&' etc.
+    let l:expanded_cmd = [&shell, &shellcmdflag, join(l:expanded_cmd)]
+
     " Reuse previous window, if possible
     let l:winnrs = win_findbuf(s:bufnr)
     if !empty(l:winnrs)
