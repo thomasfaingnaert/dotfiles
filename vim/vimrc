@@ -30,6 +30,9 @@ if !has('nvim-0.5.0')
     Plug 'mattn/vim-lsp-settings'
     Plug 'thomasfaingnaert/vim-lsp-snippets'
     Plug 'thomasfaingnaert/vim-lsp-ultisnips'
+else
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'nvim-lua/completion-nvim'
 endif
 
 Plug 'vim-scripts/DoxygenToolkit.vim'
@@ -203,6 +206,59 @@ let g:easy_align_delimiters = {
 "" julia-vim
 " Do not use <Tab> for LaTeX2Unicode
 let g:latex_to_unicode_tab = 0
+
+"" nvim-lspconfig
+if has('nvim-0.5.0')
+    lua <<EOF
+    local nvim_lsp = require('lspconfig')
+
+    -- Custom LSP attach function
+    local lsp_on_attach = function(client, bufnr)
+        -- Helper functions
+        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+        local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+        -- Completion using omnifunc
+        buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+        -- Keymappings
+        local opts = { noremap = true, silent = true }
+        buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+        buf_set_keymap('n', '<C-]>', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+        buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+        buf_set_keymap('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+        buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+        buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+        buf_set_keymap('n', '<Space>r', '<cmd> lua vim.lsp.buf.references()<CR>', opts)
+
+        if client.resolved_capabilities.document_formatting then
+            buf_set_keymap('n', '<Space>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+        end
+
+        -- Call completion-nvim
+        require('completion').on_attach()
+    end
+
+    -- Register servers
+    local servers = { 'clangd' }
+
+    for _, server in ipairs(servers) do
+        nvim_lsp[server].setup { on_attach = lsp_on_attach }
+    end
+EOF
+
+    " Set completeopt so we have a better experience with completion-nvim
+    set completeopt=menuone,noinsert,noselect
+
+    " Do not display completion messages, such as 'match m of n'
+    set shortmess+=c
+
+    " Also match completion items based on substring and fuzzy matching
+    let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+
+    " Use correct color for error diagnostics
+    highlight! link LspDiagnosticsDefaultError ErrorMsg
+endif
 
 " --------------------------------------------------------------------------------
 " Mappings

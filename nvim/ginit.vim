@@ -1,5 +1,3 @@
-colorscheme codedark
-
 if has('win32')
     set guifont=Consolas:h11
 else
