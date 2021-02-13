@@ -40,34 +40,46 @@ function! quick_run#run(is_bang, ...)
     " Run using the shell, so we can do '&&' etc.
     let l:expanded_cmd = [&shell, &shellcmdflag, join(l:expanded_cmd)]
 
+    " Store current window ID
+    let l:curwin = win_getid()
+
     " Reuse previous window, if possible
     let l:winnrs = win_findbuf(s:bufnr)
     if !empty(l:winnrs)
         let l:winnr = l:winnrs[0]
 
-        call win_execute(l:winnr, 'let s:bufnr = term_start(l:expanded_cmd, {"curwin": 1, "exit_cb" : function("s:on_exit"), "term_name" : s:title})')
+        if !has('nvim')
+            call win_execute(l:winnr, 'let s:bufnr = term_start(l:expanded_cmd, {"curwin": 1, "exit_cb" : function("s:on_exit"), "term_name" : s:title})')
+        else
+            call win_gotoid(l:winnr)
+            enew!
+            call termopen(l:expanded_cmd, {'on_exit' : function('s:on_exit')})
+            let s:bufnr = bufnr()
+        endif
     else
-        let s:bufnr = term_start(l:expanded_cmd, {'vertical': 1, 'exit_cb' : function('s:on_exit'), 'term_name' : s:title})
+        if !has('nvim')
+            let s:bufnr = term_start(l:expanded_cmd, {'vertical': 1, 'exit_cb' : function('s:on_exit'), 'term_name' : s:title})
+        else
+            vsplit
+            enew
+            let s:bufnr = bufnr()
 
-        " Switch back to previous window
-        wincmd w
+            call termopen(l:expanded_cmd, {'on_exit' : function('s:on_exit')})
+        endif
     endif
+
+    " Restore previous window
+    call win_gotoid(l:curwin)
 endfunction
 
-function! s:on_exit(job, status)
-    let l:winids = win_findbuf(s:bufnr)
-
-    if empty(l:winids)
-        return
+function! s:on_exit(...)
+    if !has('nvim')
+        " Wait for buffer content to be up to date
+        call term_wait(s:bufnr, 1000)
     endif
 
-    let l:winid = l:winids[0]
-
-    " Wait for buffer content to be up to date
-    call term_wait(s:bufnr, 1000)
-
     " Populate quickfix window
-    call win_execute(l:winid, 'cgetbuffer')
+    execute 'cgetbuffer' s:bufnr
 
     " Set quickfix title
     call setqflist([], 'a', {'title': s:title})
