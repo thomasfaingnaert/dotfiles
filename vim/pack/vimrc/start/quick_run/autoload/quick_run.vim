@@ -43,29 +43,24 @@ function! quick_run#run(is_bang, ...)
     " Store current window ID
     let l:curwin = win_getid()
 
-    " Reuse previous window, if possible
-    let l:winnrs = win_findbuf(s:bufnr)
-    if !empty(l:winnrs)
-        let l:winnr = l:winnrs[0]
-
-        if !has('nvim')
-            call win_execute(l:winnr, 'let s:bufnr = term_start(l:expanded_cmd, {"curwin": 1, "exit_cb" : function("s:on_exit"), "term_name" : s:title})')
-        else
-            call win_gotoid(l:winnr)
-            enew!
-            call termopen(l:expanded_cmd, {'on_exit' : function('s:on_exit')})
-            let s:bufnr = bufnr()
-        endif
+    " Reuse previous window, if possible.
+    " Otherwise, just open a new split
+    let l:winids = win_findbuf(s:bufnr)
+    if !empty(l:winids)
+        call win_gotoid(l:winids[0])
     else
-        if !has('nvim')
-            let s:bufnr = term_start(l:expanded_cmd, {'vertical': 1, 'exit_cb' : function('s:on_exit'), 'term_name' : s:title})
-        else
-            vsplit
-            enew
-            let s:bufnr = bufnr()
+        vsplit
+    endif
 
-            call termopen(l:expanded_cmd, {'on_exit' : function('s:on_exit')})
-        endif
+    " Edit new file, so that we can open a terminal in this buffer.
+    enew!
+
+    " Start terminal
+    if !has('nvim')
+        let s:bufnr = term_start(l:expanded_cmd, {'exit_cb' : function('s:on_exit'), 'term_name' : s:title, 'curwin' : 1})
+    else
+        call termopen(l:expanded_cmd, {'on_exit' : function('s:on_exit')})
+        let s:bufnr = bufnr()
     endif
 
     " Restore previous window
