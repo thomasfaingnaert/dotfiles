@@ -210,6 +210,12 @@ feature_gnome()
     gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
     gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 32
     gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
+
+    # Only show windows of current workspace in dash to dock
+    gsettings set org.gnome.shell.extensions.dash-to-dock isolate-workspaces true
+
+    # Make workspaces span multiple displays
+    gsettings set org.gnome.mutter workspaces-only-on-primary false
 }
 
 feature_locale()
