@@ -216,6 +216,10 @@ feature_gnome()
 
     # Make workspaces span multiple displays
     gsettings set org.gnome.mutter workspaces-only-on-primary false
+
+    # Use Super+CTRL+arrow to switch workspaces
+    gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "['<Primary><Super>Up','<Primary><Super>Left']"
+    gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "['<Primary><Super>Down','<Primary><Super>Right']"
 }
 
 feature_locale()
