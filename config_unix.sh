@@ -3,6 +3,7 @@ ln -sf "$(pwd)/.bash_aliases" ~/.bash_aliases
 ln -sf "$(pwd)/.profile" ~/.profile
 ln -sf "$(pwd)/.gitconfig" ~/.gitconfig
 ln -sf "$(pwd)/.gitignore_global" ~/.gitignore_global
+ln -sf "$(pwd)/.tmux.conf" ~/.tmux.conf
 
 ln -sfn "$(pwd)/vim" ~/.vim
 ln -sfn "$(pwd)/nvim" ~/.config/nvim
