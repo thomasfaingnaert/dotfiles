@@ -1,0 +1,31 @@
+snippet shell-escape "Invoke latex with --shell-escape" b
+\$latex = 'latex %O --shell-escape %S';
+\$pdflatex = 'pdflatex %O --shell-escape %S';
+endsnippet
+
+snippet pdf "PDF mode" b
+\$pdf_mode = 1;
+endsnippet
+
+snippet glossaries "Run makeglossaries" b
+add_cus_dep('glo', 'gls', 0, 'run_makeglossaries');
+add_cus_dep('acn', 'acr', 0, 'run_makeglossaries');
+
+sub run_makeglossaries {
+	if ( $silent ) {
+		system "makeglossaries -q '$_[0]'";
+	}
+	else {
+		system "makeglossaries '$_[0]'";
+	};
+}
+
+push @generated_exts, 'glo', 'glg', 'gls';
+push @generated_exts, 'ist';
+
+\$cleanup_includes_cusdep_generated = 1;
+endsnippet
+
+snippet main "Only compile main file" b
+@default_files = ( '${1:main.tex}' );
+endsnippet
