@@ -26,3 +26,6 @@ fi
 
 mkdir -p ~/.config/gdb
 ln -sf "$(pwd)/.gdbinit" ~/.gdbinit
+
+mkdir -p ~/.config/Projecteur
+ln -sf "$(pwd)/Projecteur.conf" ~/.config/Projecteur/Projecteur.conf
