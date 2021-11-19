@@ -48,4 +48,6 @@
 	hunk-header-decoration-style = blue underline
 	max-line-length = 0
 	minus-style = syntax auto
+	side-by-side = true
 	syntax-theme = OneHalfDark
+	wrap-max-lines = unlimited
