@@ -46,5 +46,6 @@
 	file-decoration-style = blue box
 	file-style = blue
 	hunk-header-decoration-style = blue underline
+	max-line-length = 0
 	minus-style = syntax auto
 	syntax-theme = OneHalfDark
