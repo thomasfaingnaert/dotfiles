@@ -8,6 +8,7 @@
 	keepBackup = false
 	prompt = false
 [diff]
+	colorMoved = default
 	tool = gvimdiff
 [difftool]
 	prompt = false
