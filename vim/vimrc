@@ -347,12 +347,12 @@ nmap <leader>s :ls<CR>:vert sbuffer <C-z><SID>deselect_wildmenu_option
 nmap <leader>d :ls<CR>:bdelete <C-z><SID>deselect_wildmenu_option
 
 "" Fugitive
-nnoremap <silent> <leader>gb :Gbrowse<CR>
+nnoremap <silent> <leader>gb :GBrowse<CR>
 nnoremap <silent> <leader>gc :Glcd<CR>
 nnoremap <silent> <leader>ge :Gedit<CR>
-nnoremap <silent> <leader>gp :Gpush<CR>
+nnoremap <silent> <leader>gp :Git push<CR>
 nnoremap <silent> <leader>gr :Gread<CR>
-nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gs :Git<CR>
 nnoremap <silent> <leader>gw :Gwrite<CR>
 
 "" Operators
