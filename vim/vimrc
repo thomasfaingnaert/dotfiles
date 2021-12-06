@@ -222,6 +222,9 @@ if has('nvim-0.5.0')
         -- Completion using omnifunc
         buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
+        -- Use LSP for formatting
+        buf_set_option('formatexpr', 'v:lua.vim.lsp.formatexpr()')
+
         -- Keymappings
         local opts = { noremap = true, silent = true }
         buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
