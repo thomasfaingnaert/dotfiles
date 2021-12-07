@@ -32,7 +32,8 @@ if !has('nvim-0.5.0')
     Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 else
     Plug 'neovim/nvim-lspconfig'
-    Plug 'nvim-lua/completion-nvim'
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-nvim-lsp'
 endif
 
 Plug 'vim-scripts/DoxygenToolkit.vim'
@@ -211,6 +212,25 @@ let g:latex_to_unicode_tab = 0
 "" nvim-lspconfig
 if has('nvim-0.5.0')
     lua <<EOF
+    local cmp = require('cmp')
+    cmp.setup({
+        snippet = {
+            expand = function(args)
+                vim.fn['UltiSnips#Anon'](args.body)
+            end
+        },
+        mapping = {
+            ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+            ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' })
+        },
+        sources = cmp.config.sources({
+            { name = 'nvim_lsp' }
+        })
+    })
+
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
     local nvim_lsp = require('lspconfig')
 
     -- Custom LSP attach function
@@ -238,16 +258,16 @@ if has('nvim-0.5.0')
         if client.resolved_capabilities.document_formatting then
             buf_set_keymap('n', '<Space>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
         end
-
-        -- Call completion-nvim
-        require('completion').on_attach()
     end
 
     -- Register servers
     local servers = { 'clangd' }
 
     for _, server in ipairs(servers) do
-        nvim_lsp[server].setup { on_attach = lsp_on_attach }
+        nvim_lsp[server].setup {
+            capabilities = capabilities,
+            on_attach = lsp_on_attach
+        }
     end
 EOF
 
@@ -328,7 +348,7 @@ nnoremap <silent> <leader>c :lcd %:h<CR>
 nnoremap <silent> <leader>e :browse edit<CR>
 nnoremap <silent> <leader>h :nohlsearch<CR>
 nnoremap <silent> <leader>l :set list!<CR>
-if has ('nvim')
+if has('nvim')
     nnoremap <silent> <leader>t :split<CR>:terminal<CR>
 else
     nnoremap <silent> <leader>t :terminal<CR>
