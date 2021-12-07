@@ -376,6 +376,8 @@ nnoremap <silent> <leader>w :if filereadable(expand('%')) <Bar> update <Bar> els
 nnoremap <silent> <leader>y :call preserve_state#execute('silent normal! gg"+yG')<CR>
 
 if has('nvim-0.5.0')
+    nnoremap <leader>f <cmd>Telescope builtin<CR>
+
     nnoremap <leader>b <cmd>Telescope buffers<CR>
     nnoremap <C-g> <cmd>Telescope live_grep<CR>
     nnoremap <C-p> <cmd>Telescope find_files<CR>
