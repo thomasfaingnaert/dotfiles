@@ -13,7 +13,6 @@ endif
 
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-unimpaired'
@@ -179,29 +178,6 @@ endif
 " I prefer vim-surround keymappings
 runtime macros/sandwich/keymap/surround.vim
 
-"" vim-projectionist
-let g:projectionist_heuristics = {
-            \   'include/*.h|src/*.cpp': {
-            \       'include/*.h': {
-            \           'alternate': 'src/{}.cpp',
-            \           'type': 'header'
-            \       },
-            \       'src/*.cpp': {
-            \           'alternate': 'include/{}.h',
-            \           'type': 'source'
-            \       }
-            \   },
-            \   '*.h&*.cpp': {
-            \       '*.h': {
-            \           'alternate': '{}.cpp',
-            \           'type': 'header'
-            \       },
-            \       '*.cpp': {
-            \           'alternate': '{}.h',
-            \           'type': 'source'
-            \       }
-            \   }}
-
 "" vim-easy-align
 let g:easy_align_delimiters = {
             \ '\': {
@@ -342,7 +318,7 @@ xnoremap <silent> <A-j> :move '>+1<CR>gv=gv
 xnoremap <silent> <A-k> :move '<-2<CR>gv=gv
 
 "" Quickly switch between alternate files
-nnoremap <expr> <BS> exists(':A') ? ':A<CR>' : '<C-^>'
+nnoremap <silent> <expr> <BS> exists(':ClangdSwitchSourceHeader') ? ':ClangdSwitchSourceHeader<CR>' : '<C-^>'
 
 "" Increase and reset font size
 nmap <M-+> <Plug>font_size_increase
