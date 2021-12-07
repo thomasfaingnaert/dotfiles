@@ -268,13 +268,31 @@ if has('nvim-0.5.0')
     end
 
     -- Register servers
-    local servers = { 'clangd', 'texlab' }
+    local servers = {
+        {'clangd', {}},
+        {'texlab', {
+            settings = {
+                texlab = {
+                    build = {
+                        forwardSearchAfter = true,
+                        onSave = true
+                    },
+                    forwardSearch = {
+                        executable = 'zathura',
+                        args = { '--synctex-forward', '%l:1:%f', '%p', '-x', 'nvr --remote +"%{line}" "%{input}"' }
+                    }
+                }
+            }
+        }}
+    }
 
     for _, server in ipairs(servers) do
-        nvim_lsp[server].setup {
-            capabilities = capabilities,
-            on_attach = lsp_on_attach
-        }
+        config = server[2]
+
+        config.capabilities = capabilities
+        config.on_attach = lsp_on_attach
+
+        nvim_lsp[server[1]].setup(config)
     end
 EOF
 
