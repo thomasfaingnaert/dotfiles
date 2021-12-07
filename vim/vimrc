@@ -18,7 +18,9 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-unimpaired'
 
-Plug 'lervag/vimtex'
+if !has('nvim-0.5.0')
+    Plug 'lervag/vimtex'
+endif
 Plug 'machakann/vim-sandwich'
 Plug 'junegunn/vim-easy-align'
 
@@ -268,7 +270,7 @@ if has('nvim-0.5.0')
     end
 
     -- Register servers
-    local servers = { 'clangd' }
+    local servers = { 'clangd', 'texlab' }
 
     for _, server in ipairs(servers) do
         nvim_lsp[server].setup {
