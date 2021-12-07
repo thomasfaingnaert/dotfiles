@@ -294,6 +294,18 @@ if has('nvim-0.5.0')
 
         nvim_lsp[server[1]].setup(config)
     end
+
+    require('telescope').setup({
+        defaults = {
+            mappings = {
+                -- Insert mode
+                i = {
+                    ["<C-a>"] = { "<Home>", type = "command" },
+                    ["<C-e>"] = { "<End>", type = "command" }
+                }
+            }
+        }
+    })
 EOF
 
     " Use correct color for error diagnostics
