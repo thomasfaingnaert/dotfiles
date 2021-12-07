@@ -35,6 +35,9 @@ else
     Plug 'hrsh7th/nvim-cmp'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
 endif
 
 Plug 'vim-scripts/DoxygenToolkit.vim'
@@ -354,12 +357,14 @@ nmap     <silent> <leader>v <Plug>edit_vimrc
 nnoremap <silent> <leader>w :if filereadable(expand('%')) <Bar> update <Bar> else <Bar> write <Bar> endif<CR>
 nnoremap <silent> <leader>y :call preserve_state#execute('silent normal! gg"+yG')<CR>
 
-" Deselect selected wildmenu option, if any
-cnoremap <expr> <SID>deselect_wildmenu_option wildmenumode() ? "\<S-Tab>" : ""
-
-nmap <leader>b :ls<CR>:buffer <C-z><SID>deselect_wildmenu_option
-nmap <leader>s :ls<CR>:vert sbuffer <C-z><SID>deselect_wildmenu_option
-nmap <leader>d :ls<CR>:bdelete <C-z><SID>deselect_wildmenu_option
+if has('nvim-0.5.0')
+    nnoremap <leader>b <cmd>Telescope buffers<CR>
+    nnoremap <C-p> <cmd>Telescope find_files<CR>
+else
+    " Deselect selected wildmenu option, if any
+    cnoremap <expr> <SID>deselect_wildmenu_option wildmenumode() ? "\<S-Tab>" : ""
+    nmap <leader>b :ls<CR>:buffer <C-z><SID>deselect_wildmenu_option
+endif
 
 "" Fugitive
 nnoremap <silent> <leader>gb :GBrowse<CR>
