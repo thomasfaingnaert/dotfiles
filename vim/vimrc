@@ -18,9 +18,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-unimpaired'
 
-if !has('nvim-0.5.0')
-    Plug 'lervag/vimtex'
-endif
+Plug 'lervag/vimtex'
 Plug 'machakann/vim-sandwich'
 Plug 'junegunn/vim-easy-align'
 
