@@ -286,6 +286,13 @@ if has('nvim-0.5.0')
                     ["<C-e>"] = { "<End>", type = "command" }
                 }
             }
+        },
+
+        pickers = {
+            current_buffer_fuzzy_find = {
+                -- Swap the order of results, so lower line numbers come first.
+                sorting_strategy = 'ascending'
+            }
         }
     })
 
