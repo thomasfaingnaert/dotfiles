@@ -305,9 +305,6 @@ if has('nvim-0.5.0')
         return ret
     end
 EOF
-
-    " Use correct color for error diagnostics
-    highlight! link LspDiagnosticsDefaultError ErrorMsg
 endif
 
 " --------------------------------------------------------------------------------
