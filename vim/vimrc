@@ -116,6 +116,8 @@ set statusline+=%(\ %r%)                    " readonly flag: [RO] or empty
 set statusline+=%(\ (%{fugitive#head()})%)  " current branch
 set statusline+=%=                          " right align
 if has('nvim-0.5.0')
+    set statusline+=%(\ [%{luaeval('get_diagnostics_statusline()')}]\ %)
+                                            " diagnostics
     set statusline+=%(\ [%{luaeval('get_current_lsp_servers()')}]\ %)
                                             " active lsp servers
 endif
@@ -303,6 +305,19 @@ if has('nvim-0.5.0')
         end
 
         return ret
+    end
+
+    -- Get a summary of diagnostics for use in the 'statusline'.
+    function get_diagnostics_statusline()
+        -- Grab diagnostics for all buffers.
+        num_errors = #vim.diagnostic.get(nil, { severity = vim.diagnostic.severity.ERROR })
+        num_warnings = #vim.diagnostic.get(nil, { severity = vim.diagnostic.severity.WARN })
+
+        if num_errors == 0 and num_warnings == 0 then
+            return ''
+        else
+            return string.format('%d ERR | %d WRN', num_errors, num_warnings)
+        end
     end
 EOF
 endif
