@@ -403,6 +403,8 @@ if has('nvim-0.5.0')
     nnoremap <leader>b <cmd>Telescope buffers<CR>
     nnoremap <C-g> <cmd>Telescope live_grep<CR>
     nnoremap <C-p> <cmd>Telescope find_files<CR>
+    " NOTE: This actually maps <C-/>
+    nnoremap <C-_> <cmd>Telescope current_buffer_fuzzy_find<CR>
 else
     " Deselect selected wildmenu option, if any
     cnoremap <expr> <SID>deselect_wildmenu_option wildmenumode() ? "\<S-Tab>" : ""
