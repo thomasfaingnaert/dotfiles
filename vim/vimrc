@@ -144,6 +144,7 @@ set path=.,,**
 set nojoinspaces
 set isfname-==
 set mouse=a
+set termguicolors
 
 " This fixes netrw-gx and :Gbrowse not working in gVim
 if has('unix')
@@ -285,7 +286,9 @@ if has('nvim-0.5.0')
                     ["<C-a>"] = { "<Home>", type = "command" },
                     ["<C-e>"] = { "<End>", type = "command" }
                 }
-            }
+            },
+
+            winblend = 10
         },
 
         pickers = {
