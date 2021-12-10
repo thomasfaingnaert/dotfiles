@@ -247,6 +247,10 @@ if has('nvim-0.5.0')
         buf_set_keymap('n', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
         buf_set_keymap('i', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
         buf_set_keymap('n', '<Space>a', '<cmd>Telescope lsp_code_actions<CR>', opts)
+        buf_set_keymap('n', 'gO', '<cmd>Telescope lsp_document_symbols<CR>', opts)
+        buf_set_keymap('n', 'go', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', opts)
+        buf_set_keymap('n', 'g]', '<cmd>Telescope lsp_definitions<CR>', opts)
+        buf_set_keymap('n', 'g<C-]>', '<cmd>Telescope lsp_definitions<CR>', opts)
 
         if client.resolved_capabilities.document_formatting then
             buf_set_keymap('n', '<Space>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
@@ -425,10 +429,6 @@ if has('nvim-0.5.0')
     nnoremap <C-p> <cmd>Telescope find_files<CR>
     " NOTE: This actually maps <C-/>
     nnoremap <C-_> <cmd>Telescope current_buffer_fuzzy_find<CR>
-    nnoremap gO <cmd>Telescope lsp_document_symbols<CR>
-    nnoremap go <cmd>Telescope lsp_dynamic_workspace_symbols<CR>
-    nnoremap g] <cmd>Telescope lsp_definitions<CR>
-    nnoremap g<C-]> <cmd>Telescope lsp_definitions<CR>
 else
     " Deselect selected wildmenu option, if any
     cnoremap <expr> <SID>deselect_wildmenu_option wildmenumode() ? "\<S-Tab>" : ""
