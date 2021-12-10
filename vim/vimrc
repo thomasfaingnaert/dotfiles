@@ -259,30 +259,32 @@ if has('nvim-0.5.0')
 
     -- Register servers
     local servers = {
-        {'clangd', {}},
-        {'texlab', {
+        clangd = {},
+
+        texlab = {
             settings = {
                 texlab = {
                     build = {
                         forwardSearchAfter = true,
                         onSave = true
                     },
+
                     forwardSearch = {
                         executable = 'zathura',
                         args = { '--synctex-forward', '%l:1:%f', '%p', '-x', 'nvr --remote +"%{line}" "%{input}"' }
                     }
                 }
             }
-        }}
+        }
     }
 
-    for _, server in ipairs(servers) do
-        config = server[2]
+    for server, config in pairs(servers) do
+        config = vim.tbl_deep_extend("keep", config, {
+            capabilities = capabilities,
+            on_attach = lsp_on_attach
+        })
 
-        config.capabilities = capabilities
-        config.on_attach = lsp_on_attach
-
-        nvim_lsp[server[1]].setup(config)
+        nvim_lsp[server].setup(config)
     end
 
     require('telescope').setup({
