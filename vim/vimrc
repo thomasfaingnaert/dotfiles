@@ -244,6 +244,7 @@ if has('nvim-0.5.0')
         buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
         buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
         buf_set_keymap('n', '<Space>r', '<cmd>Telescope lsp_references<CR>', opts)
+        buf_set_keymap('i', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 
         if client.resolved_capabilities.document_formatting then
             buf_set_keymap('n', '<Space>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
@@ -334,6 +335,9 @@ if has('nvim-0.5.0')
         end
     end
 EOF
+
+    " Underline active parameter in signature help.
+    highlight! link LspSignatureActiveParameter Underlined
 endif
 
 " --------------------------------------------------------------------------------
