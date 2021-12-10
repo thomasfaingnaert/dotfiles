@@ -300,7 +300,17 @@ if has('nvim-0.5.0')
                 layout_config = {
                     prompt_position = 'top'
                 }
-            }
+            },
+
+            lsp_document_symbols = {
+                -- Swap the order of results, so lower line numbers come first.
+                sorting_strategy = 'ascending',
+
+                -- Show the prompt at the top.
+                layout_config = {
+                    prompt_position = 'top'
+                }
+            },
         }
     })
 
