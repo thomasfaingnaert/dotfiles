@@ -288,30 +288,19 @@ if has('nvim-0.5.0')
                 }
             },
 
+            -- Swap the order of results, so lower line numbers come first.
+            -- This is nice for e.g. current_buffer_fuzzy_find and
+            -- lsp_document_symbols, but let's enable it globally for
+            -- consistency.
+            sorting_strategy = 'ascending',
+
+            -- Show the prompt at the top.
+            layout_config = {
+                prompt_position = 'top'
+            },
+
             winblend = 10
         },
-
-        pickers = {
-            current_buffer_fuzzy_find = {
-                -- Swap the order of results, so lower line numbers come first.
-                sorting_strategy = 'ascending',
-
-                -- Show the prompt at the top.
-                layout_config = {
-                    prompt_position = 'top'
-                }
-            },
-
-            lsp_document_symbols = {
-                -- Swap the order of results, so lower line numbers come first.
-                sorting_strategy = 'ascending',
-
-                -- Show the prompt at the top.
-                layout_config = {
-                    prompt_position = 'top'
-                }
-            },
-        }
     })
 
     -- Return the current LSP servers that are attached to
