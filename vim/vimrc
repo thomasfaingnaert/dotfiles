@@ -423,6 +423,7 @@ if has('nvim-0.5.0')
     nnoremap gO <cmd>Telescope lsp_document_symbols<CR>
     nnoremap go <cmd>Telescope lsp_dynamic_workspace_symbols<CR>
     nnoremap g] <cmd>Telescope lsp_definitions<CR>
+    nnoremap g<C-]> <cmd>Telescope lsp_definitions<CR>
 else
     " Deselect selected wildmenu option, if any
     cnoremap <expr> <SID>deselect_wildmenu_option wildmenumode() ? "\<S-Tab>" : ""
