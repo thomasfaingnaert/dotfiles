@@ -378,6 +378,18 @@ feature_virtualcam()
 
     # Update initramfs
     sudo update-initramfs -c -k $(uname -r)
+
+    # Create a launcher to automatically start OBS virtual camera.
+    cat <<EOF > ~/.local/share/applications/virtualcamera.desktop
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Exec=obs --scene "Virtual Camera" --startvirtualcam --minimize-to-tray
+Icon=com.obsproject.Studio
+Name=Start OBS Virtual Camera
+EOF
 }
 
 ########
