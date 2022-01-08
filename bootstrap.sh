@@ -356,6 +356,30 @@ feature_direnv()
     sudo apt-get install -y direnv
 }
 
+feature_virtualcam()
+{
+    # Install dependencies
+    sudo apt-get install -y ffmpeg
+    sudo apt-get install -y v4l2loopback-dkms
+
+    # Install OBS
+    sudo add-apt-repository -y ppa:obsproject/obs-studio
+    sudo apt-get update -y
+    sudo apt-get install -y obs-studio
+
+    # Load v4l2loopback on boot
+    if ! grep -q '^v4l2loopback' /etc/modules; then
+        printf "\nv4l2loopback\n" | sudo tee -a /etc/modules >/dev/null
+    fi
+
+    # Set default v4l2loopback options
+    # NOTE: exclusive_caps is necessary to allow connecting to webcam before producer (= OBS) is connected.
+    echo 'options v4l2loopback devices=1 video_nr=10 card_label="OBS Virtualcam" exclusive_caps=0' | sudo tee /etc/modprobe.d/v4l2loopback.conf
+
+    # Update initramfs
+    sudo update-initramfs -c -k $(uname -r)
+}
+
 ########
 # MAIN #
 ########
@@ -426,7 +450,7 @@ main()
     # Ask the user what they want to install
     features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-        "Choose the features to install:" 23 35 16                            \
+        "Choose the features to install:" 23 35 17                            \
         dualboot    "Dual boot fixes" "$DEFAULT_SELECTION"                    \
         gnome       "GNOME config" "$DEFAULT_SELECTION"                       \
         locale      "Locale settings" "$DEFAULT_SELECTION"                    \
@@ -443,6 +467,7 @@ main()
         docker      "Docker" "$DEFAULT_SELECTION"                             \
         kvm         "KVM" "$DEFAULT_SELECTION"                                \
         direnv      "direnv" "$DEFAULT_SELECTION"                             \
+        virtualcam  "Virtual webcam using OBS" "$DEFAULT_SELECTION"           \
         3>&1 1>&2 2>&3)
 
     if [ $? -ne 0 ]; then
