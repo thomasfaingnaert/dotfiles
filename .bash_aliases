@@ -425,7 +425,12 @@ fi
 # preserve newlines in history, instead of adding semicolons
 shopt -s cmdhist lithist
 
-# use neovim instead of vim (if it's installed)
-if command -v nvim >/dev/null 2>&1; then
-    alias vim=nvim
-fi
+vim()
+{
+    # use neovim instead of vim (if it's installed)
+    if command -v nvim >/dev/null 2>&1; then
+        command nvim $@
+    else
+        command vim $@
+    fi
+}
