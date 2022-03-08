@@ -413,7 +413,7 @@ nnoremap <silent> <leader>e :browse edit<CR>
 nnoremap <silent> <leader>h :nohlsearch<CR>
 nnoremap <silent> <leader>l :set list!<CR>
 if has('nvim')
-    nnoremap <silent> <leader>t :split<CR>:terminal<CR>
+    nnoremap <silent> <leader>t :split<CR>:terminal<CR>:startinsert<CR>
 else
     nnoremap <silent> <leader>t :terminal<CR>
 endif
@@ -516,11 +516,3 @@ augroup lsp_buffer_settings
     autocmd!
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup end
-
-"" Start insert mode for terminals in Neovim
-if has('nvim')
-    augroup nvim_term_autoinsert
-        autocmd!
-        autocmd TermOpen * startinsert
-    augroup end
-endif
