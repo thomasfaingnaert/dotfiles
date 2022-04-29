@@ -484,6 +484,11 @@ command! ClipboardToggle
             \       set clipboard+=unnamedplus |
             \   endif
 
+"" Show TODOs
+command! TODOs
+            \   grep -rF 'TODO' . |
+            \   grepadd -rF 'FIXME' .
+
 " --------------------------------------------------------------------------------
 " Autocommands
 " --------------------------------------------------------------------------------
