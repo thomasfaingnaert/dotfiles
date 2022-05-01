@@ -175,7 +175,7 @@ feature_gnome()
     local favorites=(
         "'firefox_firefox.desktop'"
         "'org.gnome.Nautilus.desktop'"
-        "'nvim.desktop'"
+        "'nvim-qt.desktop'"
         "'slack_slack.desktop'"
     )
 
@@ -219,12 +219,17 @@ feature_gnome()
 
 feature_nvim()
 {
-    # Install neovim
-    sudo snap install nvim --classic
+    # Install neovim using appimage
+    NEOVIM_URL="https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
 
-    # Install nvr (neovim remote)
-    sudo apt-get install -y python3-pip
-    pip3 install neovim-remote
+    mkdir -p ~/bin/store
+    wget "$NEOVIM_URL" -O ~/bin/store/nvim.appimage
+    chmod +x ~/bin/store/nvim.appimage
+
+    ln -sf ~/bin/store/nvim.appimage ~/bin/nvim
+
+    # Install Neovim GUI
+    sudo apt-get install -y neovim-qt
 }
 
 feature_dotfiles()
