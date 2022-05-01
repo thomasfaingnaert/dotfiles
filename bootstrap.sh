@@ -222,25 +222,6 @@ feature_gnome()
     gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "['<Primary><Super>Down','<Primary><Super>Right']"
 }
 
-feature_locale()
-{
-    local LOCALE="en_GB.UTF-8"
-
-    # Set user locale
-    dbus-send --system --dest=org.freedesktop.Accounts /org/freedesktop/Accounts/User${UID} org.freedesktop.Accounts.User.SetFormatsLocale string:"${LOCALE}"
-
-    # Set system wide locale
-    sudo update-locale LC_NUMERIC="${LOCALE}" \
-                       LC_TIME="${LOCALE}" \
-                       LC_MONETARY="${LOCALE}" \
-                       LC_PAPER="${LOCALE}" \
-                       LC_NAME="${LOCALE}" \
-                       LC_ADDRESS="${LOCALE}" \
-                       LC_TELEPHONE="${LOCALE}" \
-                       LC_MEASUREMENT="${LOCALE}" \
-                       LC_IDENTIFICATION="${LOCALE}"
-}
-
 feature_vim()
 {
     sudo apt-get install -y \
@@ -458,7 +439,6 @@ main()
         "Choose the features to install:" 23 35 17                            \
         dualboot    "Dual boot fixes" "$DEFAULT_SELECTION"                    \
         gnome       "GNOME config" "$DEFAULT_SELECTION"                       \
-        locale      "Locale settings" "$DEFAULT_SELECTION"                    \
         vim         "Vim (repositories)" "$DEFAULT_SELECTION"                 \
         nvim        "Neovim (snap)" "$DEFAULT_SELECTION"                      \
         dotfiles    "Dotfiles" "$DEFAULT_SELECTION"                           \
