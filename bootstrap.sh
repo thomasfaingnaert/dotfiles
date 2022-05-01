@@ -247,8 +247,8 @@ feature_dotfiles()
         xclip
 
     # Install delta
-    DELTA_URL="https://github.com/dandavison/delta/releases/download/0.5.1/git-delta_0.5.1_amd64.deb"
-    DELTA_SHA="d796d3b75d690afd29fd426e7db3792724c0074b9c7b2d3aea59a3d78e735f42"
+    DELTA_URL="https://github.com/dandavison/delta/releases/download/0.12.1/git-delta_0.12.1_amd64.deb"
+    DELTA_SHA="e20a306395058765f54f361944fb00fc0292566581dfbbd6917e6ff6df6c30d1"
 
     TMPDIR="$(mktemp -d)"
     (
