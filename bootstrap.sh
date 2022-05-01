@@ -319,13 +319,6 @@ feature_slack()
     sudo snap install slack --classic
 }
 
-feature_screencasts()
-{
-    sudo apt-get install -y \
-        peek                \
-        screenkey
-}
-
 feature_documents()
 {
     sudo apt-get install -y \
@@ -474,7 +467,6 @@ main()
         skype       "Skype" "$DEFAULT_SELECTION"                              \
         vlc         "VLC" "$DEFAULT_SELECTION"                                \
         slack       "Slack" "$DEFAULT_SELECTION"                              \
-        screencasts "Peek and Screenkey" "$DEFAULT_SELECTION"                 \
         documents   "Document creation" "$DEFAULT_SELECTION"                  \
         docker      "Docker" "$DEFAULT_SELECTION"                             \
         kvm         "KVM" "$DEFAULT_SELECTION"                                \
