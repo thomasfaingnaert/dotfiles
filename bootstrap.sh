@@ -222,13 +222,6 @@ feature_gnome()
     gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "['<Primary><Super>Down','<Primary><Super>Right']"
 }
 
-feature_vim()
-{
-    sudo apt-get install -y \
-        vim                 \
-        vim-gtk3
-}
-
 feature_nvim()
 {
     # Install neovim
@@ -433,7 +426,6 @@ main()
         "Choose the features to install:" 23 35 17                            \
         dualboot    "Dual boot fixes" "$DEFAULT_SELECTION"                    \
         gnome       "GNOME config" "$DEFAULT_SELECTION"                       \
-        vim         "Vim (repositories)" "$DEFAULT_SELECTION"                 \
         nvim        "Neovim (snap)" "$DEFAULT_SELECTION"                      \
         dotfiles    "Dotfiles" "$DEFAULT_SELECTION"                           \
         skeleton    "Home directory skeleton" "$DEFAULT_SELECTION"            \
