@@ -152,7 +152,7 @@ feature_gnome()
     # Change print screen keys
     gsettings set org.gnome.shell.keybindings screenshot "['Print']"
     gsettings set org.gnome.shell.keybindings screenshot-window "['<Alt>Print']"
-    gsettings set org.gnome.shell.keybindings show-screenshot-gui "['<Shift>Print']"
+    gsettings set org.gnome.shell.keybindings show-screenshot-ui "['<Shift>Print']"
 
     # Unmap default CTRL+ALT+T binding
     gsettings set org.gnome.settings-daemon.plugins.media-keys terminal '@as []'
