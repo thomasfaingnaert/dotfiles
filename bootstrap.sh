@@ -149,14 +149,10 @@ feature_gnome()
     # Show battery percentage on the top bar
     gsettings set org.gnome.desktop.interface show-battery-percentage true
 
-    # Change PrtScr to save to clipboard by default; to save to file, use Ctrl
-    gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot "['<Ctrl>Print']"
-    gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot "['<Ctrl><Alt>Print']"
-    gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot "['<Ctrl><Shift>Print']"
-
-    gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot-clip "['Print']"
-    gsettings set org.gnome.settings-daemon.plugins.media-keys window-screenshot-clip "['<Alt>Print']"
-    gsettings set org.gnome.settings-daemon.plugins.media-keys area-screenshot-clip "['<Shift>Print']"
+    # Change print screen keys
+    gsettings set org.gnome.shell.keybindings screenshot "['Print']"
+    gsettings set org.gnome.shell.keybindings screenshot-window "['<Alt>Print']"
+    gsettings set org.gnome.shell.keybindings show-screenshot-gui "['<Shift>Print']"
 
     # Unmap default CTRL+ALT+T binding
     gsettings set org.gnome.settings-daemon.plugins.media-keys terminal '@as []'
@@ -177,10 +173,9 @@ feature_gnome()
 
     # Favourite applications
     local favorites=(
-        "'firefox.desktop'"
+        "'firefox_firefox.desktop'"
         "'org.gnome.Nautilus.desktop'"
-        "'gvim.desktop'"
-        "'skype_skypeforlinux.desktop'"
+        "'nvim.desktop'"
         "'slack_slack.desktop'"
     )
 
@@ -218,8 +213,8 @@ feature_gnome()
     gsettings set org.gnome.mutter workspaces-only-on-primary false
 
     # Use Super+CTRL+arrow to switch workspaces
-    gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "['<Primary><Super>Up','<Primary><Super>Left']"
-    gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "['<Primary><Super>Down','<Primary><Super>Right']"
+    gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Primary><Super>Up','<Primary><Super>Left']"
+    gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Primary><Super>Down','<Primary><Super>Right']"
 }
 
 feature_nvim()
