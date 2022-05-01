@@ -276,12 +276,6 @@ feature_keepassxc()
     sudo snap install keepassxc
 }
 
-feature_skype()
-{
-    # Install Skype
-    sudo snap install skype --classic
-}
-
 feature_vlc()
 {
     # Install VLC
@@ -444,7 +438,6 @@ main()
         dotfiles    "Dotfiles" "$DEFAULT_SELECTION"                           \
         skeleton    "Home directory skeleton" "$DEFAULT_SELECTION"            \
         keepassxc   "KeepassXC" "$DEFAULT_SELECTION"                          \
-        skype       "Skype" "$DEFAULT_SELECTION"                              \
         vlc         "VLC" "$DEFAULT_SELECTION"                                \
         slack       "Slack" "$DEFAULT_SELECTION"                              \
         documents   "Document creation" "$DEFAULT_SELECTION"                  \
