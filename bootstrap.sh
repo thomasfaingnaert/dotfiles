@@ -228,6 +228,10 @@ feature_nvim()
 
     ln -sf ~/bin/store/nvim.appimage ~/bin/nvim
 
+    # Install FUSE2 (Filesystem in Userspace), as it is required for AppImages,
+    # but no longer installed by default in Ubuntu 22.04 LTS.
+    sudo apt-get install -y fuse libfuse2
+
     # Install Neovim GUI
     sudo apt-get install -y neovim-qt
 }
