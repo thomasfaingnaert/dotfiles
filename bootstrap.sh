@@ -431,7 +431,7 @@ main()
         "Choose the features to install:" 19 35 13                            \
         dualboot    "Dual boot fixes" "$DEFAULT_SELECTION"                    \
         gnome       "GNOME config" "$DEFAULT_SELECTION"                       \
-        nvim        "Neovim (snap)" "$DEFAULT_SELECTION"                      \
+        nvim        "Neovim (AppImage)" "$DEFAULT_SELECTION"                  \
         dotfiles    "Dotfiles" "$DEFAULT_SELECTION"                           \
         skeleton    "Home directory skeleton" "$DEFAULT_SELECTION"            \
         keepassxc   "KeepassXC" "$DEFAULT_SELECTION"                          \
