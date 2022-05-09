@@ -34,6 +34,13 @@ fi
 # Export compile commands for CMake
 export CMAKE_EXPORT_COMPILE_COMMANDS=ON
 
+# Use vim/neovim as default EDITOR
+if command -v nvim >/dev/null 2>&1; then
+    export EDITOR='nvim'
+else
+    export EDITOR='vim'
+fi
+
 # local overrides
 if [ -f "$HOME/.profile.local" ]; then
     . "$HOME/.profile.local"
