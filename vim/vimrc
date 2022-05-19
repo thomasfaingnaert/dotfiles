@@ -310,6 +310,17 @@ if has('nvim-0.5.0')
 
             winblend = 10
         },
+
+        pickers = {
+            buffers = {
+                mappings = {
+                    -- Insert mode
+                    i = {
+                        ["<C-R>"] = require('telescope.actions').delete_buffer
+                    }
+                }
+            }
+        }
     })
 
     -- Return the current LSP servers that are attached to
