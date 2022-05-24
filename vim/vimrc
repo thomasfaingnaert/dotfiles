@@ -113,7 +113,7 @@ set statusline+=%f                          " path to file in the buffer
 set statusline+=%(\ %h%)                    " help flag: [Help] or empty
 set statusline+=%(\ %m%)                    " modified flag: [+] or [-] or empty
 set statusline+=%(\ %r%)                    " readonly flag: [RO] or empty
-set statusline+=%(\ (%{fugitive#head()})%)  " current branch
+set statusline+=%(\ (%{FugitiveHead()})%)   " current branch
 set statusline+=%=                          " right align
 if has('nvim-0.5.0')
     set statusline+=%(\ [%{luaeval('get_diagnostics_statusline()')}]\ %)
