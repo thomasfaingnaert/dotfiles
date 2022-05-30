@@ -497,6 +497,7 @@ command! ClipboardToggle
 
 "" Show TODOs
 command! TODOs
+            \   copen |
             \   grep --exclude-dir=.git -rF 'TODO' . |
             \   grepadd --exclude-dir=.git -rF 'FIXME' .
 
