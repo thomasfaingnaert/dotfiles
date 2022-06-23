@@ -1,0 +1,17 @@
+# View odd pages on the left hand side in side-by-side mode
+set first-page-column 1:1
+
+# Zoom mappings
+map <C-0> zoom default
+
+map + zoom in
+map <C-+> zoom in
+map = zoom in
+map <C-=> zoom in
+
+map - zoom out
+map <C--> zoom out
+
+# Adjust page width
+map f adjust_window best-fit
+map w adjust_window width
