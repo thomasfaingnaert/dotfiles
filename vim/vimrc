@@ -44,6 +44,10 @@ Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'rhysd/vim-llvm'
 
+if has('unix')
+    Plug 'heavenshell/vim-pydocstring', { 'do': 'make install', 'for': 'python' }
+endif
+
 call plug#end()
 
 " --------------------------------------------------------------------------------
@@ -360,6 +364,13 @@ EOF
     " Underline active parameter in signature help.
     highlight! link LspSignatureActiveParameter Underlined
 endif
+
+"" pydocstring
+" Use Sphinx formatter by default
+let g:pydocstring_formatter = 'sphinx'
+
+" Prevent pydocstring from creating a mapping to :Pydocstring
+let g:pydocstring_enable_mapping = 0
 
 " --------------------------------------------------------------------------------
 " Mappings
