@@ -514,6 +514,10 @@ command! TODOs
             \   grep --exclude-dir=.git -rF 'TODO' . |
             \   grepadd --exclude-dir=.git -rF 'FIXME' .
 
+"" Add diagnostics to quickfix
+command! DiagnosticsToQflist lua vim.diagnostic.setqflist()
+command! DiagnosticsToLoclist lua vim.diagnostic.setloclist()
+
 " --------------------------------------------------------------------------------
 " Autocommands
 " --------------------------------------------------------------------------------
