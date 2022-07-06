@@ -217,7 +217,11 @@ if has('nvim-0.5.0')
             ['<C-u>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
             ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
             ['<C-space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c'}),
-            ['<C-x><C-o>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c'})
+            ['<C-x><C-o>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c'}),
+            ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
+            ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
+            ['<C-y>'] = cmp.mapping(cmp.mapping.confirm(), { 'i', 'c' }),
+            ['<C-e>'] = cmp.mapping(cmp.mapping.abort(), { 'i', 'c' }),
         },
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
