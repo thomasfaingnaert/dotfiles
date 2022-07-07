@@ -37,6 +37,7 @@ else
 
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
+    Plug 'nvim-telescope/telescope-ui-select.nvim'
 endif
 
 Plug 'vim-scripts/DoxygenToolkit.vim'
@@ -254,7 +255,7 @@ if has('nvim-0.5.0')
         buf_set_keymap('n', '<Space>r', '<cmd>Telescope lsp_references<CR>', opts)
         buf_set_keymap('n', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
         buf_set_keymap('i', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-        buf_set_keymap('n', '<Space>a', '<cmd>Telescope lsp_code_actions<CR>', opts)
+        buf_set_keymap('n', '<Space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
         buf_set_keymap('n', 'gO', '<cmd>Telescope lsp_document_symbols<CR>', opts)
         buf_set_keymap('n', 'go', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', opts)
         buf_set_keymap('n', 'g]', '<cmd>Telescope lsp_definitions<CR>', opts)
@@ -332,6 +333,8 @@ if has('nvim-0.5.0')
             }
         }
     })
+
+    require('telescope').load_extension('ui-select')
 
     -- Return the current LSP servers that are attached to
     -- a buffer.
