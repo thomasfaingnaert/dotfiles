@@ -19,3 +19,7 @@ map w adjust_window width
 # Start Zathura maximised
 set window-height 3000
 set window-width 3000
+
+# Use o/O instead of f/F for links
+map o follow
+map O display_link
