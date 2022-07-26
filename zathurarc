@@ -23,3 +23,7 @@ set window-width 3000
 # Use o/O instead of f/F for links
 map o follow
 map O display_link
+
+# Use Left/Right keys to go to prev/next page
+map <Left> navigate previous
+map <Right> navigate next
