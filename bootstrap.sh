@@ -253,9 +253,8 @@ feature_dotfiles()
     )
     rm -r "$TMPDIR"
 
-    # Install dotfiles, adding ~/bin to the PATH so as to use the latest
-    # version of Neovim.
-    PATH=$HOME/bin:$PATH ./config_unix.sh
+    # Install dotfiles
+    ./config_unix.sh
 }
 
 feature_skeleton()
