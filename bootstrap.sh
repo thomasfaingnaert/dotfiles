@@ -219,18 +219,16 @@ feature_gnome()
 
 feature_nvim()
 {
-    # Install neovim using appimage
-    NEOVIM_URL="https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
+    # Install neovim
+    NEOVIM_URL="https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.deb"
 
-    mkdir -p ~/bin/store
-    wget "$NEOVIM_URL" -O ~/bin/store/nvim.appimage
-    chmod +x ~/bin/store/nvim.appimage
-
-    ln -sf ~/bin/store/nvim.appimage ~/bin/nvim
-
-    # Install FUSE2 (Filesystem in Userspace), as it is required for AppImages,
-    # but no longer installed by default in Ubuntu 22.04 LTS.
-    sudo apt-get install -y fuse libfuse2
+    TMPDIR="$(mktemp -d)"
+    (
+        cd "$TMPDIR" &&                                                     \
+        wget "$NEOVIM_URL" -O nvim.deb &&                                   \
+        sudo apt-get install -y ./nvim.deb
+    )
+    rm -r "$TMPDIR"
 
     # Install Neovim GUI
     sudo apt-get install -y neovim-qt
@@ -244,15 +242,14 @@ feature_dotfiles()
         xclip
 
     # Install delta
-    DELTA_URL="https://github.com/dandavison/delta/releases/download/0.12.1/git-delta_0.12.1_amd64.deb"
-    DELTA_SHA="e20a306395058765f54f361944fb00fc0292566581dfbbd6917e6ff6df6c30d1"
+    DELTA_VERSION="$(curl -s https://api.github.com/repos/dandavison/delta/releases/latest | jq -r '.name')"
+    DELTA_URL="https://github.com/dandavison/delta/releases/download/${DELTA_VERSION}/git-delta_${DELTA_VERSION}_amd64.deb"
 
     TMPDIR="$(mktemp -d)"
     (
-        cd "$TMPDIR" &&                                                   \
-        wget "$DELTA_URL" &&                                              \
-        echo "$DELTA_SHA $(basename "$DELTA_URL")" | sha256sum --check && \
-        sudo apt-get install -y ./"$(basename "$DELTA_URL")"
+        cd "$TMPDIR" &&                     \
+        wget "$DELTA_URL" -O delta.deb &&   \
+        sudo apt-get install -y ./delta.deb
     )
     rm -r "$TMPDIR"
 
@@ -431,7 +428,7 @@ main()
         "Choose the features to install:" 19 35 13                            \
         dualboot    "Dual boot fixes" "$DEFAULT_SELECTION"                    \
         gnome       "GNOME config" "$DEFAULT_SELECTION"                       \
-        nvim        "Neovim (AppImage)" "$DEFAULT_SELECTION"                  \
+        nvim        "Neovim"            "$DEFAULT_SELECTION"                  \
         dotfiles    "Dotfiles" "$DEFAULT_SELECTION"                           \
         skeleton    "Home directory skeleton" "$DEFAULT_SELECTION"            \
         keepassxc   "KeepassXC" "$DEFAULT_SELECTION"                          \
