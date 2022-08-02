@@ -389,6 +389,11 @@ feature_zoom()
     sudo snap install zoom-client
 }
 
+feature_onedrive()
+{
+    sudo apt-get install -y onedrive
+}
+
 ########
 # MAIN #
 ########
@@ -459,7 +464,7 @@ main()
     # Ask the user what they want to install
     features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-        "Choose the features to install:" 24 35 18                            \
+        "Choose the features to install:" 25 35 19                            \
         dualboot    "Dual boot fixes" "$DEFAULT_SELECTION"                    \
         gnome       "GNOME config" "$DEFAULT_SELECTION"                       \
         nvim        "Neovim"            "$DEFAULT_SELECTION"                  \
@@ -478,6 +483,7 @@ main()
         zotero      "Zotero" "$DEFAULT_SELECTION"                             \
         teams       "Microsoft Teams" "$DEFAULT_SELECTION"                    \
         zoom        "Zoom" "$DEFAULT_SELECTION"                               \
+        onedrive    "OneDrive" "$DEFAULT_SELECTION"                           \
         3>&1 1>&2 2>&3)
 
     if [ $? -ne 0 ]; then
