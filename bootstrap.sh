@@ -374,6 +374,21 @@ feature_obsidian()
     rm -r "$TMPDIR"
 }
 
+feature_zotero()
+{
+    sudo snap install zotero-snap
+}
+
+feature_teams()
+{
+    sudo snap install teams
+}
+
+feature_zoom()
+{
+    sudo snap install zoom-client
+}
+
 ########
 # MAIN #
 ########
@@ -444,7 +459,7 @@ main()
     # Ask the user what they want to install
     features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-        "Choose the features to install:" 21 35 15                            \
+        "Choose the features to install:" 24 35 18                            \
         dualboot    "Dual boot fixes" "$DEFAULT_SELECTION"                    \
         gnome       "GNOME config" "$DEFAULT_SELECTION"                       \
         nvim        "Neovim"            "$DEFAULT_SELECTION"                  \
@@ -460,6 +475,9 @@ main()
         virtualcam  "Virtual webcam using OBS" "$DEFAULT_SELECTION"           \
         zathura     "Zathura PDF reader" "$DEFAULT_SELECTION"                 \
         obsidian    "Obsidian.md" "$DEFAULT_SELECTION"                        \
+        zotero      "Zotero" "$DEFAULT_SELECTION"                             \
+        teams       "Microsoft Teams" "$DEFAULT_SELECTION"                    \
+        zoom        "Zoom" "$DEFAULT_SELECTION"                               \
         3>&1 1>&2 2>&3)
 
     if [ $? -ne 0 ]; then
