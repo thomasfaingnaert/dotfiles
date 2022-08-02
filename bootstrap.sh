@@ -354,6 +354,25 @@ Name=Start OBS Virtual Camera
 EOF
 }
 
+feature_zathura()
+{
+    sudo apt-get install -y zathura
+}
+
+feature_obsidian()
+{
+    OBSIDIAN_VERSION="$(curl -s https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | jq -r '.name')"
+    OBSIDIAN_URL="https://github.com/obsidianmd/obsidian-releases/releases/download/v${OBSIDIAN_VERSION}/obsidian_${OBSIDIAN_VERSION}_amd64.deb"
+
+    TMPDIR="$(mktemp -d)"
+    (
+        cd "$TMPDIR" &&                           \
+        wget "$OBSIDIAN_URL" -O obsidian.deb &&   \
+        sudo apt-get install -y ./obsidian.deb
+    )
+    rm -r "$TMPDIR"
+}
+
 ########
 # MAIN #
 ########
@@ -424,7 +443,7 @@ main()
     # Ask the user what they want to install
     features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-        "Choose the features to install:" 19 35 13                            \
+        "Choose the features to install:" 21 35 15                            \
         dualboot    "Dual boot fixes" "$DEFAULT_SELECTION"                    \
         gnome       "GNOME config" "$DEFAULT_SELECTION"                       \
         nvim        "Neovim"            "$DEFAULT_SELECTION"                  \
@@ -438,6 +457,8 @@ main()
         kvm         "KVM" "$DEFAULT_SELECTION"                                \
         direnv      "direnv" "$DEFAULT_SELECTION"                             \
         virtualcam  "Virtual webcam using OBS" "$DEFAULT_SELECTION"           \
+        zathura     "Zathura PDF reader" "$DEFAULT_SELECTION"                 \
+        obsidian    "Obsidian.md" "$DEFAULT_SELECTION"                        \
         3>&1 1>&2 2>&3)
 
     if [ $? -ne 0 ]; then
