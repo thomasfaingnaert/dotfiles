@@ -239,7 +239,8 @@ feature_dotfiles()
     # Install dependencies
     sudo apt-get install -y \
         curl                \
-        xclip
+        xclip               \
+        jq
 
     # Install delta
     DELTA_VERSION="$(curl -s https://api.github.com/repos/dandavison/delta/releases/latest | jq -r '.name')"
