@@ -14,4 +14,11 @@ let g:loaded_quick_run = 1
 " If ! is specified, resets the last executed command back to default.
 command -bang -nargs=* -complete=shellcmd Run call quick_run#run(<bang>0, <f-args>)
 
+" Automatically :Run on save:
+" - :AutoRun           - executes :Run when any buffer is saved
+" - :AutoRun <pattern> - executes :Run when a buffer matching <pattern> is
+"                        saved
+" - :AutoRun!          - turn off automatic :Run
+command -bang -nargs=? AutoRun call quick_run#autorun(<bang>0, <f-args>)
+
 nnoremap <silent> <Plug>quick_run :Run<CR>

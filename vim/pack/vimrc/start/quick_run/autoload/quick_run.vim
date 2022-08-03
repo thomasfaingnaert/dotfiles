@@ -79,3 +79,28 @@ function! s:on_exit(...)
     " Set quickfix title
     call setqflist([], 'a', {'title': s:title})
 endfunction
+
+function! quick_run#autorun(is_bang, ...)
+    if a:is_bang
+        augroup quick_run
+            autocmd!
+        augroup END
+
+        echo 'Disabled autorunning.'
+        return
+    endif
+
+    if a:0 > 0
+        let l:pattern = a:1
+    else
+        let l:pattern = '*'
+    endif
+
+    augroup quick_run
+        autocmd!
+    augroup END
+
+    execute 'autocmd quick_run BufWritePost ' . l:pattern . ' Run'
+
+    echo 'Executing :Run automatically when files of pattern "' . l:pattern . '" are saved'
+endfunction
