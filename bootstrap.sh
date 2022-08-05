@@ -230,6 +230,10 @@ feature_nvim()
     )
     rm -r "$TMPDIR"
 
+    # Install python support for neovim
+    sudo apt install -y python3-pip
+    pip3 install neovim
+
     # Install Neovim GUI
     sudo apt-get install -y neovim-qt
 }
