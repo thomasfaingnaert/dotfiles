@@ -305,6 +305,10 @@ feature_docker()
     sudo apt-get install -y \
         docker.io           \
         docker-compose
+
+    # Run docker without sudo
+    sudo groupadd -f docker
+    sudo usermod -aG docker $USER
 }
 
 feature_kvm()
