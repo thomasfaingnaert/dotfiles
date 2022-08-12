@@ -236,6 +236,9 @@ feature_nvim()
 
     # Install Neovim GUI
     sudo apt-get install -y neovim-qt
+
+    # Install ripgrep (for Telescope grep)
+    sudo apt-get install -y ripgrep
 }
 
 feature_dotfiles()
