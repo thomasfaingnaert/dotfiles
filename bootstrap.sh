@@ -234,6 +234,9 @@ feature_nvim()
     sudo apt install -y python3-pip
     pip3 install neovim
 
+    # Install Python language server
+    sudo apt-get install -y python3-pylsp
+
     # Install Neovim GUI
     sudo apt-get install -y neovim-qt
 
