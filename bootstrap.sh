@@ -406,12 +406,6 @@ feature_zoom()
 feature_onedrive()
 {
     sudo apt-get install -y onedrive
-
-    sudo systemctl stop onedrive@${USER}.service
-    sudo systemctl disable onedrive@${USER}.service
-
-    systemctl --user enable onedrive
-    systemctl --user start onedrive
 }
 
 ########
