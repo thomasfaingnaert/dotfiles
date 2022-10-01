@@ -408,6 +408,15 @@ feature_onedrive()
     sudo apt-get install -y onedrive
 }
 
+feature_syncthing()
+{
+    sudo apt-get install -y syncthing
+
+    # Automatically start syncthing
+    systemctl --user enable syncthing.service
+    systemctl --user start syncthing.service
+}
+
 ########
 # MAIN #
 ########
@@ -478,7 +487,7 @@ main()
     # Ask the user what they want to install
     features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-        "Choose the features to install:" 25 35 19                            \
+        "Choose the features to install:" 26 35 20                            \
         dualboot    "Dual boot fixes" "$DEFAULT_SELECTION"                    \
         gnome       "GNOME config" "$DEFAULT_SELECTION"                       \
         nvim        "Neovim"            "$DEFAULT_SELECTION"                  \
@@ -498,6 +507,7 @@ main()
         teams       "Microsoft Teams" "$DEFAULT_SELECTION"                    \
         zoom        "Zoom" "$DEFAULT_SELECTION"                               \
         onedrive    "OneDrive" "$DEFAULT_SELECTION"                           \
+        syncthing   "Syncthing" "$DEFAULT_SELECTION"                          \
         3>&1 1>&2 2>&3)
 
     if [ $? -ne 0 ]; then
