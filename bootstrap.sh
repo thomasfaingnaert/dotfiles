@@ -250,7 +250,8 @@ feature_dotfiles()
     sudo apt-get install -y \
         curl                \
         xclip               \
-        jq
+        jq                  \
+        python3-pip
 
     # Install delta
     DELTA_VERSION="$(curl -s https://api.github.com/repos/dandavison/delta/releases/latest | jq -r '.name')"
@@ -263,6 +264,9 @@ feature_dotfiles()
         sudo apt-get install -y ./delta.deb
     )
     rm -r "$TMPDIR"
+
+    # Install nbstripout
+    pip3 install --upgrade nbstripout
 
     # Install dotfiles
     ./config_unix.sh

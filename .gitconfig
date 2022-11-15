@@ -52,3 +52,8 @@
 	side-by-side = true
 	syntax-theme = OneHalfDark
 	wrap-max-lines = unlimited
+[filter "nbstripout"]
+	clean = \"/usr/bin/python3\" -m nbstripout
+	smudge = cat
+[diff "ipynb"]
+	textconv = \"/usr/bin/python3\" -m nbstripout -t
