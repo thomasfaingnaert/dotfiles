@@ -3,13 +3,13 @@
 	useConfigOnly = true
 [merge]
 	conflictstyle = diff3
-	tool = gvimdiff
+	tool = nvimdiff
 [mergetool]
 	keepBackup = false
 	prompt = false
 [diff]
 	colorMoved = default
-	tool = gvimdiff
+	tool = nvimdiff
 [difftool]
 	prompt = false
 [alias]
