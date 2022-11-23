@@ -115,6 +115,7 @@ set laststatus=2
 
 set statusline=                             " clear statusline for when vimrc is reloaded
 set statusline+=%f                          " path to file in the buffer
+set statusline+=%<                          " truncate after filename, so it is always visible
 set statusline+=%(\ %h%)                    " help flag: [Help] or empty
 set statusline+=%(\ %m%)                    " modified flag: [+] or [-] or empty
 set statusline+=%(\ %r%)                    " readonly flag: [RO] or empty
