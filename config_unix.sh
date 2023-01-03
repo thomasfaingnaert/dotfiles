@@ -32,3 +32,9 @@ ln -sf "$(pwd)/.gdbinit" ~/.gdbinit
 
 mkdir -p ~/.config/Projecteur
 ln -sf "$(pwd)/Projecteur.conf" ~/.config/Projecteur/Projecteur.conf
+
+# Comment out 'HISTSIZE' and 'HISTFILESIZE' in bashrc.
+sed -i \
+    -e '/^HISTSIZE=/ s/^#*/#/' \
+    -e '/^HISTFILESIZE=/ s/^#*/#/' \
+    ~/.bashrc

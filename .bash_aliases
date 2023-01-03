@@ -434,3 +434,22 @@ vim()
         command vim $@
     fi
 }
+
+# Eternal bash history (see https://stackoverflow.com/questions/9457233/unlimited-bash-history).
+
+# Undocumented feature which sets the size to "unlimited".
+export HISTFILESIZE=
+export HISTSIZE=
+
+export HISTTIMEFORMAT="[%F %T] "
+
+# Change the file location because certain bash sessions truncate .bash_history file upon close.
+# http://superuser.com/questions/575479/bash-history-truncated-to-500-lines-on-each-login
+export HISTFILE=~/.bash_eternal_history
+
+# Force prompt to write history after every command.
+# http://superuser.com/questions/20900/bash-history-loss
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+
+# Append to history; do not overwrite it.
+shopt -s histappend
