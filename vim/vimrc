@@ -163,6 +163,11 @@ if has('win32')
     set shell=C:\WINDOWS\system32\cmd.exe
 endif
 
+" Use ripgrep (if it exists)
+if executable('rg')
+    set grepprg=rg\ --smart-case\ --vimgrep
+endif
+
 " --------------------------------------------------------------------------------
 " Plugin settings
 " --------------------------------------------------------------------------------
