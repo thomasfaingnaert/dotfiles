@@ -65,7 +65,7 @@ filetype plugin indent on
 syntax enable
 
 "" GUI options
-colorscheme codedark
+colorscheme mycodedark
 
 if has('gui_running')
     " Only set guifont once, since it resizes gVim when sourcing $MYVIMRC
