@@ -267,7 +267,7 @@ if has('nvim-0.5.0')
         buf_set_keymap('n', 'g]', '<cmd>Telescope lsp_definitions<CR>', opts)
         buf_set_keymap('n', 'g<C-]>', '<cmd>Telescope lsp_definitions<CR>', opts)
 
-        if client.resolved_capabilities.document_formatting then
+        if client.server_capabilities.document_formatting then
             buf_set_keymap('n', '<Space>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
         end
     end
