@@ -11,6 +11,6 @@ let g:colors_name = "mycodedark"
 
 " Allow syntax highlighting in diff chunks.
 highlight DiffAdd guifg=NONE
-highlight DiffChange guifg=NONE
+highlight DiffChange guifg=NONE guibg=#003044
 highlight DiffDelete guifg=NONE
-highlight DiffText guifg=NONE
+highlight DiffText guifg=NONE guibg=#00567a
