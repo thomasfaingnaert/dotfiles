@@ -453,7 +453,7 @@ iconify()
 
     wget -O /tmp/img.svg "$URL"
     inkscape /tmp/img.svg --export-type=png --export-filename=/tmp/img.png -w 1000
-    xclip -selection clipboard -t image/png </tmp/img.png
+    xclip -selection clipboard -t image/png /tmp/img.png
 }
 
 # Eternal bash history (see https://stackoverflow.com/questions/9457233/unlimited-bash-history).
