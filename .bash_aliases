@@ -435,6 +435,27 @@ vim()
     fi
 }
 
+# convert SVG link to rasterised graphics (e.g. to include in Google Slides)
+iconify()
+{
+    # Read URL from argument or from clipboard.
+    if [[ $# -eq 0 ]]; then
+        URL="$(xclip -selection clipboard -o)"
+    else
+        URL="$1"
+    fi
+
+    # If we haven't provided a URL, regard argument as iconify ID.
+    if [[ $URL != http?(s)://* ]]; then
+        URL="${URL/:/\/}"
+        URL="https://api.iconify.design/$URL.svg?download=1"
+    fi
+
+    wget -O /tmp/img.svg "$URL"
+    inkscape /tmp/img.svg --export-type=png --export-filename=/tmp/img.png -w 1000
+    xclip -selection clipboard -t image/png </tmp/img.png
+}
+
 # Eternal bash history (see https://stackoverflow.com/questions/9457233/unlimited-bash-history).
 
 # Undocumented feature which sets the size to "unlimited".
