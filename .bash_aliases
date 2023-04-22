@@ -452,7 +452,7 @@ iconify()
     fi
 
     wget -O /tmp/img.svg "$URL"
-    inkscape /tmp/img.svg --export-type=png --export-filename=/tmp/img.png -w 1000
+    inkscape /tmp/img.svg --export-type=png --export-filename=/tmp/img.png -w 500
     xclip -selection clipboard -t image/png /tmp/img.png
 }
 
