@@ -256,7 +256,8 @@ feature_dotfiles()
         curl                \
         xclip               \
         jq                  \
-        python3-pip
+        python3-pip         \
+        entr
 
     # Install delta
     DELTA_VERSION="$(curl -s https://api.github.com/repos/dandavison/delta/releases/latest | jq -r '.name')"
