@@ -522,10 +522,17 @@ command! ClipboardToggle
             \   endif
 
 "" Show TODOs
-command! TODOs
-            \   copen |
-            \   grep --exclude-dir=.git -rF 'TODO' . |
-            \   grepadd --exclude-dir=.git -rF 'FIXME' .
+if executable('rg')
+    command! TODOs
+                \   copen |
+                \   grep -F 'TODO' . |
+                \   grepadd -F 'FIXME' .
+else
+    command! TODOs
+                \   copen |
+                \   grep --exclude-dir=.git -rF 'TODO' . |
+                \   grepadd --exclude-dir=.git -rF 'FIXME' .
+endif
 
 "" Add diagnostics to quickfix
 command! DiagnosticsToQflist lua vim.diagnostic.setqflist()
