@@ -22,6 +22,7 @@
 	d = diff
 	dc = diff --cached
 	fa = fetch --all
+	gone = !"gone() { git branch -vv | grep -F ': gone]' | awk '{ print $1 }'; }; gone"
 	hotmail = config user.email thomas.faingnaert@hotmail.com
 	l = log --abbrev-commit --decorate --date=relative --format=tformat:'%C(bold blue)%h%C(reset) - %C(dim white)%an%C(reset) %C(bold green)(%ar)%C(reset) - %C(white)%s%C(reset) %C(bold yellow)%d%C(reset)'
 	lg = l --graph
