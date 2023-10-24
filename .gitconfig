@@ -44,6 +44,7 @@
 [core]
 	excludesfile = ~/.gitignore_global
 	pager = delta
+	attributesfile = ~/.gitattributes
 
 [interactive]
 	diffFilter = delta --color-only
@@ -62,3 +63,5 @@
 	smudge = cat
 [diff "ipynb"]
 	textconv = \"/usr/bin/python3\" -m nbstripout -t
+[diff "json"]
+	textconv = \"/usr/bin/python3\" -m json.tool
