@@ -45,3 +45,9 @@ fi
 if [ -f "$HOME/.profile.local" ]; then
     . "$HOME/.profile.local"
 fi
+
+# Use nvim as man pager
+if command -v nvim >/dev/null 2>&1; then
+    export MANPAGER='nvim +Man!'
+    export MANWIDTH=999
+fi
