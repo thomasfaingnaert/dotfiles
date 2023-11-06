@@ -32,6 +32,7 @@
 	pr = !"pr() { git fetch $(git remote | grep ^upstream || echo origin) pull/$1/head:pr/$1 && git checkout pr/$1; }; pr"
 	ps = push
 	psu = push --set-upstream origin HEAD
+	squash = !"squash() { git reset --soft "$1" && git commit; }; squash"
 	rb = rebase
 	rbi = rebase --interactive
 	st = status
