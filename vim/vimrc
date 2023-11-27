@@ -270,6 +270,22 @@ if has('nvim-0.5.0')
         if client.server_capabilities.document_formatting then
             buf_set_keymap('n', '<Space>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
         end
+
+        -- Show diagnostics in floating window on cursor hold.
+        vim.api.nvim_create_autocmd("CursorHold", {
+            buffer = bufnr,
+            callback = function()
+                local opts = {
+                    focusable = false,
+                    close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+                    border = 'rounded',
+                    source = 'always',
+                    prefix = ' ',
+                    scope = 'cursor',
+                }
+                vim.diagnostic.open_float(nil, opts)
+            end
+        })
     end
 
     -- Register servers
@@ -373,6 +389,9 @@ if has('nvim-0.5.0')
         end
     end
 EOF
+
+    " Use LspDiagnostics to show all diagnostics in the location window.
+    command! LspDiagnostics lua vim.diagnostic.setqflist()
 
     " Underline active parameter in signature help.
     highlight! link LspSignatureActiveParameter Underlined
