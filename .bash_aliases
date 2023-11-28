@@ -171,6 +171,9 @@ alias jl='julia'
 # Python
 alias py='python'
 
+# Tail follow entire file. (tail follow all)
+alias tfa='tail --lines=+1 --follow=name --retry'
+
 # Utility functions to manage symlinks in ~/bin.
 
 # Garbage collection: remove dangling
