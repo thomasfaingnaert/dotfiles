@@ -143,6 +143,9 @@ feature_dualboot()
 
 feature_gnome()
 {
+    # Install Cascadia font
+    sudo apt-get install -y fonts-cascadia-code
+
     # Enable click-to-minimize
     gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
 
@@ -194,7 +197,7 @@ feature_gnome()
 
     # Set terminal font size
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile}/ use-system-font false
-    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile}/ font 'Ubuntu Mono Regular 18'
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile}/ font 'Cascadia Code 12'
 
     # Disable 'Use colors from system theme'
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:${profile}/ use-theme-colors false
