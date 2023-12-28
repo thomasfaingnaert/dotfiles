@@ -228,13 +228,18 @@ feature_gnome()
 feature_nvim()
 {
     # Install neovim
-    NEOVIM_URL="https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.deb"
+    NEOVIM_URL="https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
 
     TMPDIR="$(mktemp -d)"
     (
-        cd "$TMPDIR" &&                                                     \
-        wget "$NEOVIM_URL" -O nvim.deb &&                                   \
-        sudo apt-get install -y ./nvim.deb
+        cd "$TMPDIR" &&                        \
+        wget "$NEOVIM_URL" -O nvim.appimage && \
+        chmod +x nvim.appimage &&              \
+        ./nvim.appimage --appimage-extract &&  \
+        mkdir -p ~/bin/store &&                \
+        rm -rf ~/bin/store/nvim &&             \
+        mv squashfs-root ~/bin/store/nvim &&   \
+        ln -sf ~/bin/store/nvim/usr/bin/nvim ~/bin/nvim
     )
     rm -r "$TMPDIR"
 
