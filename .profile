@@ -41,6 +41,9 @@ else
     export EDITOR='vim'
 fi
 
+# Less charset
+export LESSCHARSET=utf-8
+
 # local overrides
 if [ -f "$HOME/.profile.local" ]; then
     . "$HOME/.profile.local"
