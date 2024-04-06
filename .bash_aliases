@@ -485,3 +485,8 @@ PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
 # Append to history; do not overwrite it.
 shopt -s histappend
+
+# Use zoxide as cd
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init --cmd cd bash)"
+fi

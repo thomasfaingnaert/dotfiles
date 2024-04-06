@@ -265,7 +265,8 @@ feature_dotfiles()
         xclip               \
         jq                  \
         python3-pip         \
-        entr
+        entr                \
+        fzf
 
     # Install delta
     DELTA_VERSION="$(curl -s https://api.github.com/repos/dandavison/delta/releases/latest | jq -r '.name')"
@@ -281,6 +282,9 @@ feature_dotfiles()
 
     # Install nbstripout
     pip3 install --upgrade nbstripout
+
+    # Install zoxide
+    curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
 
     # Install dotfiles
     ./config_unix.sh
