@@ -7,7 +7,7 @@ alias setclip='xclip -selection clipboard'
 # Run docker container with files mounted in /host (*d*ocker *r*un *m*ount)
 drm()
 {
-    docker run --rm -it -v $PWD:/host -w /host $@
+    docker run --rm -it -v "$PWD":/host -w /host $@
 }
 
 # Remove and watch logfile
