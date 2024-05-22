@@ -245,7 +245,8 @@ feature_nvim()
 
     # Install python support for neovim
     sudo apt install -y python3-pip
-    pip3 install neovim
+    python3 -m venv ~/.local --system-site-packages
+    ~/.local/bin/pip install neovim
 
     # Install Python language server
     sudo apt-get install -y python3-pylsp
@@ -267,6 +268,7 @@ feature_dotfiles()
         python3-pip         \
         entr                \
         fzf
+    python3 -m venv ~/.local --system-site-packages
 
     # Install delta
     DELTA_VERSION="$(curl -s https://api.github.com/repos/dandavison/delta/releases/latest | jq -r '.name')"
@@ -281,7 +283,7 @@ feature_dotfiles()
     rm -r "$TMPDIR"
 
     # Install nbstripout
-    pip3 install --upgrade nbstripout
+    ~/.local/bin/pip install --upgrade nbstripout
 
     # Install zoxide
     curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
