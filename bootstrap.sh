@@ -127,18 +127,6 @@ feature_dualboot()
     # when rebooting into a different OS. This is a better solution than configuring Windows
     # to store the time in UTC.
     timedatectl set-local-rtc 1
-
-    # GRUB configuration
-    sudo sed -i \
-             -e 's/^GRUB_TIMEOUT=[0-9]*$/GRUB_TIMEOUT=5/' \
-             -e 's/^GRUB_DEFAULT=.*$/GRUB_DEFAULT=saved/' \
-             /etc/default/grub
-
-    if ! grep -q '^GRUB_SAVEDEFAULT=true' /etc/default/grub; then
-        printf "\nGRUB_SAVEDEFAULT=true\n" | sudo tee -a /etc/default/grub >/dev/null
-    fi
-
-    sudo update-grub
 }
 
 feature_gnome()
