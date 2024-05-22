@@ -502,7 +502,7 @@ main()
     # Ask the user what they want to install
     features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-        "Choose the features to install:" 26 35 20                            \
+        "Choose the features to install:" 24 35 18                            \
         dualboot    "Dual boot fixes" "$DEFAULT_SELECTION"                    \
         gnome       "GNOME config" "$DEFAULT_SELECTION"                       \
         nvim        "Neovim"            "$DEFAULT_SELECTION"                  \
