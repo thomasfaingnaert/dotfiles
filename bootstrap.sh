@@ -417,16 +417,6 @@ feature_zotero()
     sudo snap install zotero-snap
 }
 
-feature_teams()
-{
-    sudo snap install teams
-}
-
-feature_zoom()
-{
-    sudo snap install zoom-client
-}
-
 feature_onedrive()
 {
     sudo apt-get install -y onedrive
@@ -528,8 +518,6 @@ main()
         zathura     "Zathura PDF reader" "$DEFAULT_SELECTION"                 \
         obsidian    "Obsidian.md" "$DEFAULT_SELECTION"                        \
         zotero      "Zotero" "$DEFAULT_SELECTION"                             \
-        teams       "Microsoft Teams" "$DEFAULT_SELECTION"                    \
-        zoom        "Zoom" "$DEFAULT_SELECTION"                               \
         onedrive    "OneDrive" "$DEFAULT_SELECTION"                           \
         syncthing   "Syncthing" "$DEFAULT_SELECTION"                          \
         3>&1 1>&2 2>&3)
