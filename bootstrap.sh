@@ -244,7 +244,7 @@ feature_nvim()
     rm -r "$TMPDIR"
 
     # Install python support for neovim
-    sudo apt install -y python3-pip
+    sudo apt-get install -y python3-pip
     python3 -m venv ~/.local --system-site-packages
     ~/.local/bin/pip install neovim
 
