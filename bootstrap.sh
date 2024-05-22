@@ -72,7 +72,7 @@ execute()
 
         printf "$red   ┌ \n$nc"
         while read -r line; do
-            printf "$red   │ $line\n$nc"
+            printf "$red   │ %s\n$nc" "$line"
         done < "$errfile"
         printf "$red   └ \n$nc"
     fi
