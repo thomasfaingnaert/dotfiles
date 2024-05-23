@@ -4,6 +4,7 @@
 [merge]
 	conflictstyle = diff3
 	tool = nvimdiff
+	autoStash = true
 [mergetool]
 	keepBackup = false
 	prompt = false
@@ -68,3 +69,5 @@
 	textconv = \"/usr/bin/python3\" -m nbstripout -t
 [diff "json"]
 	textconv = \"/usr/bin/python3\" -m json.tool
+[rebase]
+	autoStash = true
