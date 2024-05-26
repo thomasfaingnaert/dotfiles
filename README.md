@@ -26,6 +26,6 @@ cd ~/.dotfiles && \
 2. Generate an SSH key, and add it to GitHub:
 
 ```bash
-ssh-keygen -b 4096 && \
-cat ~/.ssh/id_rsa.pub | xclip -sel c
+ssh-keygen && \
+cat ~/.ssh/id_ed25519.pub | xclip -sel c
 ```
