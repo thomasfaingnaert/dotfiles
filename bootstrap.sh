@@ -422,7 +422,7 @@ feature_syncthing()
 
 feature_tasks()
 {
-    sudo apt-get install -y taskwarrior tasksh
+    sudo apt-get install -y taskwarrior tasksh timewarrior
 }
 
 ########
