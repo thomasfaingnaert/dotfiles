@@ -425,8 +425,12 @@ feature_tasks()
     sudo apt-get install -y taskwarrior tasksh timewarrior gnome-shell-pomodoro
 
     mkdir -p ~/.task/hooks
+
     cp /usr/share/doc/timewarrior/ext/on-modify.timewarrior ~/.task/hooks/on-modify.00.timewarrior
     chmod +x ~/.task/hooks/on-modify.00.timewarrior
+
+    cp ./taskwarrior-pomodoro-hook.py ~/.task/hooks/on-modify.01.pomodoro
+    chmod +x ~/.task/hooks/on-modify.01.pomodoro
 }
 
 ########
@@ -518,7 +522,7 @@ main()
         zotero      "Zotero" "$DEFAULT_SELECTION"                             \
         onedrive    "OneDrive" "$DEFAULT_SELECTION"                           \
         syncthing   "Syncthing" "$DEFAULT_SELECTION"                          \
-        tasks       "Task Management" "$DEFAULT_SELECTION"                          \
+        tasks       "Task Management" "$DEFAULT_SELECTION"                    \
         3>&1 1>&2 2>&3)
 
     if [ $? -ne 0 ]; then
