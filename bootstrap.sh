@@ -420,6 +420,11 @@ feature_syncthing()
     systemctl --user start syncthing.service
 }
 
+feature_tasks()
+{
+    sudo apt-get install -y taskwarrior tasksh
+}
+
 ########
 # MAIN #
 ########
@@ -490,7 +495,7 @@ main()
     # Ask the user what they want to install
     features=$(
     whiptail --title "Select Features" --checklist --notags --separate-output \
-        "Choose the features to install:" 24 35 18                            \
+        "Choose the features to install:" 25 35 19                            \
         dualboot    "Dual boot fixes" "$DEFAULT_SELECTION"                    \
         gnome       "GNOME config" "$DEFAULT_SELECTION"                       \
         nvim        "Neovim"            "$DEFAULT_SELECTION"                  \
@@ -509,6 +514,7 @@ main()
         zotero      "Zotero" "$DEFAULT_SELECTION"                             \
         onedrive    "OneDrive" "$DEFAULT_SELECTION"                           \
         syncthing   "Syncthing" "$DEFAULT_SELECTION"                          \
+        tasks       "Task Management" "$DEFAULT_SELECTION"                          \
         3>&1 1>&2 2>&3)
 
     if [ $? -ne 0 ]; then

@@ -5,6 +5,7 @@ ln -sf "$(pwd)/.gitconfig" ~/.gitconfig
 ln -sf "$(pwd)/.gitignore_global" ~/.gitignore_global
 ln -sf "$(pwd)/.gitattributes" ~/.gitattributes
 ln -sf "$(pwd)/.tmux.conf" ~/.tmux.conf
+ln -sf "$(pwd)/.taskrc" ~/.taskrc
 
 mkdir -p ~/.config/zathura
 ln -sf "$(pwd)/zathurarc" ~/.config/zathura/zathurarc
