@@ -423,6 +423,10 @@ feature_syncthing()
 feature_tasks()
 {
     sudo apt-get install -y taskwarrior tasksh timewarrior
+
+    mkdir -p ~/.task/hooks
+    cp /usr/share/doc/timewarrior/ext/on-modify.timewarrior ~/.task/hooks/on-modify.00.timewarrior
+    chmod +x ~/.task/hooks/on-modify.00.timewarrior
 }
 
 ########

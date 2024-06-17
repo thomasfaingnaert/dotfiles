@@ -10,6 +10,9 @@ ln -sf "$(pwd)/.taskrc" ~/.taskrc
 mkdir -p ~/.config/zathura
 ln -sf "$(pwd)/zathurarc" ~/.config/zathura/zathurarc
 
+mkdir -p ~/.config/timewarrior
+ln -sf "$(pwd)/timewarrior.cfg" ~/.config/timewarrior/timewarrior.cfg
+
 ln -sfn "$(pwd)/vim" ~/.vim
 ln -sfn "$(pwd)/nvim" ~/.config/nvim
 
