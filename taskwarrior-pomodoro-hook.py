@@ -24,7 +24,7 @@ def main(old, new):
 
     # Stopped task.
     elif ('start' not in new or 'end' in new) and 'start' in old:
-        subprocess.run(['gnome-pomodoro', '--stop'])
+        subprocess.run(['gnome-pomodoro', '--pause'])
 
 if __name__ == "__main__":
     old = json.loads(input_stream.readline().decode("utf-8", errors="replace"))
