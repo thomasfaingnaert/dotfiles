@@ -13,6 +13,9 @@ ln -sf "$(pwd)/zathurarc" ~/.config/zathura/zathurarc
 mkdir -p ~/.config/timewarrior
 ln -sf "$(pwd)/timewarrior.cfg" ~/.config/timewarrior/timewarrior.cfg
 
+mkdir -p ~/.task/hooks
+ln -sf "$(pwd)/taskwarrior-pomodoro-hook.py" ~/.task/hooks/on-modify.01.pomodoro
+
 ln -sfn "$(pwd)/vim" ~/.vim
 ln -sfn "$(pwd)/nvim" ~/.config/nvim
 

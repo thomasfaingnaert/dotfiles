@@ -428,9 +428,6 @@ feature_tasks()
 
     cp /usr/share/doc/timewarrior/ext/on-modify.timewarrior ~/.task/hooks/on-modify.00.timewarrior
     chmod +x ~/.task/hooks/on-modify.00.timewarrior
-
-    cp ./taskwarrior-pomodoro-hook.py ~/.task/hooks/on-modify.01.pomodoro
-    chmod +x ~/.task/hooks/on-modify.01.pomodoro
 }
 
 ########
