@@ -428,6 +428,17 @@ feature_tasks()
 
     cp /usr/share/doc/timewarrior/ext/on-modify.timewarrior ~/.task/hooks/on-modify.00.timewarrior
     chmod +x ~/.task/hooks/on-modify.00.timewarrior
+
+    # Enable 'Custom actions' in Pomodoro.
+    gsettings set org.gnome.pomodoro.preferences enabled-plugins "['sounds', 'actions']"
+
+    # Add hook action.
+    gsettings set org.gnome.pomodoro.plugins.actions actions-list "['/org/gnome/pomodoro/plugins/actions/action0/']"
+
+    gsettings set org.gnome.pomodoro.plugins.actions.action:/org/gnome/pomodoro/plugins/actions/action0/ name "Pomodoro TimeWarrior Integration"
+    gsettings set org.gnome.pomodoro.plugins.actions.action:/org/gnome/pomodoro/plugins/actions/action0/ command "$HOME/.dotfiles/pomodoro-hook.sh \$(triggers)"
+    gsettings set org.gnome.pomodoro.plugins.actions.action:/org/gnome/pomodoro/plugins/actions/action0/ states "['pomodoro']"
+    gsettings set org.gnome.pomodoro.plugins.actions.action:/org/gnome/pomodoro/plugins/actions/action0/ triggers "['start', 'complete', 'skip', 'pause', 'resume']"
 }
 
 ########
