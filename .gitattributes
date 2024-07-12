@@ -1,1 +1,2 @@
 *.json diff=json
+*.ipynb diff=ipynb filter=nbstripout
