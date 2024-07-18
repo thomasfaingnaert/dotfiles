@@ -291,7 +291,7 @@ feature_skeleton()
 feature_keepassxc()
 {
     # Install KeepassXC
-    sudo snap install keepassxc
+    sudo apt-et install -y keepassxc
 }
 
 feature_vlc()
