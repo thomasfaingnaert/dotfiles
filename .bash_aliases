@@ -490,3 +490,9 @@ shopt -s histappend
 if command -v zoxide >/dev/null 2>&1; then
     eval "$(zoxide init --cmd cd bash)"
 fi
+
+# ripgrep + delta
+rgd()
+{
+    rg --json "$@" | delta
+}
