@@ -32,6 +32,7 @@ out/
 *.synctex.gz
 *.toc
 *.xdv
+comment.cut
 
 # LaTeX pdf images
 !**/images/*.pdf
