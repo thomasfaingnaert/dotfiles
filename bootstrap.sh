@@ -441,6 +441,7 @@ feature_tasks()
     gsettings set org.gnome.pomodoro.plugins.actions.action:/org/gnome/pomodoro/plugins/actions/action0/ triggers "['start', 'complete', 'skip', 'pause', 'resume']"
 
     # Start Pomodoro timer on boot.
+    mkdir -p ~/.config/autostart
     cat <<EOF >~/.config/autostart/pomodoro.desktop
 [Desktop Entry]
 Name=Pomodoro
