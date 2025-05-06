@@ -33,6 +33,7 @@ out/
 *.toc
 *.xdv
 comment.cut
+*.bbl-SAVE-ERROR
 
 # LaTeX pdf images
 !**/images/*.pdf
@@ -62,3 +63,4 @@ virtualenv/
 
 # Jupyter
 .ipynb_checkpoints/
+.virtual_documents/
