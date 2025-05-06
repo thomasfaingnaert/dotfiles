@@ -34,6 +34,7 @@ out/
 *.xdv
 comment.cut
 *.bbl-SAVE-ERROR
+*.bcf-SAVE-ERROR
 
 # LaTeX pdf images
 !**/images/*.pdf
