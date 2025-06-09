@@ -10,19 +10,16 @@ debug_off() { do_debug=0; }
 debug() {
     [[ "$do_debug" == "1" ]] || return 0
 
-    # Print a '+' for every element in BASH_LINENO, similar to PS4's behaviour.
-    printf '%s' "${BASH_LINENO[@]/*/+}" >&2
-
     # Print coloured current command.
-    printf ' \033[0;36m%s\033[0m\n' "$BASH_COMMAND" >&2
+    printf '\n\033[0;36m>>> %s\033[0m\n' "$BASH_COMMAND" >&2
 
+    # Write command to file.
     printf '%s\n' "$BASH_COMMAND" >>commands.log
 }
 
 set -o functrace
 shopt -s extdebug
 trap debug DEBUG
-
 
 # logging
 log()  { echo -e "\033[0;36m[LOG]\033[0m $1" >&2; }
