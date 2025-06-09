@@ -1,14 +1,34 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
+# Coloured xtrace-like output.
+# Inspired by: https://stackoverflow.com/questions/26067916/colored-xtrace-output
+rm -f commands.log
+do_debug=0
+debug_on() { do_debug=1; }
+debug_off() { do_debug=0; }
+debug() {
+    [[ "$do_debug" == "1" ]] || return 0
+
+    # Print a '+' for every element in BASH_LINENO, similar to PS4's behaviour.
+    printf '%s' "${BASH_LINENO[@]/*/+}" >&2
+
+    # Print coloured current command.
+    printf ' \033[0;36m%s\033[0m\n' "$BASH_COMMAND" >&2
+
+    printf '%s\n' "$BASH_COMMAND" >>commands.log
+}
+
+set -o functrace
+shopt -s extdebug
+trap debug DEBUG
+
+
 # logging
 log()  { echo -e "\033[0;36m[LOG]\033[0m $1" >&2; }
 warn() { echo -e "\033[0;33m[WRN]\033[0m $1" >&2; }
 err()  { echo -e "\033[0;31m[ERR]\033[0m $1" >&2; }
 die()  { err "$1"; exit 1; }
-
-# log commands
-PS4="\n\033[0;36m>>>\033[0m "
 
 confirm() {
     read -p "$1 [yN] " -n1 -r && echo
@@ -16,7 +36,7 @@ confirm() {
 }
 
 # (1.6 - 1.8) Tests.
-[[ $(cat /sys/firmware/efi/fw_platform_size) == "64" ]] || die "You are not booted using UEFI 64-bit"
+[[ "$(cat /sys/firmware/efi/fw_platform_size)" == "64" ]] || die "You are not booted using UEFI 64-bit"
 ping -c1 archlinux.org &>/dev/null || die "No internet connection"
 timedatectl | grep -q "System clock synchronized: yes" || die "Clock not synchronised"
 
@@ -59,7 +79,7 @@ select PART_SETUP in premounted ext4; do
             SWAP_PART="$DISK-part2"
             ROOT_PART="$DISK-part3"
 
-            set -x
+            debug_on
 
             # Wipe disk.
             wipefs -af $DISK
@@ -88,7 +108,7 @@ select PART_SETUP in premounted ext4; do
         premounted)
             # Just check that we have something mounted on /mnt.
             mountpoint -q /mnt || die "Nothing mounted on /mnt"
-            set -x
+            debug_on
 
             break
             ;;
