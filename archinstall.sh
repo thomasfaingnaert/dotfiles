@@ -1,27 +1,26 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-rm -f commands.log
-
 # logging
 log()  { echo -e "\033[0;36m[LOG]\033[0m $1" >&2; }
 warn() { echo -e "\033[0;33m[WRN]\033[0m $1" >&2; }
 err()  { echo -e "\033[0;31m[ERR]\033[0m $1" >&2; }
 die()  { err "$1"; exit 1; }
 
-log_cmd() { echo -e "\033[0;36m$ $@\033[0m" >&2; echo "$@" >>commands.log; $@; }
+# log commands
+PS4="\n\033[0;36m>>>\033[0m "
 
 confirm() {
     read -p "$1 [yN] " -n1 -r && echo
     [[ "$REPLY" =~ ^[Yy]$ ]] || exit 1
 }
 
-# (0) Tests.
+# (1.6 - 1.8) Tests.
 [[ $(cat /sys/firmware/efi/fw_platform_size) == "64" ]] || die "You are not booted using UEFI 64-bit"
 ping -c1 archlinux.org &>/dev/null || die "No internet connection"
 timedatectl | grep -q "System clock synchronized: yes" || die "Clock not synchronised"
 
-# (1) Disk partitioning, formatting, and mounting.
+# (1.9 - 1.11) Disk partitioning, formatting, and mounting.
 choose_disk() {
     lsblk --list -o PATH,MODEL,SIZE,TYPE | awk 'NR==1 || /disk/'
     echo
@@ -54,32 +53,34 @@ select PART_SETUP in premounted ext4; do
             echo "Will install to $DISK (-> $(realpath "$DISK"))."
             confirm "Are you sure? All data will be wiped."
 
-            # Wipe disk.
-            log_cmd wipefs -af $DISK
-            log_cmd sgdisk -Zo $DISK
-
-            # Partitioning.
             SWAP_SIZE=$(awk '/MemTotal/ { print $2 * 2 }' /proc/meminfo)
-
-            log_cmd sgdisk -n 1:0:+1G            -t 1:EF00 $DISK # EFI
-            log_cmd sgdisk -n 2:0:+"$SWAP_SIZE"K -t 2:8200 $DISK # swap
-            log_cmd sgdisk -n 3:0:0              -t 3:8304 $DISK # root
 
             ESP_PART="$DISK-part1"
             SWAP_PART="$DISK-part2"
             ROOT_PART="$DISK-part3"
 
-            log_cmd partprobe $DISK
+            set -x
+
+            # Wipe disk.
+            wipefs -af $DISK
+            sgdisk -Zo $DISK
+
+            # Partitioning.
+            sgdisk -n 1:0:+1G            -t 1:EF00 $DISK # EFI
+            sgdisk -n 2:0:+"$SWAP_SIZE"K -t 2:8200 $DISK # swap
+            sgdisk -n 3:0:0              -t 3:8304 $DISK # root
+
+            partprobe $DISK
 
             # Formatting.
-            log_cmd mkfs.fat -F32 $ESP_PART
-            log_cmd mkswap $SWAP_PART
-            log_cmd mkfs.ext4 $ROOT_PART
+            mkfs.fat -F32 $ESP_PART
+            mkswap $SWAP_PART
+            mkfs.ext4 $ROOT_PART
 
             # Mounting.
-            log_cmd mount $ROOT_PART /mnt
-            log_cmd mount --mkdir $ESP_PART /mnt/boot
-            log_cmd swapon $SWAP_PART
+            mount $ROOT_PART /mnt
+            mount --mkdir $ESP_PART /mnt/boot
+            swapon $SWAP_PART
 
             break
             ;;
@@ -87,7 +88,17 @@ select PART_SETUP in premounted ext4; do
         premounted)
             # Just check that we have something mounted on /mnt.
             mountpoint -q /mnt || die "Nothing mounted on /mnt"
+            set -x
+
             break
             ;;
     esac
 done
+
+# (2.2) Install essential packages.
+pacstrap -K /mnt base linux linux-firmware
+
+# TODO: Other essential packages (CPU microcode etc, see wiki 2.2)
+
+# (3.1) fstab
+genfstab -U /mnt >> /mnt/etc/fstab
