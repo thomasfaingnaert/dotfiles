@@ -139,7 +139,11 @@ echo 'LANG=en_GB.UTF-8' >/mnt/etc/locale.conf
 read -p "Enter hostname: " HOSTNAME
 echo "$HOSTNAME" >/mnt/etc/hostname
 
-# TODO: Install network software.
+arch-chroot /mnt pacman -S networkmanager
+arch-chroot systemctl enable NetworkManager
+
+# TODO: encrypted WiFi passwords (see https://wiki.archlinux.org/title/NetworkManager)
+# TODO: other networkmanager config (see https://wiki.archlinux.org/title/NetworkManager)
 
 # (3.7) Set the root password
 # TODO: Get rid of this?
