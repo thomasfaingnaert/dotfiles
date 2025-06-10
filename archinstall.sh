@@ -140,7 +140,7 @@ read -p "Enter hostname: " HOSTNAME
 echo "$HOSTNAME" >/mnt/etc/hostname
 
 arch-chroot /mnt pacman -S networkmanager
-arch-chroot systemctl enable NetworkManager
+arch-chroot /mnt systemctl enable NetworkManager
 
 # TODO: encrypted WiFi passwords (see https://wiki.archlinux.org/title/NetworkManager)
 # TODO: other networkmanager config (see https://wiki.archlinux.org/title/NetworkManager)
