@@ -162,3 +162,10 @@ EOF
 # (5) Post-installation.
 
 # TODO: See general recommendations (user account, GUI, sound, trackpad).
+
+# TODO: Secure boot.
+
+# TODO: Encryption. (+ encrypted swap, hibernation)
+
+# TODO: btrfs?
+# TODO: zfs?
