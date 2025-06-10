@@ -580,7 +580,7 @@ command! HighlightBetween call s:highlight_between()
 "" Automatically strip whitespace
 augroup strip_whitespace
     autocmd!
-    autocmd BufWritePre * call preserve_state#execute("%s/\\s\\+$//e")
+    autocmd BufWritePre * if &filetype != "diff" | call preserve_state#execute("%s/\\s\\+$//e") | endif
 augroup end
 
 "" Customize popup window colours
