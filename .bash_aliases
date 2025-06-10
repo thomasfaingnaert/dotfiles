@@ -438,9 +438,9 @@ vim()
 {
     # use neovim instead of vim (if it's installed)
     if command -v nvim >/dev/null 2>&1; then
-        command nvim $@
+        command nvim "$@"
     else
-        command vim $@
+        command vim "$@"
     fi
 }
 
