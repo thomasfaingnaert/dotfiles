@@ -1,29 +1,47 @@
 # View odd pages on the left hand side in side-by-side mode
 set first-page-column 1:1
 
-# Zoom mappings
-map <C-0> zoom default
-
-map + zoom in
-map <C-+> zoom in
-map = zoom in
-map <C-=> zoom in
-
-map - zoom out
-map <C--> zoom out
-
-# Adjust page width
-map f adjust_window best-fit
-map w adjust_window width
-
 # Start Zathura maximised
 set window-height 3000
 set window-width 3000
 
+# Zoom mappings
+map [normal]     <C-0> zoom default
+map [fullscreen] <C-0> zoom default
+
+map [normal] + zoom in
+map [normal] <C-+> zoom in
+map [normal] = zoom in
+map [normal] <C-=> zoom in
+
+map [fullscreen] + zoom in
+map [fullscreen] <C-+> zoom in
+map [fullscreen] = zoom in
+map [fullscreen] <C-=> zoom in
+
+map [normal] - zoom out
+map [normal] <C--> zoom out
+
+map [fullscreen] - zoom out
+map [fullscreen] <C--> zoom out
+
+# Adjust page width
+map [normal] f adjust_window best-fit
+map [normal] w adjust_window width
+
+map [fullscreen] f adjust_window best-fit
+map [fullscreen] w adjust_window width
+
 # Use o/O instead of f/F for links
-map o follow
-map O display_link
+map [normal] o follow
+map [normal] O display_link
+
+map [fullscreen] o follow
+map [fullscreen] O display_link
 
 # Use Left/Right keys to go to prev/next page
-map <Left> navigate previous
-map <Right> navigate next
+map [normal] <Left> navigate previous
+map [normal] <Right> navigate next
+
+map [fullscreen] <Left> navigate previous
+map [fullscreen] <Right> navigate next
