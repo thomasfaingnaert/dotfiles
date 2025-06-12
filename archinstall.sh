@@ -139,15 +139,14 @@ echo 'LANG=en_GB.UTF-8' >/mnt/etc/locale.conf
 read -p "Enter hostname: " HOSTNAME
 echo "$HOSTNAME" >/mnt/etc/hostname
 
-arch-chroot /mnt pacman -S networkmanager
+arch-chroot /mnt pacman --noconfirm -S networkmanager
 arch-chroot /mnt systemctl enable NetworkManager
 
 # TODO: encrypted WiFi passwords (see https://wiki.archlinux.org/title/NetworkManager)
 # TODO: other networkmanager config (see https://wiki.archlinux.org/title/NetworkManager)
 
-# (3.7) Set the root password
-# TODO: Get rid of this?
-arch-chroot /mnt passwd
+# (3.7) Lock the root account.
+arch-chroot /mnt passwd --lock root
 
 # (3.8) Boot loader (systemd-boot)
 # TODO: instead of ROOT_PART, use mountpoint.
@@ -165,11 +164,22 @@ EOF
 
 # (5) Post-installation.
 
-# TODO: See general recommendations (user account, GUI, sound, trackpad).
+# 1) Create a local user account with sudo rights.
+arch-chroot /mnt useradd -m -G wheel -s /bin/bash thomas
+arch-chroot /mnt passwd thomas
+
+# 2) Install and configure sudo.
+arch-chroot /mnt pacman --noconfirm -S sudo
+sed -i '/# %wheel ALL=(ALL:ALL) ALL/s/^# //' /mnt/etc/sudoers
+
+# TODO: general recommendations: GUI
+# TODO: general recommendations: sound
+# TODO: general recommendations: trackpad
 
 # TODO: Secure boot.
 
 # TODO: Encryption. (+ encrypted swap, hibernation)
 
 # TODO: btrfs?
+
 # TODO: zfs?
