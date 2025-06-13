@@ -117,9 +117,22 @@ select PART_SETUP in premounted ext4; do
 done
 
 # (2.2) Install essential packages.
-pacstrap -K /mnt base linux linux-firmware
+case "$(lscpu | awk -F':[[:space:]]+' '/Vendor ID/ { print $2 }')" in
+    GenuineIntel)
+        microcode="intel-ucode"
+        ;;
 
-# TODO: Other essential packages (CPU microcode etc, see wiki 2.2)
+    AuthenticAMD)
+        microcode="amd-ucode"
+        ;;
+
+    *)
+        microcode=""
+        ;;
+esac
+pacstrap -K /mnt base linux linux-firmware $microcode
+
+# TODO: Other essential packages (see wiki 2.2)
 
 # (3.1) fstab
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -183,3 +196,5 @@ sed -i '/# %wheel ALL=(ALL:ALL) ALL/s/^# //' /mnt/etc/sudoers
 # TODO: btrfs?
 
 # TODO: zfs?
+
+# partition automounting
