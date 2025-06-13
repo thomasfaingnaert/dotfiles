@@ -117,20 +117,7 @@ select PART_SETUP in premounted ext4; do
 done
 
 # (2.2) Install essential packages.
-case "$(lscpu | awk -F':[[:space:]]+' '/Vendor ID/ { print $2 }')" in
-    GenuineIntel)
-        microcode="intel-ucode"
-        ;;
-
-    AuthenticAMD)
-        microcode="amd-ucode"
-        ;;
-
-    *)
-        microcode=""
-        ;;
-esac
-pacstrap -K /mnt base linux linux-firmware $microcode
+pacstrap -K /mnt base linux linux-firmware intel-ucode amd-ucode
 
 # TODO: Other essential packages (see wiki 2.2)
 
@@ -186,7 +173,9 @@ arch-chroot /mnt pacman --noconfirm -S sudo
 sed -i '/# %wheel ALL=(ALL:ALL) ALL/s/^# //' /mnt/etc/sudoers
 
 # TODO: general recommendations: GUI
+
 # TODO: general recommendations: sound
+
 # TODO: general recommendations: trackpad
 
 # TODO: Secure boot.
@@ -197,4 +186,4 @@ sed -i '/# %wheel ALL=(ALL:ALL) ALL/s/^# //' /mnt/etc/sudoers
 
 # TODO: zfs?
 
-# partition automounting
+# TODO: partition automounting
