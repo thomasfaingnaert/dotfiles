@@ -162,7 +162,7 @@ select PART_SETUP in premounted ext4 ext4-crypt; do
             INITRAMFS_HOOKS="(base udev autodetect microcode modconf kms keyboard keymap consolefont block encrypt lvm2 filesystems fsck)"
             EXTRA_PACKAGES="lvm2"
             CRYPT_UUID=$(blkid "$CRYPT_PART" --match-tag UUID --output value)
-            KERNEL_PARAMS="cryptdevice=UUID=$CRYPT_UUID:root root=/dev/mapper/root"
+            KERNEL_PARAMS="cryptdevice=UUID=$CRYPT_UUID:root root=/dev/vg0/root"
 
             break
             ;;
