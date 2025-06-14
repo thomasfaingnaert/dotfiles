@@ -1,3 +1,6 @@
+# If not running interactively, don't do anything.
+[[ $- != *i* ]] && return
+
 alias g='git'
 
 # Copy to/paste from clipboard
