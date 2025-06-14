@@ -195,6 +195,9 @@ echo "$HOSTNAME" >/mnt/etc/hostname
 arch-chroot /mnt pacman --noconfirm -S networkmanager
 arch-chroot /mnt systemctl enable NetworkManager
 
+# (3.6) Initramfs
+arch-chroot /mnt mkinitcpio -P
+
 # (3.7) Lock the root account.
 arch-chroot /mnt passwd --lock root
 
