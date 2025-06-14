@@ -217,7 +217,7 @@ sed -i '/^default_uki=/s|=.*|="/efi/EFI/BOOT/BOOTx64.EFI"|' /mnt/etc/mkinitcpio.
 # Set hooks and regenerate UKI.
 sed -i "/^HOOKS=/s/=.*/=$INITRAMFS_HOOKS/" /mnt/etc/mkinitcpio.conf
 mkdir -p /mnt/efi/EFI/BOOT
-mkdir -p /mnt/efi/Linux
+mkdir -p /mnt/efi/EFI/Linux
 arch-chroot /mnt mkinitcpio -P
 
 # TODO: REMOVE initramfs leftovers.
