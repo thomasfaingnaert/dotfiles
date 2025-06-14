@@ -103,12 +103,12 @@ select PART_SETUP in premounted ext4 ext4-crypt; do
 
             # Mounting.
             mount $ROOT_PART /mnt
-            mount --mkdir $ESP_PART /mnt/boot
+            mount --mkdir $ESP_PART /mnt/efi
             swapon $SWAP_PART
 
             # Overrides.
             ROOT_UUID=$(blkid "$ROOT_PART" --match-tag UUID --output value)
-            KERNEL_PARAMS="root=UUID=$ROOT_UUID rw"
+            KERNEL_CMDLINE_ROOT="root=UUID=$ROOT_UUID rw"
 
             break
             ;;
@@ -155,14 +155,14 @@ select PART_SETUP in premounted ext4 ext4-crypt; do
 
             # Mounting.
             mount /dev/vg0/root /mnt
-            mount --mkdir $ESP_PART /mnt/boot
+            mount --mkdir $ESP_PART /mnt/efi
             swapon /dev/vg0/swap
 
             # Overrides.
             INITRAMFS_HOOKS="(base udev autodetect microcode modconf kms keyboard keymap consolefont block encrypt lvm2 filesystems resume fsck)"
             EXTRA_PACKAGES="lvm2"
             CRYPT_UUID=$(blkid "$CRYPT_PART" --match-tag UUID --output value)
-            KERNEL_PARAMS="cryptdevice=UUID=$CRYPT_UUID:root root=/dev/vg0/root rw"
+            KERNEL_CMDLINE_ROOT="cryptdevice=UUID=$CRYPT_UUID:root root=/dev/vg0/root rw"
 
             break
             ;;
@@ -174,21 +174,12 @@ select PART_SETUP in premounted ext4 ext4-crypt; do
             # Overrides.
             ROOT_PART="$(findmnt --raw --noheadings --first-only -o source /mnt)"
             ROOT_UUID=$(blkid "$ROOT_PART" --match-tag UUID --output value)
-            KERNEL_PARAMS="root=UUID=$ROOT_UUID rw"
+            KERNEL_CMDLINE_ROOT="root=UUID=$ROOT_UUID rw"
 
             break
             ;;
     esac
 done
-
-debug_off
-
-# Reobtain necessary variables.
-ESP_PART="$(findmnt --raw --noheadings --first-only -o source /mnt/boot)"
-ESP_DISK="/dev/$(lsblk --raw --noheadings -o PKNAME "$ESP_PART")"
-ESP_PART_NR="$(lsblk --raw --noheadings -o PARTN "$ESP_PART")"
-
-debug_on
 
 # (2.2) Install essential packages.
 pacstrap -K /mnt base linux linux-firmware intel-ucode amd-ucode "$EXTRA_PACKAGES"
@@ -214,21 +205,28 @@ arch-chroot /mnt pacman --noconfirm -S networkmanager
 arch-chroot /mnt systemctl enable NetworkManager
 
 # (3.6) Initramfs
+
+# Configure for UKI.
+mkdir -p /mnt/etc/cmdline.d
+echo "$KERNEL_CMDLINE_ROOT" >/mnt/etc/cmdline.d/root.conf
+
+sed -i '/_uki=/s/^#//' /mnt/etc/mkinitcpio.d/linux.preset
+sed -i '/_image=/s/^/#/' /mnt/etc/mkinitcpio.d/linux.preset
+sed -i '/^default_uki=/s|=.*|="/efi/EFI/BOOT/BOOTx64.EFI"|' /mnt/etc/mkinitcpio.d/linux.preset
+
+# Set hooks and regenerate UKI.
 sed -i "/^HOOKS=/s/=.*/=$INITRAMFS_HOOKS/" /mnt/etc/mkinitcpio.conf
+mkdir -p /mnt/efi/EFI/BOOT
+mkdir -p /mnt/efi/Linux
 arch-chroot /mnt mkinitcpio -P
+
+# TODO: REMOVE initramfs leftovers.
 
 # (3.7) Lock the root account.
 arch-chroot /mnt passwd --lock root
 
-# (3.8) Boot loader (systemd-boot)
-arch-chroot /mnt bootctl install
-efibootmgr --create --disk $ESP_DISK --part $ESP_PART_NR --loader '\EFI\systemd\systemd-bootx64.efi' --label "Linux Boot Manager" --unicode
-cat <<EOF >/mnt/boot/loader/entries/arch.conf
-title  Arch Linux
-linux  /vmlinuz-linux
-initrd /initramfs-linux.img
-options $KERNEL_PARAMS
-EOF
+# (3.8) Boot loader
+# Not needed for UKI.
 
 # (5) Post-installation.
 
