@@ -1,26 +1,32 @@
 #!/bin/sh
-ln -sf "$(pwd)/.bash_aliases" ~/.bash_aliases
-ln -sf "$(pwd)/.profile" ~/.profile
-ln -sf "$(pwd)/.gitconfig" ~/.gitconfig
-ln -sf "$(pwd)/.gitignore_global" ~/.gitignore_global
-ln -sf "$(pwd)/.gitattributes" ~/.gitattributes
-ln -sf "$(pwd)/.tmux.conf" ~/.tmux.conf
-ln -sf "$(pwd)/.taskrc" ~/.taskrc
+cd "$( dirname "${BASH_SOURCE[0]}" )"
+cd ..
+
+ln -sf "$(pwd)/bash/.bash_aliases" ~/.bash_aliases
+ln -sf "$(pwd)/bash/.profile" ~/.profile
+
+ln -sf "$(pwd)/git/.gitattributes" ~/.gitattributes
+ln -sf "$(pwd)/git/.gitconfig" ~/.gitconfig
+ln -sf "$(pwd)/git/.gitignore_global" ~/.gitignore_global
+
+ln -sf "$(pwd)/tmux/.tmux.conf" ~/.tmux.conf
+
+ln -sf "$(pwd)/taskwarrior/.taskrc" ~/.taskrc
 
 mkdir -p ~/.config/zathura
-ln -sf "$(pwd)/zathurarc" ~/.config/zathura/zathurarc
+ln -sf "$(pwd)/zathura/zathurarc" ~/.config/zathura/zathurarc
 
 mkdir -p ~/.config/timewarrior
-ln -sf "$(pwd)/timewarrior.cfg" ~/.config/timewarrior/timewarrior.cfg
+ln -sf "$(pwd)/timewarrior/timewarrior.cfg" ~/.config/timewarrior/timewarrior.cfg
 
 mkdir -p ~/.task/hooks
-ln -sf "$(pwd)/taskwarrior-pomodoro-hook.py" ~/.task/hooks/on-modify.01.pomodoro
+ln -sf "$(pwd)/gnome-pomodoro/taskwarrior-pomodoro-hook.py" ~/.task/hooks/on-modify.01.pomodoro
 
 mkdir -p ~/.config/foot
-ln -sf "$(pwd)/foot.ini" ~/.config/foot/foot.ini
+ln -sf "$(pwd)/foot/foot.ini" ~/.config/foot/foot.ini
 
 mkdir -p ~/.config/qtile
-ln -sf "$(pwd)/qtile.py" ~/.config/qtile/config.py
+ln -sf "$(pwd)/qtile/config.py" ~/.config/qtile/config.py
 
 ln -sfn "$(pwd)/vim" ~/.vim
 ln -sfn "$(pwd)/nvim" ~/.config/nvim
@@ -42,10 +48,10 @@ else
 fi
 
 mkdir -p ~/.config/gdb
-ln -sf "$(pwd)/.gdbinit" ~/.gdbinit
+ln -sf "$(pwd)/gdb/.gdbinit" ~/.gdbinit
 
 mkdir -p ~/.config/Projecteur
-ln -sf "$(pwd)/Projecteur.conf" ~/.config/Projecteur/Projecteur.conf
+ln -sf "$(pwd)/projecteur/Projecteur.conf" ~/.config/Projecteur/Projecteur.conf
 
 # Comment out 'HISTSIZE' and 'HISTFILESIZE' in bashrc.
 sed -i \

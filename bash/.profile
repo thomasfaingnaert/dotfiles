@@ -54,3 +54,7 @@ if command -v nvim >/dev/null 2>&1; then
     export MANPAGER='nvim +Man!'
     export MANWIDTH=999
 fi
+
+if [ -z "$WAYLAND_DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
+    exec qtile start -b wayland
+fi
