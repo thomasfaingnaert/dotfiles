@@ -182,7 +182,7 @@ arch-chroot /mnt pacman --noconfirm -S \
     xorg-xwayland
 
 # Autostart qtile on VT1.
-cat >>/home/thomas/.bash_profile <<EOF
+cat >>/mnt/home/thomas/.bash_profile <<EOF
 
 if [ -z "\$WAYLAND_DISPLAY" ] && [ -n "\$XDG_VTNR" ] && [ "\$XDG_VTNR" -eq 1 ]; then
     exec qtile start -b wayland
