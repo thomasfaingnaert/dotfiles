@@ -142,13 +142,13 @@ select PART_SETUP in premounted ext4 ext4-crypt; do
 
             # Formatting.
             mkfs.fat -F32 $ESP_PART
-            mkswap /dev/mapper/vg0-swap
-            mkfs.ext4 /dev/mapper/vg0-root
+            mkswap /dev/vg0/swap
+            mkfs.ext4 /dev/vg0/root
 
             # Mounting.
-            mount /dev/mapper/vg0-root /mnt
+            mount /dev/vg0/root /mnt
             mount --mkdir $ESP_PART /mnt/boot
-            swapon /dev/mapper/vg0-swap
+            swapon /dev/vg0/swap
 
             break
             ;;
