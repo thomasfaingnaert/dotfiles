@@ -107,14 +107,18 @@ select PART_SETUP in premounted ext4; do
         premounted)
             # Just check that we have something mounted on /mnt.
             mountpoint -q /mnt || die "Nothing mounted on /mnt"
-            debug_on
-
-            # TODO: Need $DISK, $ROOT_PART and $ESP_PART_NR
-
             break
             ;;
     esac
 done
+
+# Reobtain necessary variables.
+ESP_PART="$(findmnt --raw --noheadings --first-only -o source /mnt/boot)"
+ROOT_PART="$(findmnt --raw --noheadings --first-only -o source /mnt)"
+DISK="/dev/$(lsblk --raw --noheadings -o KNAME "$ROOT_PART")"
+ESP_PART_NR="$(lsblk --raw --noheadings -o PARTN "$ESP_PART")"
+
+debug_on
 
 # (2.2) Install essential packages.
 pacstrap -K /mnt base linux linux-firmware intel-ucode amd-ucode
@@ -143,9 +147,6 @@ arch-chroot /mnt systemctl enable NetworkManager
 arch-chroot /mnt passwd --lock root
 
 # (3.8) Boot loader (systemd-boot)
-# TODO: instead of ROOT_PART, use mountpoint.
-# TODO: same with ESP_PART_NR?
-# TODO: same with DISK?
 arch-chroot /mnt bootctl install
 ROOT_UUID=$(blkid "$ROOT_PART" --match-tag UUID --output value)
 efibootmgr --create --disk $DISK --part $ESP_PART_NR --loader '\EFI\systemd\systemd-bootx64.efi' --label "Linux Boot Manager" --unicode
