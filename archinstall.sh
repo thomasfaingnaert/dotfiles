@@ -112,9 +112,12 @@ select PART_SETUP in premounted ext4; do
     esac
 done
 
+debug_off
+
 # Reobtain necessary variables.
 ESP_PART="$(findmnt --raw --noheadings --first-only -o source /mnt/boot)"
 ROOT_PART="$(findmnt --raw --noheadings --first-only -o source /mnt)"
+ROOT_UUID=$(blkid "$ROOT_PART" --match-tag UUID --output value)
 DISK="/dev/$(lsblk --raw --noheadings -o PKNAME "$ROOT_PART")"
 ESP_PART_NR="$(lsblk --raw --noheadings -o PARTN "$ESP_PART")"
 
@@ -148,7 +151,6 @@ arch-chroot /mnt passwd --lock root
 
 # (3.8) Boot loader (systemd-boot)
 arch-chroot /mnt bootctl install
-ROOT_UUID=$(blkid "$ROOT_PART" --match-tag UUID --output value)
 efibootmgr --create --disk $DISK --part $ESP_PART_NR --loader '\EFI\systemd\systemd-bootx64.efi' --label "Linux Boot Manager" --unicode
 cat <<EOF >/mnt/boot/loader/entries/arch.conf
 title  Arch Linux
