@@ -182,8 +182,8 @@ arch-chroot /mnt pacman --noconfirm -S \
     xorg-xwayland
 
 # Autostart qtile on VT1.
-cat >>/mnt/home/thomas/.bash_profile <<EOF
-
+# NOTE: Our bash_profile from our dotfiles will source profile.local.
+cat >/mnt/home/thomas/.profile.local <<EOF
 if [ -z "\$WAYLAND_DISPLAY" ] && [ -n "\$XDG_VTNR" ] && [ "\$XDG_VTNR" -eq 1 ]; then
     exec qtile start -b wayland
 fi
@@ -218,3 +218,16 @@ arch-chroot /mnt systemctl enable bluetooth
 # TODO: zfs?
 
 # TODO: systemd partition automounting?
+
+# Install web browser.
+arch-chroot /mnt pacman --noconfirm -S firefox
+
+# Install text editor.
+arch-chroot /mnt pacman --noconfirm -S nvim python-nvim
+
+# Install basic development packages (also required for dotfiles).
+arch-chroot /mnt pacman --noconfirm -S git base-devel
+
+# Install dotfiles.
+arch-chroot /mnt su thomas git clone https://github.com/thomasfaingnaert/dotfiles ~/.dotfiles
+arch-chroot /mnt su thomas bash ~/.dotfiles/scripts/config-unix.sh
