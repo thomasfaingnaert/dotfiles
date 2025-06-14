@@ -17,9 +17,10 @@ rmtail()
 }
 
 # Used to access git completion functions from within this script
-if [ -f /usr/share/bash-completion/completions/git ]; then
-    source /usr/share/bash-completion/completions/git
-fi
+[[ -f /usr/share/bash-completion/completions/git ]] && source /usr/share/bash-completion/completions/git
+
+# Used to access __git_ps1 in this script.
+[[ -f /usr/share/git/git-prompt.sh ]] && source /usr/share/git/git-prompt.sh
 
 # Make completion work with git alias
 # Source: https://stackoverflow.com/questions/39506941/alias-g-git-and-have-bash-completion-still-work
@@ -146,7 +147,7 @@ nc='\[\033[00m\]'
 PS1="${red}\$(retval="\$?" ; if [[ \$retval -ne 0 ]]; then echo \"[\${retval}] \"; fi)${nc}"
 
 # user@host:~/directory (master)$ |
-PS1="${PS1}${green}\u@\h${nc}:${blue}\w${yellow}\$(__git_ps1)${nc}\$ "
+PS1="${PS1}${green}\u@\h${nc}:${blue}\w${yellow}\$(function_exists __git_ps1 && __git_ps1)${nc}\$ "
 
 # If this is an xterm set the title
 # Based on Ubuntu default ~/.bashrc
