@@ -217,4 +217,4 @@ arch-chroot /mnt systemctl enable bluetooth
 
 # TODO: zfs?
 
-# TODO: partition automounting
+# TODO: systemd partition automounting?
