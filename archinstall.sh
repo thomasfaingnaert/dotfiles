@@ -223,7 +223,7 @@ arch-chroot /mnt systemctl enable bluetooth
 arch-chroot /mnt pacman --noconfirm -S firefox
 
 # Install text editor.
-arch-chroot /mnt pacman --noconfirm -S nvim python-nvim
+arch-chroot /mnt pacman --noconfirm -S nvim python-pynvim
 
 # Install basic development packages (also required for dotfiles).
 arch-chroot /mnt pacman --noconfirm -S git base-devel
