@@ -1,17 +1,12 @@
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
-    fi
-fi
+# Source bashrc even for interactive non-login shells.
+if [ -f ~/.bashrc ]; then . ~/.bashrc fi
 
-# set PATH so it includes user's private bin if it exists
+# Set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-# set PATH so it includes user's private bin if it exists
+# Set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
@@ -53,8 +48,4 @@ fi
 if command -v nvim >/dev/null 2>&1; then
     export MANPAGER='nvim +Man!'
     export MANWIDTH=999
-fi
-
-if [ -z "$WAYLAND_DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
-    exec qtile start -b wayland
 fi

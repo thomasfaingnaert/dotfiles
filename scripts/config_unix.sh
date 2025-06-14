@@ -2,8 +2,8 @@
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 cd ..
 
-ln -sf "$(pwd)/bash/.bash_aliases" ~/.bash_aliases
-ln -sf "$(pwd)/bash/.profile" ~/.profile
+ln -sf "$(pwd)/bash/.bashrc" ~/.bashrc
+ln -sf "$(pwd)/bash/.bash_profile" ~/.bash_profile
 
 ln -sf "$(pwd)/git/.gitattributes" ~/.gitattributes
 ln -sf "$(pwd)/git/.gitconfig" ~/.gitconfig
@@ -52,9 +52,3 @@ ln -sf "$(pwd)/gdb/.gdbinit" ~/.gdbinit
 
 mkdir -p ~/.config/Projecteur
 ln -sf "$(pwd)/projecteur/Projecteur.conf" ~/.config/Projecteur/Projecteur.conf
-
-# Comment out 'HISTSIZE' and 'HISTFILESIZE' in bashrc.
-sed -i \
-    -e '/^HISTSIZE=/ s/^#*/#/' \
-    -e '/^HISTFILESIZE=/ s/^#*/#/' \
-    ~/.bashrc
