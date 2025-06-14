@@ -119,16 +119,13 @@ done
 # (2.2) Install essential packages.
 pacstrap -K /mnt base linux linux-firmware intel-ucode amd-ucode
 
-# TODO: Other essential packages (see wiki 2.2)
-
 # (3.1) fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
 # (3.3) Timezone
 arch-chroot /mnt ln -sf /usr/share/zoneinfo/Europe/Brussels /etc/localtime
 arch-chroot /mnt hwclock --systohc
-
-# TODO: NTP (see wiki 3.3)
+arch-chroot /mnt systecmtl enable systemd-timesyncd
 
 # (3.4) Localization
 sed -i 's/#\(en_GB.UTF-8\)/\1/' /mnt/etc/locale.gen
@@ -141,9 +138,6 @@ echo "$HOSTNAME" >/mnt/etc/hostname
 
 arch-chroot /mnt pacman --noconfirm -S networkmanager
 arch-chroot /mnt systemctl enable NetworkManager
-
-# TODO: encrypted WiFi passwords (see https://wiki.archlinux.org/title/NetworkManager)
-# TODO: other networkmanager config (see https://wiki.archlinux.org/title/NetworkManager)
 
 # (3.7) Lock the root account.
 arch-chroot /mnt passwd --lock root
@@ -171,63 +165,3 @@ arch-chroot /mnt passwd thomas
 # 2) Install and configure sudo.
 arch-chroot /mnt pacman --noconfirm -S sudo
 sed -i '/# %wheel ALL=(ALL:ALL) ALL/s/^# //' /mnt/etc/sudoers
-
-# 3.1) Install Qtile (Wayland) as GUI.
-arch-chroot /mnt pacman --noconfirm -S \
-    qtile \
-    libinput \
-    python-pywayland \
-    python-pywlroots \
-    python-xkbcommon \
-    xorg-xwayland
-
-# Autostart qtile on VT1.
-# NOTE: Our bash_profile from our dotfiles will source profile.local.
-cat >/mnt/home/thomas/.profile.local <<EOF
-if [ -z "\$WAYLAND_DISPLAY" ] && [ -n "\$XDG_VTNR" ] && [ "\$XDG_VTNR" -eq 1 ]; then
-    exec qtile start -b wayland
-fi
-EOF
-
-# 3.2) Install some fonts, as installing Qtile by default doesn't pull in any.
-# NOTE: ttf-noto-nerd is required by bluetui.
-arch-chroot /mnt pacman --noconfirm -S noto-fonts ttf-noto-nerd
-
-# 3.3) Install a terminal.
-arch-chroot /mnt pacman --noconfirm -S foot
-
-# 3.4) Create user directories automatically.
-arch-chroot /mnt pacman --noconfirm -S xdg-user-dirs
-
-# 3.5) Install sounds packages (pipewire).
-arch-chroot /mnt pacman --noconfirm -S pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack wireplumber
-arch-chroot /mnt pacman --noconfirm -S pavucontrol
-
-# 3.6) Install bluetooth packages (bluez).
-arch-chroot /mnt pacman --noconfirm -S bluez bluez-utils bluetui
-arch-chroot /mnt systemctl enable bluetooth
-
-# TODO: general recommendations: trackpad
-
-# TODO: Secure boot.
-
-# TODO: Encryption. (+ encrypted swap, hibernation)
-
-# TODO: btrfs?
-
-# TODO: zfs?
-
-# TODO: systemd partition automounting?
-
-# Install web browser.
-arch-chroot /mnt pacman --noconfirm -S firefox
-
-# Install text editor.
-arch-chroot /mnt pacman --noconfirm -S nvim python-pynvim
-
-# Install basic development packages (also required for dotfiles).
-arch-chroot /mnt pacman --noconfirm -S git base-devel
-
-# Install dotfiles.
-arch-chroot /mnt su thomas git clone https://github.com/thomasfaingnaert/dotfiles ~/.dotfiles
-arch-chroot /mnt su thomas bash ~/.dotfiles/scripts/config-unix.sh
