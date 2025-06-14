@@ -16,6 +16,9 @@ ln -sf "$(pwd)/timewarrior.cfg" ~/.config/timewarrior/timewarrior.cfg
 mkdir -p ~/.task/hooks
 ln -sf "$(pwd)/taskwarrior-pomodoro-hook.py" ~/.task/hooks/on-modify.01.pomodoro
 
+mkdir -p ~/.config/foot
+ln -sf "$(pwd)/foot.ini" ~/.config/foot/foot.ini
+
 ln -sfn "$(pwd)/vim" ~/.vim
 ln -sfn "$(pwd)/nvim" ~/.config/nvim
 
