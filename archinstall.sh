@@ -53,6 +53,10 @@ choose_disk() {
     done
 }
 
+# Defaults.
+INITRAMFS_HOOKS="(base udev autodetect microcode modconf kms keyboard keymap consolefont block filesystems fsck)"
+EXTRA_PACKAGES=""
+
 cat <<EOF
 Available partitioning schemes:
 
@@ -102,6 +106,10 @@ select PART_SETUP in premounted ext4 ext4-crypt; do
             mount --mkdir $ESP_PART /mnt/boot
             swapon $SWAP_PART
 
+            # Overrides.
+            ROOT_UUID=$(blkid "$ROOT_PART" --match-tag UUID --output value)
+            KERNEL_PARAMS="root=UUID=$ROOT_UUID rw"
+
             break
             ;;
 
@@ -150,12 +158,24 @@ select PART_SETUP in premounted ext4 ext4-crypt; do
             mount --mkdir $ESP_PART /mnt/boot
             swapon /dev/vg0/swap
 
+            # Overrides.
+            INITRAMFS_HOOKS="(base udev autodetect microcode modconf kms keyboard keymap consolefont block encrypt lvm2 filesystems fsck)"
+            EXTRA_PACKAGES="lvm2"
+            CRYPT_UUID=$(blkid "$CRYPT_PART" --match-tag UUID --output value)
+            KERNEL_PARAMS="cryptdevice=UUID=$CRYPT_UUID:root root=/dev/mapper/root"
+
             break
             ;;
 
         premounted)
             # Just check that we have something mounted on /mnt.
             mountpoint -q /mnt || die "Nothing mounted on /mnt"
+
+            # Overrides.
+            ROOT_PART="$(findmnt --raw --noheadings --first-only -o source /mnt)"
+            ROOT_UUID=$(blkid "$ROOT_PART" --match-tag UUID --output value)
+            KERNEL_PARAMS="root=UUID=$ROOT_UUID rw"
+
             break
             ;;
     esac
@@ -165,15 +185,13 @@ debug_off
 
 # Reobtain necessary variables.
 ESP_PART="$(findmnt --raw --noheadings --first-only -o source /mnt/boot)"
-ROOT_PART="$(findmnt --raw --noheadings --first-only -o source /mnt)"
-ROOT_UUID=$(blkid "$ROOT_PART" --match-tag UUID --output value)
-DISK="/dev/$(lsblk --raw --noheadings -o PKNAME "$ESP_PART")"
+ESP_DISK="/dev/$(lsblk --raw --noheadings -o PKNAME "$ESP_PART")"
 ESP_PART_NR="$(lsblk --raw --noheadings -o PARTN "$ESP_PART")"
 
 debug_on
 
 # (2.2) Install essential packages.
-pacstrap -K /mnt base linux linux-firmware intel-ucode amd-ucode
+pacstrap -K /mnt base linux linux-firmware intel-ucode amd-ucode "$EXTRA_PACKAGES"
 
 # (3.1) fstab
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -196,6 +214,7 @@ arch-chroot /mnt pacman --noconfirm -S networkmanager
 arch-chroot /mnt systemctl enable NetworkManager
 
 # (3.6) Initramfs
+sed -i "/^HOOKS=/s/=.*/=$INITRAMFS_HOOKS/" /mnt/etc/mkinitcpio.conf
 arch-chroot /mnt mkinitcpio -P
 
 # (3.7) Lock the root account.
@@ -203,12 +222,12 @@ arch-chroot /mnt passwd --lock root
 
 # (3.8) Boot loader (systemd-boot)
 arch-chroot /mnt bootctl install
-efibootmgr --create --disk $DISK --part $ESP_PART_NR --loader '\EFI\systemd\systemd-bootx64.efi' --label "Linux Boot Manager" --unicode
+efibootmgr --create --disk $ESP_DISK --part $ESP_PART_NR --loader '\EFI\systemd\systemd-bootx64.efi' --label "Linux Boot Manager" --unicode
 cat <<EOF >/mnt/boot/loader/entries/arch.conf
 title  Arch Linux
 linux  /vmlinuz-linux
 initrd /initramfs-linux.img
-options root=UUID=$ROOT_UUID rw
+options $KERNEL_PARAMS
 EOF
 
 # (5) Post-installation.
