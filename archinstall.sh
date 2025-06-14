@@ -132,7 +132,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # (3.3) Timezone
 arch-chroot /mnt ln -sf /usr/share/zoneinfo/Europe/Brussels /etc/localtime
 arch-chroot /mnt hwclock --systohc
-arch-chroot /mnt systecmtl enable systemd-timesyncd
+arch-chroot /mnt systemctl enable systemd-timesyncd
 
 # (3.4) Localization
 sed -i 's/#\(en_GB.UTF-8\)/\1/' /mnt/etc/locale.gen
