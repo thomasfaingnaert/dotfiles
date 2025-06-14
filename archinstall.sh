@@ -115,7 +115,7 @@ done
 # Reobtain necessary variables.
 ESP_PART="$(findmnt --raw --noheadings --first-only -o source /mnt/boot)"
 ROOT_PART="$(findmnt --raw --noheadings --first-only -o source /mnt)"
-DISK="/dev/$(lsblk --raw --noheadings -o KNAME "$ROOT_PART")"
+DISK="/dev/$(lsblk --raw --noheadings -o PKNAME "$ROOT_PART")"
 ESP_PART_NR="$(lsblk --raw --noheadings -o PARTN "$ESP_PART")"
 
 debug_on
