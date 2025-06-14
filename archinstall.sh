@@ -219,8 +219,7 @@ sed -i "/^HOOKS=/s/=.*/=$INITRAMFS_HOOKS/" /mnt/etc/mkinitcpio.conf
 mkdir -p /mnt/efi/EFI/BOOT
 mkdir -p /mnt/efi/EFI/Linux
 arch-chroot /mnt mkinitcpio -P
-
-# TODO: REMOVE initramfs leftovers.
+rm -f /mnt/boot/initramfs-*.img
 
 # (3.7) Lock the root account.
 arch-chroot /mnt passwd --lock root
