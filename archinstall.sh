@@ -37,6 +37,14 @@ confirm() {
 ping -c1 archlinux.org &>/dev/null || die "No internet connection"
 timedatectl | grep -q "System clock synchronized: yes" || die "Clock not synchronised"
 
+# Check if in Secure Boot Setup Mode, so we can generate and enroll keys.
+[[ "$(od -j4 -N1 -t x1 -An /sys/firmware/efi/efivars/SetupMode-8be4df61-93ca-11d2-aa0d-00e098032b8c | tr -d ' ')" == "01" ]]
+running_setup_mode=$?
+if (( running_setup_mode != 0 )); then
+    warn "Not running in UEFI Setup Mode. sbctl will not be able to enroll new keys."
+    confirm "Do you want to continue?"
+fi
+
 # (1.9 - 1.11) Disk partitioning, formatting, and mounting.
 choose_disk() {
     lsblk --list -o PATH,MODEL,SIZE,TYPE | awk 'NR==1 || /disk/'
@@ -236,3 +244,15 @@ arch-chroot /mnt passwd thomas
 # 2) Install and configure sudo.
 arch-chroot /mnt pacman --noconfirm -S sudo
 sed -i '/# %wheel ALL=(ALL:ALL) ALL/s/^# //' /mnt/etc/sudoers
+
+# Secure boot.
+arch-chroot /mnt pacman --noconfirm -S sbctl
+
+arch-chroot /mnt sbctl create-keys
+arch-chroot /mnt sbctl enroll-keys --microsoft
+
+arch-chroot /mnt sbctl sign -s /mnt/efi/EFI/BOOT/BOOTx64.EFI
+arch-chroot /mnt sbctl sign -s /mnt/efi/EFI/Linux/arch-linux-fallback.efi
+
+arch-chroot /mnt sbctl status
+arch-chroot /mnt sbctl verify
