@@ -1,3 +1,14 @@
+# If not running interactively, don't do anything.
+[[ $- != *i* ]] && return
+
+# Use colors for certain commands.
+alias diff='diff --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias ip='ip -color=auto'
+alias ls='ls --color=auto'
+
 alias g='git'
 
 # Copy to/paste from clipboard
@@ -17,9 +28,10 @@ rmtail()
 }
 
 # Used to access git completion functions from within this script
-if [ -f /usr/share/bash-completion/completions/git ]; then
-    source /usr/share/bash-completion/completions/git
-fi
+[[ -f /usr/share/bash-completion/completions/git ]] && source /usr/share/bash-completion/completions/git
+
+# Used to access __git_ps1 in this script.
+[[ -f /usr/share/git/git-prompt.sh ]] && source /usr/share/git/git-prompt.sh
 
 # Make completion work with git alias
 # Source: https://stackoverflow.com/questions/39506941/alias-g-git-and-have-bash-completion-still-work
@@ -146,7 +158,7 @@ nc='\[\033[00m\]'
 PS1="${red}\$(retval="\$?" ; if [[ \$retval -ne 0 ]]; then echo \"[\${retval}] \"; fi)${nc}"
 
 # user@host:~/directory (master)$ |
-PS1="${PS1}${green}\u@\h${nc}:${blue}\w${yellow}\$(__git_ps1)${nc}\$ "
+PS1="${PS1}${green}\u@\h${nc}:${blue}\w${yellow}\$(function_exists __git_ps1 && __git_ps1)${nc}\$ "
 
 # If this is an xterm set the title
 # Based on Ubuntu default ~/.bashrc
@@ -496,3 +508,9 @@ rgd()
 {
     rg --json "$@" | delta
 }
+
+# Automatically start tmux.
+# Adapted from: https://unix.stackexchange.com/questions/43601/how-can-i-set-my-default-shell-to-start-up-tmux
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [[ ! "$(tty)" =~ /dev/tty.* ]]; then
+  exec tmux
+fi

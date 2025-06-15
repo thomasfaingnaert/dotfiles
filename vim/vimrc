@@ -305,7 +305,7 @@ if has('nvim-0.5.0')
 
                     forwardSearch = {
                         executable = 'zathura',
-                        args = { '--synctex-forward', '%l:1:%f', '%p', '-x', string.format('%s/.dotfiles/scripts/nvim-backward-synctex-helper.sh "%s" "%%{line}" "%%{input}"', os.getenv('HOME'), vim.v.servername) }
+                        args = { '--synctex-forward', '%l:1:%f', '%p', '-x', string.format('%s/.dotfiles/nvim/nvim-backward-synctex-helper.sh "%s" "%%{line}" "%%{input}"', os.getenv('HOME'), vim.v.servername) }
                     }
                 }
             }
