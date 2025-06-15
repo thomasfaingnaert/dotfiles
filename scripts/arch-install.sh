@@ -75,11 +75,12 @@ Available partitioning schemes:
 premounted      Partitioning, formatting, and mounting already done. (/mnt)
 ext4            Wipe disk: EFI | swap | ext4 root
 ext4-crypt      Wipe disk: EFI | crypt ( LVM ( swap | ext4 root ) )
+btrfs-crypt     Wipe disk: EFI | crypt ( LVM ( swap | btrfs root ) )
 
 EOF
 
 PS3="Select partitioning scheme: "
-select PART_SETUP in premounted ext4 ext4-crypt; do
+select PART_SETUP in premounted ext4 ext4-crypt btrfs-crypt; do
     case "$PART_SETUP" in
         ext4)
             choose_disk
@@ -179,6 +180,67 @@ select PART_SETUP in premounted ext4 ext4-crypt; do
             break
             ;;
 
+        btrfs-crypt)
+            choose_disk
+
+            echo "Will install to $DISK (-> $(realpath "$DISK"))."
+            confirm "Are you sure? All data will be wiped."
+
+            SWAP_SIZE=$(awk '/MemTotal/ { print $2 * 2 }' /proc/meminfo)
+
+            ESP_PART="$DISK-part1"
+            CRYPT_PART="$DISK-part2"
+
+            debug_on
+
+            # Wipe disk.
+            wipefs -af $DISK
+            sgdisk -Zo $DISK
+
+            # Partitioning.
+            sgdisk -n 1:0:+1G -t 1:EF00 $DISK # EFI
+            sgdisk -n 2:0:0   -t 2:8309 $DISK # cryptroot
+
+            partprobe $DISK
+
+            # Crypt setup.
+            cryptsetup -v luksFormat $CRYPT_PART
+            cryptsetup open $CRYPT_PART cryptroot
+
+            # LVM setup.
+            # Leave 256 MiB free space at the end so we can use e2scrub(8) for ext4.
+            pvcreate /dev/mapper/cryptroot
+            vgcreate vg0 /dev/mapper/cryptroot
+            lvcreate -L "$SWAP_SIZE"K vg0 -n swap
+            lvcreate -l 100%FREE vg0 -n root
+            lvreduce -L -256M vg0/root
+
+            # Formatting.
+            mkfs.fat -F32 $ESP_PART
+            mkswap /dev/vg0/swap
+            mkfs.btrfs /dev/vg0/root
+
+            # Create subvolumes for btrfs.
+            mount /dev/vg0/root /mnt
+            btrfs subvolume create /mnt/@
+            btrfs subvolume create /mnt/@home
+            umount /mnt
+
+            # Mounting.
+            mount -o subvol=@ /dev/vg0/root /mnt
+            mount --mkdir -o subvol=@home /dev/vg0/root /mnt/home
+            mount --mkdir $ESP_PART /mnt/efi
+            swapon /dev/vg0/swap
+
+            # Overrides.
+            INITRAMFS_HOOKS="(base udev autodetect microcode modconf kms keyboard keymap consolefont block encrypt lvm2 filesystems resume fsck)"
+            EXTRA_PACKAGES="lvm2 btrfs-progs"
+            CRYPT_UUID=$(blkid "$CRYPT_PART" --match-tag UUID --output value)
+            KERNEL_CMDLINE_ROOT="cryptdevice=UUID=$CRYPT_UUID:root root=/dev/vg0/root rootflags=subvol=@ rw"
+
+            break
+            ;;
+
         premounted)
             # Just check that we have something mounted on /mnt.
             mountpoint -q /mnt || die "Nothing mounted on /mnt"
@@ -194,7 +256,7 @@ select PART_SETUP in premounted ext4 ext4-crypt; do
 done
 
 # (2.2) Install essential packages.
-pacstrap -K /mnt base linux linux-firmware intel-ucode amd-ucode "$EXTRA_PACKAGES"
+pacstrap -K /mnt base linux linux-firmware intel-ucode amd-ucode $EXTRA_PACKAGES
 
 # (3.1) fstab
 genfstab -U /mnt >> /mnt/etc/fstab
