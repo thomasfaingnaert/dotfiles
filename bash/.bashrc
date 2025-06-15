@@ -514,3 +514,6 @@ rgd()
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [[ ! "$(tty)" =~ /dev/tty.* ]]; then
   exec tmux
 fi
+
+# Command not found hook for Arch.
+[[ -f /usr/share/doc/pkgfile/command-not-found.bash ]] && source /usr/share/doc/pkgfile/command-not-found.bash
