@@ -54,3 +54,6 @@ ln -sf "$(pwd)/gdb/.gdbinit" ~/.gdbinit
 
 mkdir -p ~/.config/Projecteur
 ln -sf "$(pwd)/projecteur/Projecteur.conf" ~/.config/Projecteur/Projecteur.conf
+
+mkdir -p ~/.config/keepassxc
+ln -sf "$(pwd)/keepassxc/keepassxc.ini" ~/.config/keepassxc/keepassxc.ini
