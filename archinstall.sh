@@ -132,7 +132,7 @@ select PART_SETUP in premounted ext4 ext4-crypt; do
 
             # Partitioning.
             sgdisk -n 1:0:+1G -t 1:EF00 $DISK # EFI
-            sgdisk -n 2:0:0   -t 2:8308 $DISK # cryptroot
+            sgdisk -n 2:0:0   -t 2:8309 $DISK # cryptroot
 
             partprobe $DISK
 
