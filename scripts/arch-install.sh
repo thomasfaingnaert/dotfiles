@@ -44,7 +44,7 @@ if [[ "$(od -j4 -N1 -t x1 -An /sys/firmware/efi/efivars/SetupMode-8be4df61-93ca-
     running_setup_mode=1
 fi
 
-if (( running_setup_mode != 0 )); then
+if (( running_setup_mode != 1 )); then
     warn "Not running in UEFI Setup Mode. sbctl will not be able to enroll new keys."
     confirm "Do you want to continue?"
 fi
@@ -254,7 +254,7 @@ arch-chroot /mnt pacman --noconfirm -S sbctl
 
 arch-chroot /mnt sbctl create-keys
 
-if (( running_setup_mode == 0 )); then
+if (( running_setup_mode == 1 )); then
     arch-chroot /mnt sbctl enroll-keys --microsoft
 else
     warn "Not running in UEFI Setup Mode. You need to enroll the keys yourself using sbctl enroll-keys --microsoft after boot."
