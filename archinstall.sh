@@ -249,7 +249,12 @@ sed -i '/# %wheel ALL=(ALL:ALL) ALL/s/^# //' /mnt/etc/sudoers
 arch-chroot /mnt pacman --noconfirm -S sbctl
 
 arch-chroot /mnt sbctl create-keys
-arch-chroot /mnt sbctl enroll-keys --microsoft
+
+if (( running_setup_mode == 0 )); then
+    arch-chroot /mnt sbctl enroll-keys --microsoft
+else
+    warn "Not running in UEFI Setup Mode. You need to enroll the keys yourself using sbctl enroll-keys --microsoft after boot."
+fi
 
 arch-chroot /mnt sbctl sign -s /mnt/efi/EFI/BOOT/BOOTx64.EFI
 arch-chroot /mnt sbctl sign -s /mnt/efi/EFI/Linux/arch-linux-fallback.efi
