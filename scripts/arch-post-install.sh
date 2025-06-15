@@ -1,8 +1,15 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+cd "$( dirname "${BASH_SOURCE[0]}" )"
+cd ..
+
 # TODO: Do this with Ansible.
 
 # TODO: Other essential packages (see wiki 2.2)
 # TODO: encrypted WiFi passwords (see https://wiki.archlinux.org/title/NetworkManager)
 # TODO: other networkmanager config (see https://wiki.archlinux.org/title/NetworkManager)
+
 
 # 3.1) Install Qtile (Wayland) as GUI.
 sudo pacman --noconfirm -S \
@@ -15,7 +22,7 @@ sudo pacman --noconfirm -S \
 
 # Autostart qtile on VT1.
 # NOTE: Our bash_profile from our dotfiles will source profile.local.
-cat >/~/.profile.local <<EOF
+cat >~/.profile.local <<EOF
 if [ -z "\$WAYLAND_DISPLAY" ] && [ -n "\$XDG_VTNR" ] && [ "\$XDG_VTNR" -eq 1 ]; then
     exec qtile start -b wayland
 fi
@@ -61,5 +68,4 @@ sudo pacman --noconfirm -S nvim python-pynvim
 sudo pacman --noconfirm -S git base-devel
 
 # Install dotfiles.
-git clone https://github.com/thomasfaingnaert/dotfiles ~/.dotfiles
-bash ~/.dotfiles/scripts/config-unix.sh
+./scripts/config_unix.sh
