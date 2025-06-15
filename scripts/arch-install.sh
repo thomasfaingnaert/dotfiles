@@ -38,8 +38,12 @@ ping -c1 archlinux.org &>/dev/null || die "No internet connection"
 timedatectl | grep -q "System clock synchronized: yes" || die "Clock not synchronised"
 
 # Check if in Secure Boot Setup Mode, so we can generate and enroll keys.
-[[ "$(od -j4 -N1 -t x1 -An /sys/firmware/efi/efivars/SetupMode-8be4df61-93ca-11d2-aa0d-00e098032b8c | tr -d ' ')" == "01" ]]
-running_setup_mode=$?
+running_setup_mode=0
+
+if [[ "$(od -j4 -N1 -t x1 -An /sys/firmware/efi/efivars/SetupMode-8be4df61-93ca-11d2-aa0d-00e098032b8c | tr -d ' ')" == "01" ]]; then
+    running_setup_mode=1
+fi
+
 if (( running_setup_mode != 0 )); then
     warn "Not running in UEFI Setup Mode. sbctl will not be able to enroll new keys."
     confirm "Do you want to continue?"
