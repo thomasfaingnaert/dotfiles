@@ -7,6 +7,15 @@ from libqtile.backend.wayland import InputConfig
 mod = "mod4"
 terminal = guess_terminal()
 
+@lazy.function
+def rename_current_group(qtile):
+    prompt = qtile.widgets_map['prompt']
+
+    print('got here')
+
+    rename_group = lambda label: qtile.current_group.set_label(label if label.strip() != '' else None)
+    prompt.start_input('New group label: ', rename_group)
+
 keys = [
     # A list of available commands that can be bound to keys can be found
     # at https://docs.qtile.org/en/latest/manual/config/lazy.html
@@ -69,6 +78,9 @@ keys = [
     Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%"), desc="Decrease output volume"),
     Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%"), desc="Increase output volume"),
     Key([], "XF86AudioMicMute", lazy.spawn("pactl set-source-mute @DEFAULT_SOURCE@ toggle"), desc="Toggle mute of microphone"),
+
+    # Rename groups using , (cfr. tmux).
+    Key([mod], "comma", rename_current_group, desc="Rename current group"),
 ]
 
 # Add key bindings to switch VTs in Wayland.
