@@ -5,7 +5,7 @@ cd "$( dirname "${BASH_SOURCE[0]}" )"
 cd ..
 
 ln -sf "$(pwd)/bash/.bashrc" ~/.bashrc
-ln -sf "$(pwd)/bash/.bash_profile" ~/.bash_profile
+ln -sf "$(pwd)/bash/.profile" ~/.profile
 
 ln -sf "$(pwd)/git/.gitattributes" ~/.gitattributes
 ln -sf "$(pwd)/git/.gitconfig" ~/.gitconfig
