@@ -510,4 +510,6 @@ rgd()
 }
 
 # Command not found hook for Arch.
-[[ -f /usr/share/doc/pkgfile/command-not-found.bash ]] && source /usr/share/doc/pkgfile/command-not-found.bash
+if [[ -f /usr/share/doc/pkgfile/command-not-found.bash ]]; then
+    source /usr/share/doc/pkgfile/command-not-found.bash
+fi
