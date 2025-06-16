@@ -45,10 +45,6 @@ if command -v nvim >/dev/null 2>&1; then
     export MANWIDTH=999
 fi
 
-# Set SSH agent socket, if it exists.
-# Needs a: systemctl enable --user ssh-agent
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-
 # local overrides
 if [ -f "$HOME/.profile.local" ]; then
     . "$HOME/.profile.local"
