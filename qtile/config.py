@@ -3,9 +3,36 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile.backend.wayland import InputConfig
+from libqtile.widget import backlight
 
 mod = "mod4"
 terminal = guess_terminal()
+
+# Color scheme (Nord)
+
+# Polar Night
+nord0 = '2e3440'
+nord1 = '3b4252'
+nord2 = '434c5e'
+nord3 = '4c566a'
+
+# Snow Storm
+nord4 = 'd8dee9'
+nord5 = 'e5e9f0'
+nord6 = 'eceff4'
+
+# Frost
+nord7 = '8fbcbb'
+nord8 = '88c0d0'
+nord9 = '81a1c1'
+nord10 = '5e81ac'
+
+# Aurora
+nord11 = 'bf616a'
+nord12 = 'd08770'
+nord13 = 'ebcb8b'
+nord14 = 'a3be8c'
+nord15 = 'b48ead'
 
 @lazy.function
 def rename_current_group(qtile):
@@ -71,8 +98,8 @@ keys = [
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
 
     # Brightness control.
-    Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 5%-"), desc="Decrease screen brightness"),
-    Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set 5%+"), desc="Increase screen brightness"),
+    Key([], "XF86MonBrightnessDown", lazy.widget['backlight'].change_backlight(backlight.ChangeDirection.DOWN), desc="Decrease screen brightness"),
+    Key([], "XF86MonBrightnessUp", lazy.widget['backlight'].change_backlight(backlight.ChangeDirection.UP), desc="Increase screen brightness"),
 
     # Volume control.
     Key([], "XF86AudioMute", lazy.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle"), desc="Toggle mute of output audio"),
@@ -141,17 +168,35 @@ layouts = [
 
 widget_defaults = dict(
     font="sans",
-    fontsize=12,
-    padding=3,
+    fontsize=16,
+    foreground=nord6,
+    padding=5,
 )
 extension_defaults = widget_defaults.copy()
 
+sep = widget.Sep(padding=10, size_percent=60)
+
 screens = [
     Screen(
-        bottom=bar.Bar(
+        top=bar.Bar(
             [
-                widget.CurrentLayout(),
-                widget.GroupBox(),
+                widget.Spacer(length=4),
+                widget.CurrentLayoutIcon(scale=0.6),
+                sep,
+                widget.GroupBox(
+                    highlight_method = 'line',
+
+                    highlight_color = nord1,                # Background of current group
+                    block_highlight_text_color = nord6,     # Foreground of current group
+                    this_current_screen_border = nord6,     # Color of the underline for current group
+                    this_screen_border = nord6,             # Color of the underline for other screens
+
+                    active = nord6,                         # Foreground of non-current, but used group
+                    inactive = nord6,                       # Foreground of non-current, and unused group
+
+                    hide_unused = True,
+                ),
+                sep,
                 widget.Prompt(),
                 widget.WindowName(),
                 widget.Chord(
@@ -160,17 +205,66 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.TextBox("default config", name="default"),
-                widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
-                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
-                widget.Systray(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                widget.QuickExit(),
+                # Systray is incompatible with Wayland, so use StatusNotifier instead.
+                widget.StatusNotifier(),
+                sep,
+                widget.PulseVolume(
+                    fmt = '  {}',
+                    volume_app = 'pavucontrol',
+                ),
+                sep,
+                widget.Wlan(
+                    format = '{essid} {quality}/70',
+                    fmt = '  {}',
+                    interface = 'wlp58s0',
+                    mouse_callbacks = {
+                        'Button1': lazy.spawn('foot nmtui')
+                    }
+                ),
+                widget.Bluetooth(
+                    default_text = '󰂯 {num_connected_devices}',
+                    mouse_callbacks = {
+                        'Button1': lazy.spawn('foot bluetui')
+                    }
+                ),
+                sep,
+                widget.Backlight(
+                    backlight_name = 'intel_backlight',
+                    change_command = 'brightnessctl set {0}%',
+                    min_brightness = 5,
+                    fmt = '󰃠 {}',
+                ),
+                widget.Battery(
+                    format = '{char} {percent:2.0%} ({hour:d}:{min:02d})',
+                    charge_char = '󰂄',
+                    discharge_char = '󰂍',
+                    empty_char = '󰁺',
+                    unknown_char = '󰂑',
+                    full_short_text = '󰁹  Full',
+                ),
+                sep,
+                widget.CheckUpdates(
+                    display_format='{updates}',
+                    no_update_string='0',
+                    fmt = '󰚰 {}',
+                ),
+                sep,
+                widget.Clock(
+                    format="%H:%M",
+                    fmt = ' {}',
+                    mouse_callbacks = {
+                        'Button1': lazy.spawn('foot bash -c "cal -y && read"'),
+                    }
+                ),
+                sep,
+                widget.QuickExit(
+                    default_text = '󰐥',
+                    countdown_format = '[{}]'
+                ),
+                widget.Spacer(length=4),
             ],
-            24,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+            36,
+            background=nord0,
         ),
         # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
         # By default we handle these events delayed to already improve performance, however your system might still be struggling
