@@ -44,6 +44,9 @@ EOF
             sudo pacman --noconfirm -S pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack wireplumber
             sudo pacman --noconfirm -S pavucontrol
 
+            # Install a File Manager (GNOME Files).
+            sudo pacman --noconfirm -S nautilus
+
             break
             ;;
 
