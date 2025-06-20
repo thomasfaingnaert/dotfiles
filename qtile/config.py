@@ -124,20 +124,19 @@ for i in groups:
         ]
     )
 
+layout_defaults = dict(
+    border_normal = nord0,
+    border_normal_stack = nord0,
+    border_focus = nord10,
+    border_focus_stack = nord10,
+    border_on_single = True,
+    border_width = 4,
+)
+
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
-    layout.Max(),
-    # Try more layouts by unleashing below layouts.
-    # layout.Stack(num_stacks=2),
-    # layout.Bsp(),
-    # layout.Matrix(),
-    # layout.MonadTall(),
-    # layout.MonadWide(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.TreeTab(),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
+    layout.MonadTall(**layout_defaults),
+    layout.Columns(**layout_defaults),
+    layout.Max(**layout_defaults),
 ]
 
 widget_defaults = dict(
