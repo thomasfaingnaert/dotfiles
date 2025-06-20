@@ -48,10 +48,6 @@ EOF
             sudo pacman --noconfirm -S pipewire pipewire-audio pipewire-alsa pipewire-pulse pipewire-jack wireplumber
             sudo pacman --noconfirm -S pavucontrol
 
-            # 3.6) Install bluetooth packages (bluez).
-            sudo pacman --noconfirm -S bluez bluez-utils bluetui
-            sudo systemctl enable bluetooth
-
             break
             ;;
 
@@ -66,6 +62,10 @@ EOF
             ;;
     esac
 done
+
+# 3.6) Install bluetooth packages (bluez).
+sudo pacman --noconfirm -S bluez bluez-utils bluetui
+sudo systemctl enable bluetooth
 
 # TODO: Encryption. (+ encrypted swap, hibernation)
 
