@@ -34,10 +34,6 @@ select WM in qtile gnome; do
             fi
 EOF
 
-            # 3.2) Install some fonts, as installing Qtile by default doesn't pull in any.
-            # NOTE: ttf-noto-nerd is required by bluetui.
-            sudo pacman --noconfirm -S noto-fonts ttf-noto-nerd
-
             # 3.3) Install a terminal.
             sudo pacman --noconfirm -S foot
 
@@ -62,6 +58,10 @@ EOF
             ;;
     esac
 done
+
+# 3.2) Install some fonts.
+# NOTE: ttf-noto-nerd is required by bluetui.
+sudo pacman --noconfirm -S noto-fonts ttf-noto-nerd
 
 # 3.6) Install bluetooth packages (bluez).
 sudo pacman --noconfirm -S bluez bluez-utils bluetui
