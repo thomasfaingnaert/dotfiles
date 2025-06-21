@@ -203,7 +203,7 @@ screens = [
                     format="%a, %d %b %Y, %H:%M",
                     fmt = '{}',
                     mouse_callbacks = {
-                        'Button1': lazy.spawn('foot bash -c "cal -y && read"'),
+                        'Button1': lazy.spawn('foot -W70x35 -T floatingterm bash -c "cal -y && read -n1"'),
                     }
                 ),
                 widget.Spacer(),
@@ -226,13 +226,13 @@ screens = [
                     fmt = '  {}',
                     interface = 'wlp58s0',
                     mouse_callbacks = {
-                        'Button1': lazy.spawn('foot nmtui')
+                        'Button1': lazy.spawn('foot -T floatingterm nmtui')
                     }
                 ),
                 widget.Bluetooth(
                     default_text = '󰂯 {num_connected_devices}',
                     mouse_callbacks = {
-                        'Button1': lazy.spawn('foot bluetui')
+                        'Button1': lazy.spawn('foot -T floatingterm bluetui')
                     }
                 ),
                 sep,
@@ -298,6 +298,7 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
+        Match(title="floatingterm"), # Floating terminal
     ]
 )
 auto_fullscreen = True
