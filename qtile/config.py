@@ -198,7 +198,15 @@ screens = [
                 ),
                 sep,
                 widget.Prompt(),
-                widget.WindowName(),
+                widget.Spacer(),
+                widget.Clock(
+                    format="%a, %d %b %Y, %H:%M",
+                    fmt = '{}',
+                    mouse_callbacks = {
+                        'Button1': lazy.spawn('foot bash -c "cal -y && read"'),
+                    }
+                ),
+                widget.Spacer(),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
@@ -247,14 +255,6 @@ screens = [
                     display_format='{updates}',
                     no_update_string='0',
                     fmt = '󰚰 {}',
-                ),
-                sep,
-                widget.Clock(
-                    format="%H:%M",
-                    fmt = ' {}',
-                    mouse_callbacks = {
-                        'Button1': lazy.spawn('foot bash -c "cal -y && read"'),
-                    }
                 ),
                 sep,
                 widget.QuickExit(
