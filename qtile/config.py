@@ -38,8 +38,6 @@ nord15 = 'b48ead'
 def rename_current_group(qtile):
     prompt = qtile.widgets_map['prompt']
 
-    print('got here')
-
     rename_group = lambda label: qtile.current_group.set_label(label if label.strip() != '' else None)
     prompt.start_input('New group label: ', rename_group)
 
