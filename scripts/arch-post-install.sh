@@ -57,6 +57,16 @@ EOF
             # Autostart GDM on boot.
             sudo systemctl enable gdm
 
+            # AppIndicator support.
+            sudo pacman --noconfirm -S gnome-shell-extension-appindicator
+
+            # NOTE: Requires a restart of GNOME shell.
+            appindicator_extension_name="$(gnome-extensions list | { grep -m 1 appindicatorsupport || true; })"
+
+            if [[ -n "$appindicator_extension_name" ]]; then
+                gnome-extensions enable "$appindicator_extension_name"
+            fi
+
             break
             ;;
     esac
