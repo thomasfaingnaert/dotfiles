@@ -59,3 +59,6 @@ mkdir -p ~/.config/keepassxc
 # There are some settings we do not want to sync in Git, so just copy the file
 # if it does not exist.
 [[ -f "~/.config/keepassxc/keepassxc.ini" ]] || cp "$(pwd)/keepassxc/keepassxc.ini" ~/.config/keepassxc/keepassxc.ini
+
+mkdir -p ~/.config/kanshi
+ln -sf "$(pwd)/kanshi/config" ~/.config/kanshi/config

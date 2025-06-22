@@ -1,0 +1,26 @@
+# ------------------------------------------------------------------------------
+# Use wlr-randr to get Make Model Serial
+# Replace empty values with 'Unknown'
+
+output "Sharp Corporation 0x1420 Unknown" {
+    alias $INTERNAL
+}
+
+output "LG Electronics LG ULTRAGEAR 109MAXS38V82" {
+    alias $HOME
+    mode 2560x1440
+}
+
+# ------------------------------------------------------------------------------
+
+profile "Internal Only" {
+    output $INTERNAL enable
+}
+
+profile "Docked Home" {
+    # Stack on top of each other:
+    # x=(W-w)/2=(2560-1920)/2=320
+    # y=H=1440
+    output $HOME enable position 0,0
+    output $INTERNAL enable position 320,1440
+}
