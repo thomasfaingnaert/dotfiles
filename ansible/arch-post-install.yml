@@ -1,0 +1,78 @@
+---
+- hosts: all
+
+  tasks:
+    # 3.1) Install GNOME
+    - name: Install GNOME packages
+      pacman: name=gnome state=present
+      become: yes
+
+    - name: Autostart GDM on boot.
+      service: name=gdm enabled=true
+      become: yes
+
+    - name: Install AppIndicator extension
+      pacman: name=gnome-shell-extension-appindicator state=present
+      register: install_appindicator
+      become: yes
+
+    - name: Enable AppIndicator extension
+      command: gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
+      when: install_appindicator.changed
+
+
+    # 3.2) Install some fonts.
+    # NOTE: ttf-noto-nerd is required by bluetui.
+    - name: Install fonts
+      pacman: name={{ item }} state=present
+      with_items:
+        - noto-fonts
+        - ttf-noto-nerd
+      become: yes
+
+    # 3.6) Install Bluetooth packages (bluez).
+    - name: Install Bluetooth packages
+      pacman: name={{ item }} state=present
+      with_items:
+        - bluez
+        - bluez-utils
+        - bluetui
+      become: yes
+
+    - name: Enable Bluetooth service
+      service: name=bluetooth enabled=true
+      become: yes
+
+    # Install web browser
+    - name: Install Web browser
+      pacman: name=firefox state=present
+      become: yes
+
+    # Install text editor.
+    - name: Install text editor (Neovim)
+      pacman: name={{ item }} state=present
+      with_items:
+        - nvim
+        - python-pynvim
+      become: yes
+
+    # Install basic development packages (also required for dotfiles).
+    - name: Install basic development packages
+      pacman: name={{ item }} state=present
+      with_items:
+        - git
+        - base-devel
+      become: yes
+
+    # Clone dotfiles
+    - name: Clone dotfiles
+      git:
+        repo: 'https://www.github.com/thomasfaingnaert/dotfiles'
+        dest: '$HOME/.dotfiles'
+        update: no
+      register: clone_dotfiles
+
+    # Run script to install dotfiles.
+    - name: Configure dotfiles
+      shell: '$HOME/.dotfiles/scripts/config_unix.sh'
+      when: clone_dotfiles.changed
