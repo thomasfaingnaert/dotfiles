@@ -174,103 +174,110 @@ extension_defaults = widget_defaults.copy()
 
 sep = widget.Sep(padding=10, size_percent=60)
 
-screens = [
-    Screen(
-        top=bar.Bar(
-            [
-                widget.Spacer(length=4),
-                widget.CurrentLayoutIcon(scale=0.6),
-                sep,
-                widget.GroupBox(
-                    highlight_method = 'line',
+volume_widget = widget.PulseVolume(
+    fmt = '  {}',
+    volume_app = 'pavucontrol',
+)
 
-                    highlight_color = nord1,                # Background of current group
-                    block_highlight_text_color = nord6,     # Foreground of current group
-                    this_current_screen_border = nord6,     # Color of the underline for current group
-                    this_screen_border = nord6,             # Color of the underline for other screens
+# Use left click to open mixer, right click to mute.
+volume_widget.mouse_callbacks = {
+    "Button1": volume_widget.run_app,
+    "Button3": volume_widget.mute,
+    "Button4": volume_widget.increase_vol,
+    "Button5": volume_widget.decrease_vol,
+}
 
-                    active = nord6,                         # Foreground of non-current, but used group
-                    inactive = nord6,                       # Foreground of non-current, and unused group
+widgets_list = [
+    widget.Spacer(length=4),
+    widget.CurrentLayoutIcon(scale=0.6),
+    sep,
+    widget.GroupBox(
+        highlight_method = 'line',
 
-                    hide_unused = True,
-                ),
-                sep,
-                widget.Prompt(),
-                widget.Spacer(),
-                widget.Clock(
-                    format="%a, %d %b %Y, %H:%M",
-                    fmt = '{}',
-                    mouse_callbacks = {
-                        'Button1': lazy.spawn('foot -W70x35 -T floatingterm bash -c "cal -y && read -n1"'),
-                    }
-                ),
-                widget.Spacer(),
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                ),
-                # Systray is incompatible with Wayland, so use StatusNotifier instead.
-                widget.StatusNotifier(),
-                sep,
-                widget.PulseVolume(
-                    fmt = '  {}',
-                    volume_app = 'pavucontrol',
-                ),
-                sep,
-                widget.Wlan(
-                    format = '{essid} {quality}/70',
-                    fmt = '  {}',
-                    interface = 'wlp58s0',
-                    mouse_callbacks = {
-                        'Button1': lazy.spawn('foot -T floatingterm nmtui')
-                    }
-                ),
-                widget.Bluetooth(
-                    default_text = '󰂯 {num_connected_devices}',
-                    mouse_callbacks = {
-                        'Button1': lazy.spawn('foot -T floatingterm bluetui')
-                    }
-                ),
-                sep,
-                widget.Backlight(
-                    backlight_name = 'intel_backlight',
-                    change_command = 'brightnessctl set {0}%',
-                    min_brightness = 5,
-                    fmt = '󰃠 {}',
-                ),
-                widget.Battery(
-                    format = '{char} {percent:2.0%} ({hour:d}:{min:02d})',
-                    charge_char = '󰂄',
-                    discharge_char = '󰂍',
-                    empty_char = '󰁺',
-                    unknown_char = '󰂑',
-                    full_short_text = '󰁹  Full',
-                ),
-                sep,
-                widget.CheckUpdates(
-                    display_format='{updates}',
-                    no_update_string='0',
-                    fmt = '󰚰 {}',
-                ),
-                sep,
-                widget.QuickExit(
-                    default_text = '󰐥',
-                    countdown_format = '[{}]'
-                ),
-                widget.Spacer(length=4),
-            ],
-            36,
-            background=nord0,
-        ),
-        # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
-        # By default we handle these events delayed to already improve performance, however your system might still be struggling
-        # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
-        # x11_drag_polling_rate = 60,
-        wallpaper='~/.dotfiles/qtile/wallpaper.jpg',
-        wallpaper_mode='stretch'
+        highlight_color = nord1,                # Background of current group
+        block_highlight_text_color = nord6,     # Foreground of current group
+        this_current_screen_border = nord6,     # Color of the underline for current group
+        this_screen_border = nord6,             # Color of the underline for other screens
+
+        active = nord6,                         # Foreground of non-current, but used group
+        inactive = nord6,                       # Foreground of non-current, and unused group
+
+        hide_unused = True,
     ),
+    sep,
+    widget.Prompt(),
+    widget.Spacer(),
+    widget.Clock(
+        format="%a, %d %b %Y, %H:%M",
+        fmt = '{}',
+        mouse_callbacks = {
+            'Button1': lazy.spawn('foot -W70x35 -T floatingterm bash -c "cal -y && read -n1"'),
+        }
+    ),
+    widget.Spacer(),
+    widget.Chord(
+        chords_colors={
+            "launch": ("#ff0000", "#ffffff"),
+        },
+        name_transform=lambda name: name.upper(),
+    ),
+    # Systray is incompatible with Wayland, so use StatusNotifier instead.
+    widget.StatusNotifier(),
+    sep,
+    volume_widget,
+    sep,
+    widget.Wlan(
+        format = '{essid} {quality}/70',
+        fmt = '  {}',
+        interface = 'wlp58s0',
+        mouse_callbacks = {
+            'Button1': lazy.spawn('foot -T floatingterm nmtui')
+        }
+    ),
+    widget.Bluetooth(
+        default_text = '󰂯 {num_connected_devices}',
+        mouse_callbacks = {
+            'Button1': lazy.spawn('foot -T floatingterm bluetui')
+        }
+    ),
+    sep,
+    widget.Backlight(
+        backlight_name = 'intel_backlight',
+        change_command = 'brightnessctl set {0}%',
+        min_brightness = 5,
+        fmt = '󰃠 {}',
+    ),
+    widget.Battery(
+        format = '{char} {percent:2.0%} ({hour:d}:{min:02d})',
+        charge_char = '󰂄',
+        discharge_char = '󰂍',
+        empty_char = '󰁺',
+        unknown_char = '󰂑',
+        full_short_text = '󰁹  Full',
+    ),
+    sep,
+    widget.CheckUpdates(
+        display_format='{updates}',
+        no_update_string='0',
+        fmt = '󰚰 {}',
+    ),
+    sep,
+    widget.QuickExit(
+        default_text = '󰐥',
+        countdown_format = '[{}]'
+    ),
+    widget.Spacer(length=4),
+]
+
+screen_options = dict(
+    wallpaper='~/.dotfiles/qtile/wallpaper.jpg',
+    wallpaper_mode='stretch'
+)
+
+screens = [
+    Screen(top=bar.Bar(widgets_list, 36, background=nord0), **screen_options),
+    Screen(top=bar.Bar(widgets_list, 36, background=nord0), **screen_options),
+    Screen(top=bar.Bar(widgets_list, 36, background=nord0), **screen_options),
 ]
 
 # Drag floating layouts.
