@@ -305,7 +305,7 @@ arch-chroot /mnt passwd --lock root
 
 # 1) Create a local user account with sudo rights.
 arch-chroot /mnt useradd -m -G wheel -s /bin/bash thomas
-arch-chroot /mnt passwd thomas
+until arch-chroot /mnt passwd thomas; do echo "Try again."; done
 
 # 2) Install and configure sudo.
 arch-chroot /mnt pacman --noconfirm -S sudo
