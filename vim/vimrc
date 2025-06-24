@@ -549,7 +549,10 @@ if executable('rg')
     command! TODOs
                 \   copen |
                 \   grep -F 'TODO' . |
-                \   grepadd -F 'FIXME' .
+                \   grepadd -F 'FIXME' . |
+                \   grepadd -F '\bds{' . |
+                \   grepadd -F '\tf{' . |
+                \   grepadd -F '\todo{' .
 else
     command! TODOs
                 \   copen |
