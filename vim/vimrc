@@ -366,7 +366,7 @@ if has('nvim-0.5.0')
         ret = ''
         first = true
 
-        for _, server in pairs(vim.lsp.buf_get_clients()) do
+        for _, server in pairs(vim.lsp.get_clients({bufnr=0})) do
             if not first then
                 ret = ret .. ','
             end
