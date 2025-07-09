@@ -522,3 +522,8 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# local overrides
+if [ -f "$HOME/.bashrc.local" ]; then
+    . "$HOME/.bashrc.local"
+fi
