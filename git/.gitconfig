@@ -72,3 +72,5 @@
 	textconv = \"/usr/bin/python3\" -m json.tool
 [rebase]
 	autoStash = true
+[init]
+	defaultBranch = main
