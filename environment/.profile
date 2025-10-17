@@ -6,22 +6,11 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# Set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-
-# Set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
-# Add dotfiles' bin/ to PATH
-if [ -d ~/.dotfiles/bin ]; then
-    export PATH=$PATH:~/.dotfiles/bin
-elif [ -d ~/dotfiles/bin ]; then
-    export PATH=$PATH:~/dotfiles/bin
-fi
+# Add some directories in my home directory to the PATH.
+export PATH="$HOME/dotfiles/bin:$PATH"
+export PATH="$HOME/.dotfiles/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
 
 # Use gvim as EDITOR for the Julia REPL
 export JULIA_EDITOR='gvim --remote-silent'
