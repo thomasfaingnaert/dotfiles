@@ -27,6 +27,14 @@ rmtail()
     rm $1 && touch $1 && tail -f $1
 }
 
+# Run command every time files in a directory change.
+fwatch()
+{
+    while sleep 1; do
+        git ls-files | entr -dscc "$*"
+    done
+}
+
 # Used to access git completion functions from within this script
 [[ -f /usr/share/bash-completion/completions/git ]] && source /usr/share/bash-completion/completions/git
 
