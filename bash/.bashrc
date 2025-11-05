@@ -15,6 +15,12 @@ alias g='git'
 alias getclip='xclip -selection clipboard -o'
 alias setclip='xclip -selection clipboard'
 
+# Fix tmux ssh.
+fixssh()
+{
+    eval "$(tmux showenv -s SSH_AUTH_SOCK)"
+}
+
 # Run docker container with files mounted in /host (*d*ocker *r*un *m*ount)
 drm()
 {
