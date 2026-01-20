@@ -8,6 +8,7 @@
 [mergetool]
 	keepBackup = false
 	prompt = false
+	hideResolved = true
 [diff]
 	colorMoved = default
 	tool = nvimdiff
