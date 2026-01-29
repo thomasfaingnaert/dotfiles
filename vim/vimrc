@@ -253,56 +253,12 @@ if has('nvim-0.5.0')
 
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-    local nvim_lsp = require('lspconfig')
+    -- Global options for all language servers.
+    vim.lsp.config('*', {
+        capabilities = capabilities,
+    })
 
-    -- Custom LSP attach function
-    local lsp_on_attach = function(client, bufnr)
-        -- Helper functions
-        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-        local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-        -- Use LSP for formatting
-        buf_set_option('formatexpr', 'v:lua.vim.lsp.formatexpr()')
-
-        -- Keymappings
-        local opts = { noremap = true, silent = true }
-        buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-        buf_set_keymap('n', '<C-]>', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-        buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-        buf_set_keymap('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-        buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-        buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-        buf_set_keymap('n', '<Space>r', '<cmd>Telescope lsp_references<CR>', opts)
-        buf_set_keymap('n', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-        buf_set_keymap('i', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-        buf_set_keymap('n', '<Space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-        buf_set_keymap('n', 'gO', '<cmd>Telescope lsp_document_symbols<CR>', opts)
-        buf_set_keymap('n', 'go', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', opts)
-        buf_set_keymap('n', 'g]', '<cmd>Telescope lsp_definitions<CR>', opts)
-        buf_set_keymap('n', 'g<C-]>', '<cmd>Telescope lsp_definitions<CR>', opts)
-
-        if client.server_capabilities.document_formatting then
-            buf_set_keymap('n', '<Space>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-        end
-
-        -- Show diagnostics in floating window on cursor hold.
-        vim.api.nvim_create_autocmd("CursorHold", {
-            buffer = bufnr,
-            callback = function()
-                local opts = {
-                    focusable = false,
-                    close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-                    border = 'rounded',
-                    source = 'always',
-                    prefix = ' ',
-                    scope = 'cursor',
-                }
-                vim.diagnostic.open_float(nil, opts)
-            end
-        })
-    end
-
-    -- Register servers
+    -- Configure and enable each individual language server.
     local servers = {
         clangd = {},
 
@@ -328,13 +284,63 @@ if has('nvim-0.5.0')
     }
 
     for server, config in pairs(servers) do
-        config = vim.tbl_deep_extend("keep", config, {
-            capabilities = capabilities,
-            on_attach = lsp_on_attach
+        -- Only call vim.lsp.config if there are server-specific settings.
+        if next(config) ~= nil then
+            vim.lsp.config(server, config)
+        end
+        vim.lsp.enable(server)
+    end
+
+    -- Custom LSP attach function.
+    vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('my.lsp', {}),
+        callback = function(args)
+            local bufnr = args.buf
+            local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "Expected valid LSP client")
+
+            local builtin = require 'telescope.builtin'
+
+            -- Use LSP for formatting
+            vim.opt_local.formatexpr = 'v:lua.vim.lsp.formatexpr()'
+
+            -- Keymappings
+            vim.keymap.set('n', 'gd', vim.lsp.buf.declaration, { buffer = 0 })
+            vim.keymap.set('n', '<C-]>', vim.lsp.buf.definition, { buffer = 0 })
+            vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = 0 })
+            vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, { buffer = 0 })
+            vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { buffer = 0 })
+            vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { buffer = 0 })
+            vim.keymap.set('n', '<C-s>', vim.lsp.buf.signature_help, { buffer = 0 })
+            vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help, { buffer = 0 })
+            vim.keymap.set('n', '<Space>a', vim.lsp.buf.code_action, { buffer = 0 })
+            vim.keymap.set('n', '<Space>r', builtin.lsp_references, { buffer = 0 })
+            vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { buffer = 0 })
+            vim.keymap.set('n', 'go', builtin.lsp_dynamic_workspace_symbols, { buffer = 0 })
+            vim.keymap.set('n', 'g]', builtin.lsp_definitions, { buffer = 0 })
+            vim.keymap.set('n', 'g<C-]>', builtin.lsp_definitions, { buffer = 0 })
+
+            if client:supports_method('textDocument/formatting') then
+                vim.keymap.set('n', '<Space>=', vim.lsp.buf.format, { buffer = 0 })
+            end
+
+            -- Show diagnostics in floating window on cursor hold.
+            vim.api.nvim_create_autocmd("CursorHold", {
+                buffer = bufnr,
+                callback = function()
+                    local opts = {
+                        focusable = false,
+                        close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+                        border = 'rounded',
+                        source = 'always',
+                        prefix = ' ',
+                        scope = 'cursor',
+                    }
+                    vim.diagnostic.open_float(nil, opts)
+                end
         })
 
-        nvim_lsp[server].setup(config)
-    end
+        end,
+    })
 
     require('telescope').setup({
         defaults = {
