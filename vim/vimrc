@@ -170,7 +170,8 @@ if executable('rg')
 endif
 
 " Highlight conflict markers
-match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+highlight ConflictMarker guifg=#D16969 guibg=#3B2D2D ctermfg=167 ctermbg=52 gui=bold cterm=bold
+match ConflictMarker '^\(<\|=\||\|>\)\{7\}\([^=].\+\)\?$'
 
 " Less saturated highlights for diffs
 highlight DiffAdd    guibg=#314D31 guifg=NONE ctermbg=238
