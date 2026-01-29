@@ -23,6 +23,7 @@
 	co = checkout
 	d = diff
 	dc = diff --cached
+	du = diff @{u}
 	fa = fetch --all
 	gone = !"gone() { git fetch --all --prune >/dev/null; git branch -vv | grep -F ': gone]' | sed 's/^\\+//' | awk '{ print $1 }'; }; gone"
 	gonep = !"gonep() { git worktree prune; git gone | xargs git branch -D; }; gonep"
@@ -37,6 +38,7 @@
 	psu = push --set-upstream origin HEAD
 	squash = !"squash() { git reset --soft "$1" && git commit; }; squash"
 	rb = rebase
+	rbc = rebase --continue
 	rbi = rebase --interactive
 	st = status
 	ugent = config user.email thomas.faingnaert@ugent.be
