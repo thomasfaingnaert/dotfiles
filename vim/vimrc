@@ -342,6 +342,9 @@ if has('nvim-0.5.0')
         end,
     })
 
+    -- Show diagnostics using virtual text.
+    vim.diagnostic.config { virtual_text = true, virtual_lines = { current_line = true } }
+
     require('telescope').setup({
         defaults = {
             mappings = {
