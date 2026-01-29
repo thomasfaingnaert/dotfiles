@@ -578,6 +578,15 @@ function! s:highlight_between()
 endfunction
 command! HighlightBetween call s:highlight_between()
 
+"" Mergetool diffing bindings
+nmap <leader>d1 <Plug>gitmergetool_diff_local_merged
+nmap <leader>d2 <Plug>gitmergetool_diff_base_merged
+nmap <leader>d3 <Plug>gitmergetool_diff_remote_merged
+nmap <leader>d4 <Plug>gitmergetool_diff_local_remote
+nmap <leader>da <Plug>gitmergetool_diff_all
+nmap <leader>dt <Plug>gitmergetool_diff_top
+nmap <leader>do <Plug>gitmergetool_diff_off
+
 " --------------------------------------------------------------------------------
 " Autocommands
 " --------------------------------------------------------------------------------
