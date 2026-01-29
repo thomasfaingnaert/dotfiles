@@ -177,7 +177,7 @@ match ConflictMarker '^\(<\|=\||\|>\)\{7\}\([^=].\+\)\?$'
 highlight DiffAdd    guibg=#314D31 guifg=NONE ctermbg=238
 highlight DiffDelete guibg=#4D3131 guifg=#6A6A6A ctermbg=238 ctermfg=243
 highlight DiffChange guibg=#2F4A6A guifg=NONE ctermbg=239
-highlight DiffText   guibg=#569CD6 guifg=#1E1E1E ctermbg=68 ctermfg=234 gui=bold cterm=bold
+highlight DiffText   guibg=#3B5F7F guifg=NONE ctermbg=68 gui=bold cterm=bold
 
 " Get rid of the - in diffs for deleted lines.
 execute 'set fillchars+=diff:\ '
