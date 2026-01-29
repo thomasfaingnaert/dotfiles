@@ -322,23 +322,6 @@ if has('nvim-0.5.0')
             if client:supports_method('textDocument/formatting') then
                 vim.keymap.set('n', '<Space>=', vim.lsp.buf.format, { buffer = 0 })
             end
-
-            -- Show diagnostics in floating window on cursor hold.
-            vim.api.nvim_create_autocmd("CursorHold", {
-                buffer = bufnr,
-                callback = function()
-                    local opts = {
-                        focusable = false,
-                        close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-                        border = 'rounded',
-                        source = 'always',
-                        prefix = ' ',
-                        scope = 'cursor',
-                    }
-                    vim.diagnostic.open_float(nil, opts)
-                end
-        })
-
         end,
     })
 
