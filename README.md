@@ -22,18 +22,19 @@ cd ~/.dotfiles && \
 ```bash
 pacman -Sy git
 git clone https://github.com/thomasfaingnaert/dotfiles
-./dotfiles/scripts/arch-install.sh
+./dotfiles/scripts/arch/install.sh
+./dotfiles/scripts/arch/post-install.sh
 ```
 
 ### Ubuntu
 
-1. Clone the repository, navigate to the directory where you cloned the repository and run the `scripts/ubuntu-install.sh` configuration script:
+1. Clone the repository, navigate to the directory where you cloned the repository and run the `scripts/ubuntu/post-install.sh` configuration script:
 
 ```bash
 sudo apt install -y git && \
 git clone https://github.com/thomasfaingnaert/dotfiles ~/.dotfiles && \
 cd ~/.dotfiles && \
-./scripts/ubuntu-install.sh
+./scripts/ubuntu/post-install.sh
 ```
 
 2. Generate an SSH key, and add it to GitHub:
