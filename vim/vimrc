@@ -423,7 +423,7 @@ let g:traces_abolish_integration = 1
 inoremap <C-u> <C-g>u<C-u>
 inoremap <C-w> <C-g>u<C-w>
 
-"" Window navigation and movement
+"" Window navigation and movement (hjkl)
 nnoremap <silent> <C-h> :call window_move#window_move('h')<CR>
 nnoremap <silent> <C-j> :call window_move#window_move('j')<CR>
 nnoremap <silent> <C-k> :call window_move#window_move('k')<CR>
@@ -433,6 +433,17 @@ nnoremap <C-M-h> <C-w>H
 nnoremap <C-M-j> <C-w>J
 nnoremap <C-M-k> <C-w>K
 nnoremap <C-M-l> <C-w>L
+
+"" Window navigation and movement (arrow keys)
+nnoremap <silent> <C-Left>  :call window_move#window_move('h')<CR>
+nnoremap <silent> <C-Down>  :call window_move#window_move('j')<CR>
+nnoremap <silent> <C-Up>    :call window_move#window_move('k')<CR>
+nnoremap <silent> <C-Right> :call window_move#window_move('l')<CR>
+
+nnoremap <C-M-Left>  <C-w>H
+nnoremap <C-M-Down>  <C-w>J
+nnoremap <C-M-Up>    <C-w>K
+nnoremap <C-M-Right> <C-w>L
 
 "" Move lines up and down
 nnoremap <silent> <A-j> :move +1<CR>==
