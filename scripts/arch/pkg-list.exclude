@@ -1,0 +1,83 @@
+# -----------------------------------------------
+# ARCH INSTALL
+# -----------------------------------------------
+
+# (2.2) Install essential packages.
+base
+linux
+linux-firmware
+intel-ucode
+amd-ucode
+
+# Extra packages, depending on root filesystem.
+lvm2
+btrfs-progs
+
+# (3.5) Network configuration
+networkmanager
+
+# (5) Post-installation
+sudo
+sbctl
+
+# -----------------------------------------------
+# QTILE POST-INSTALL
+# -----------------------------------------------
+
+# (3.1) QTile (wayland)
+qtile
+libinput
+python-pywayland
+python-pywlroots
+python-xkbcommon
+xorg-xwayland
+
+# (3.3) Terminal
+foot
+
+# (3.4) User dirs autocreate
+xdg-user-dirs
+
+# (3.5) Audio
+pipewire
+pipewire-audio
+pipewire-alsa
+pipewire-pulse
+pipewire-jack
+wireplumber
+pavucontrol
+
+# File manager
+nautilus
+
+# -----------------------------------------------
+# GNOME POST-INSTALL
+# -----------------------------------------------
+
+# (3.1) GNOME
+gnome
+gnome-shell-extension-appindicator
+
+# -----------------------------------------------
+# POST-INSTALL (COMMON)
+# -----------------------------------------------
+
+# (3.2) Fonts
+noto-fonts
+ttf-noto-nerd
+
+# (3.6) Bluetooth
+bluez
+bluez-utils
+bluetui
+
+# Web browser
+firefox
+
+# Editor
+nvim
+python-nvim
+
+# Basic development
+git
+base-devel
