@@ -116,7 +116,7 @@ select PART_SETUP in premounted ext4 ext4-crypt btrfs-crypt; do
 
             # Mounting.
             mount $ROOT_PART /mnt
-            mount --mkdir $ESP_PART /mnt/efi
+            mount --mkdir -o fmask=0077 -o dmask=0077 $ESP_PART /mnt/efi
             swapon $SWAP_PART
 
             # Overrides.
@@ -168,7 +168,7 @@ select PART_SETUP in premounted ext4 ext4-crypt btrfs-crypt; do
 
             # Mounting.
             mount /dev/vg0/root /mnt
-            mount --mkdir $ESP_PART /mnt/efi
+            mount --mkdir -o fmask=0077 -o dmask=0077 $ESP_PART /mnt/efi
             swapon /dev/vg0/swap
 
             # Overrides.
@@ -229,7 +229,7 @@ select PART_SETUP in premounted ext4 ext4-crypt btrfs-crypt; do
             # Mounting.
             mount -o subvol=@ /dev/vg0/root /mnt
             mount --mkdir -o subvol=@home /dev/vg0/root /mnt/home
-            mount --mkdir $ESP_PART /mnt/efi
+            mount --mkdir -o fmask=0077 -o dmask=0077 $ESP_PART /mnt/efi
             swapon /dev/vg0/swap
 
             # Overrides.
