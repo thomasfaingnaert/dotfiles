@@ -280,13 +280,16 @@ arch-chroot /mnt systemctl enable NetworkManager
 
 # (3.6) Initramfs
 
-# Configure for UKI.
+# Configure for UKI, default and fallback preset.
 mkdir -p /mnt/etc/cmdline.d
 echo "$KERNEL_CMDLINE_ROOT" >/mnt/etc/cmdline.d/root.conf
 
 sed -i '/_uki=/s/^#//' /mnt/etc/mkinitcpio.d/linux.preset
 sed -i '/_image=/s/^/#/' /mnt/etc/mkinitcpio.d/linux.preset
 sed -i '/^default_uki=/s|=.*|="/efi/EFI/BOOT/BOOTx64.EFI"|' /mnt/etc/mkinitcpio.d/linux.preset
+
+sed -i "/^PRESETS=/s/^/#/" /mnt/etc/mkinitcpio.d/linux.preset
+sed -i "/PRESETS=('default' 'fallback')/s/^#//" /mnt/etc/mkinitcpio.d/linux.preset
 
 # Set hooks and regenerate UKI.
 sed -i "/^HOOKS=/s/=.*/=$INITRAMFS_HOOKS/" /mnt/etc/mkinitcpio.conf
