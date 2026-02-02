@@ -603,6 +603,12 @@ nmap <leader>da <Plug>gitmergetool_diff_all
 nmap <leader>dt <Plug>gitmergetool_diff_top
 nmap <leader>do <Plug>gitmergetool_diff_off
 
+"" tmux send pane
+nmap cp <Plug>operator_tmux_send
+xmap cp <Plug>operator_tmux_send
+nmap cpp <Plug>operator_tmux_send_paragraph
+nmap cpt <Plug>operator_tmux_select_pane
+
 " --------------------------------------------------------------------------------
 " Autocommands
 " --------------------------------------------------------------------------------
