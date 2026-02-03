@@ -464,6 +464,15 @@ inoremap <silent> <A-k> <Esc>:move -2<CR>==gi
 xnoremap <silent> <A-j> :move '>+1<CR>gv=gv
 xnoremap <silent> <A-k> :move '<-2<CR>gv=gv
 
+nnoremap <silent> <A-Down> :move +1<CR>==
+nnoremap <silent> <A-Up> :move -2<CR>==
+
+inoremap <silent> <A-Down> <Esc>:move +1<CR>==gi
+inoremap <silent> <A-Up> <Esc>:move -2<CR>==gi
+
+xnoremap <silent> <A-Down> :move '>+1<CR>gv=gv
+xnoremap <silent> <A-Up> :move '<-2<CR>gv=gv
+
 "" Quickly switch between alternate files
 nnoremap <silent> <expr> <BS> exists(':ClangdSwitchSourceHeader') ? ':ClangdSwitchSourceHeader<CR>' : '<C-^>'
 
