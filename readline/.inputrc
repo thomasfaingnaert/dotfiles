@@ -1,0 +1,7 @@
+# Map CTRL+W to ALT+BACKSPACE. This is pretty much the same, but it stops at
+# punctuation like period, like Vim' CTRL+W does.
+"\C-W":"\e\b"
+
+# Map CTRL+BS to delete previous word. This way, I can use CTRL+W on normal
+# keyboards, but my CTRL+BS macro on ZMK boards.
+"\C-H":"\e\b"

@@ -15,6 +15,8 @@ ln -sf "$(pwd)/tmux/.tmux.conf" ~/.tmux.conf
 
 ln -sf "$(pwd)/taskwarrior/.taskrc" ~/.taskrc
 
+ln -sf "$(pwd)/readline/.inputrc" ~/.inputrc
+
 mkdir -p ~/.config/zathura
 ln -sf "$(pwd)/zathura/zathurarc" ~/.config/zathura/zathurarc
 
