@@ -474,7 +474,7 @@ xnoremap <silent> <A-Down> :move '>+1<CR>gv=gv
 xnoremap <silent> <A-Up> :move '<-2<CR>gv=gv
 
 "" Quickly switch between alternate files
-nnoremap <silent> <expr> <BS> exists(':ClangdSwitchSourceHeader') ? ':ClangdSwitchSourceHeader<CR>' : '<C-^>'
+nnoremap <silent> <expr> <BS> exists(':LspClangdSwitchSourceHeader') ? ':LspClangdSwitchSourceHeader<CR>' : '<C-^>'
 
 "" Increase and reset font size
 nmap <M-+> <Plug>font_size_increase
