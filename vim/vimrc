@@ -525,6 +525,7 @@ if has('nvim-0.5.0')
     nnoremap <leader>b <cmd>Telescope buffers<CR>
     nnoremap <C-g> <cmd>Telescope live_grep<CR>
     nnoremap <C-p> <cmd>Telescope find_files<CR>
+    nnoremap <C-m-p> <cmd>Telescope find_files no_ignore=true<CR>
     " NOTE: This actually maps <C-/>
     nnoremap <C-_> <cmd>Telescope current_buffer_fuzzy_find<CR>
 else
