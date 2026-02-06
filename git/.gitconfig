@@ -25,6 +25,7 @@
 	dc = diff --cached
 	du = diff @{u}
 	fa = fetch --all
+	fixup-files = !"fixfiles() { git diff --name-only --cached | while read file; do git commit --fixup \"$(git log -1 --format=\"%H\" -- \"$file\")\" -- \"$file\"; done; }; fixfiles"
 	gone = !"gone() { git fetch --all --prune >/dev/null; git branch -vv | grep -F ': gone]' | sed 's/^\\+//' | awk '{ print $1 }'; }; gone"
 	gonep = !"gonep() { git worktree prune; git gone | xargs git branch -D; }; gonep"
 	hotmail = config user.email thomas.faingnaert@hotmail.com
