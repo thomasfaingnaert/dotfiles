@@ -65,3 +65,6 @@ virtualenv/
 # Jupyter
 .ipynb_checkpoints/
 .virtual_documents/
+
+# Run script in the root for easy iteration. (e.g. in combination with entr)
+/run.sh
