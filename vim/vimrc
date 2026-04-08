@@ -373,6 +373,13 @@ if has('nvim-0.5.0')
         }
     })
 
+    -- Keymaps to open pickers.
+    local builtin = require('telescope.builtin')
+    vim.keymap.set('n', '<C-p>', builtin.find_files)
+    vim.keymap.set('n', '<C-M-p>', function()
+        builtin.find_files({ no_ignore=true, hidden=true })
+    end)
+
     require('telescope').load_extension('ui-select')
 
     -- Return the current LSP servers that are attached to
