@@ -68,10 +68,10 @@
 	syntax-theme = OneHalfDark
 	wrap-max-lines = unlimited
 [filter "nbstripout"]
-	clean = \"/usr/bin/python3\" -m nbstripout
+	clean = nbstripout
 	smudge = cat
 [diff "ipynb"]
-	textconv = \"/usr/bin/python3\" -m nbstripout -t
+	textconv = nbstripout -t
 [diff "json"]
 	textconv = \"/usr/bin/python3\" -m json.tool
 [rebase]
