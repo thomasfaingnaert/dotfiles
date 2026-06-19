@@ -32,25 +32,6 @@ ln -sf "$(pwd)/foot/foot.ini" ~/.config/foot/foot.ini
 mkdir -p ~/.config/qtile
 ln -sf "$(pwd)/qtile/config.py" ~/.config/qtile/config.py
 
-ln -sfn "$(pwd)/vim" ~/.vim
-ln -sfn "$(pwd)/nvim" ~/.config/nvim
-
-mkdir -p ~/.vim/autoload \
-         ~/.vim/cache/backup \
-         ~/.vim/cache/swap \
-         ~/.vim/cache/undo
-
-curl -fLsSo ~/.vim/autoload/plug.vim --create-dirs \
-	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-if command -v nvim >/dev/null 2>&1; then
-    nvim --headless +PlugInstall +qall
-elif command -v vim >/dev/null 2>&1; then
-    vim +PlugInstall +qall
-else
-    echo "Skipping Vim configuration: Vim and/or Neovim is not in PATH."
-fi
-
 mkdir -p ~/.config/gdb
 ln -sf "$(pwd)/gdb/.gdbinit" ~/.gdbinit
 
