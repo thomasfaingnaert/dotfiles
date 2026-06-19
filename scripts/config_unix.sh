@@ -45,3 +45,6 @@ mkdir -p ~/.config/keepassxc
 
 mkdir -p ~/.config/kanshi
 ln -sf "$(pwd)/kanshi/config" ~/.config/kanshi/config
+
+# Neovim
+ln -sfn "$(pwd)/nvim" ~/.config/nvim
