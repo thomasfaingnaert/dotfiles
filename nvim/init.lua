@@ -124,6 +124,10 @@ vim.keymap.set('n', '<Leader>=', function()
     vim.fn.winrestview(view)
 end, {silent = true, desc = 'Format entire buffer'})
 
+-- Toggle binary options quickly.
+vim.keymap.set('n', 'yos', ':set spell!<CR>', {silent = true, desc = 'Toggle spell on/off'})
+vim.keymap.set('n', 'yow', ':set wrap!<CR>', {silent = true, desc = 'Toggle wrap on/off'})
+
 -- Move lines up and down
 -- TODO: Replace this with mini.move?
 vim.keymap.set('n', '<A-j>', ':move +1<CR>==', {silent = true, desc = 'Move line down'})
