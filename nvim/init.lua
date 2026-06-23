@@ -47,6 +47,63 @@ vim.opt.listchars = { eol = '¬', tab = '▸ ', trail = '·', precedes = '←', 
 -- Diagnostics
 vim.diagnostic.config({virtual_text = {current_line = false}, virtual_lines = {current_line = true}})
 
+-- Statusline
+function get_statusline_diagnostics()
+    local current = vim.diagnostic.count(0) -- counts in local buffer
+    local total = vim.diagnostic.count() -- counts for all buffers
+
+    local severity = vim.diagnostic.severity
+
+    local levels = {
+        { s = severity.ERROR, hl = 'DiagnosticError', lbl = 'E' },
+        { s = severity.WARN, hl = 'DiagnosticWarn', lbl = 'W' },
+        { s = severity.INFO, hl = 'DiagnoticInfo', lbl = 'I' },
+        { s = severity.HINT, hl = 'DiagnosticHint', lbl = 'H' },
+    }
+
+    local parts = {}
+
+    for _, level in ipairs(levels) do
+        local x = current[level.s] or 0
+        local y = total[level.s] or 0
+
+        if y > 0 then
+            parts[#parts + 1] = string.format('%%#%s#%s: %d/%d%%*', level.hl, level.lbl, x, y)
+        end
+    end
+
+    return table.concat(parts, ' ')
+end
+
+function get_statusline_lsp_servers()
+    local names = {}
+
+    for _, client in ipairs(vim.lsp.get_clients()) do
+        names[#names + 1] = client.name
+    end
+
+    return table.concat(names, ', ')
+end
+
+local function get_statusline()
+    return table.concat({
+        '%f',                                                       -- Path to the file in the buffer
+        '%<',                                                       -- Start truncating here, so filename is always visible
+        '%( %h%)',                                                  -- Help flag: [Help] or empty
+        '%( %w%)',                                                  -- Preview flag: [Preview] or empty
+        '%( %m%)',                                                  -- Modified flag: [+] or [-] or empty
+        '%( %r%)',                                                  -- Readonly flag: [RO] or empty
+        "%( (%{exists('*FugitiveHead') ? FugitiveHead() : ''})%)",  -- Current branch
+        '%=',                                                       -- Right align
+        "%{% luaeval('get_statusline_diagnostics()') %}",           -- Diagnostics
+        "%( [%{ luaeval('get_statusline_lsp_servers()') }]%)",      -- LSP servers
+        ' Line: %l/%L',                                             -- Line number and total number of lines
+        ' Col: %c',                                                 -- Column number
+    })
+end
+
+vim.opt.statusline = get_statusline()
+
 --------------------------------------------------------------------------------
 --- KEYMAPPINGS
 --------------------------------------------------------------------------------
