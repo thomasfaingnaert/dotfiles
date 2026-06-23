@@ -65,6 +65,7 @@ vim.keymap.set('n', '<Leader>=', function()
 end, {silent = true, desc = 'Format entire buffer'})
 
 -- Move lines up and down
+-- TODO: Replace this with mini.move?
 vim.keymap.set('n', '<A-j>', ':move +1<CR>==', {silent = true, desc = 'Move line down'})
 vim.keymap.set('n', '<A-k>', ':move -2<CR>==', {silent = true, desc = 'Move line up'})
 
@@ -134,6 +135,7 @@ vim.keymap.set('c', '<S-Tab>', cmdline_tab('<C-t>', '<S-Tab>'), {expr = true})
 local augroup = vim.api.nvim_create_augroup('UserConfig', {clear = true})
 
 -- Remove trailing whitespace on file save.
+-- TODO: Replace with mini.trailspace?
 vim.api.nvim_create_autocmd('BufWritePre', {
     group = augroup,
     pattern = '*',
@@ -148,3 +150,53 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     end,
     desc = 'Strip trailing whitespace on save'
 })
+
+--------------------------------------------------------------------------------
+--- PLUGINS
+--------------------------------------------------------------------------------
+
+vim.pack.add({
+    'https://github.com/lervag/vimtex',
+    'https://github.com/neovim/nvim-lspconfig',
+    'https://github.com/nvim-mini/mini.nvim',
+    'https://github.com/tpope/vim-eunuch',
+})
+
+-- LSP
+vim.lsp.enable('texlab')
+
+-- vim-tex
+vim.g.vimtex_view_method = 'zathura'
+
+-- mini.pick and mini.extra
+require('mini.pick').setup({})
+require('mini.extra').setup({})
+
+vim.keymap.set('n', '<C-p>', MiniPick.builtin.files)
+vim.keymap.set('n', '<C-g>', MiniPick.builtin.grep_live)
+vim.keymap.set('n', '<C-_>', MiniExtra.pickers.buf_lines) -- NOTE: actually maps C-/
+vim.keymap.set('n', 'go', function() MiniExtra.pickers.lsp({scope = 'workspace_symbol_live'}) end)
+vim.keymap.set('n', 'gO', function() MiniExtra.pickers.lsp({scope = 'document_symbol'}) end)
+vim.keymap.set('n', '<Space>r', function() MiniExtra.pickers.lsp({scope = 'references'}) end)
+
+-- mini.surround
+require('mini.surround').setup({
+    -- Use mappings of tpope's vim-surround.
+    mappings = {
+        add = 'ys',
+        delete = 'ds',
+        replace = 'cs',
+    },
+})
+
+-- mini.align
+require('mini.align').setup({})
+
+-- mini.operators (for sort)
+require('mini.operators').setup({})
+
+-- mini.snippets
+require('mini.snippets').setup({})
+
+-- mini.completion
+require('mini.completion').setup({})
