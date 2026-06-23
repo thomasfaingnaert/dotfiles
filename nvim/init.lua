@@ -227,6 +227,7 @@ vim.pack.add({
     'https://github.com/neovim/nvim-lspconfig',
     'https://github.com/nvim-mini/mini.nvim',
     'https://github.com/tpope/vim-eunuch',
+    'https://github.com/tpope/vim-fugitive',
 })
 
 -- LSP
