@@ -209,4 +209,6 @@ require('mini.operators').setup({})
 require('mini.snippets').setup({})
 
 -- mini.completion
-require('mini.completion').setup({})
+require('mini.completion').setup({
+    delay = { completion = 1e7 },
+})
