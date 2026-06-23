@@ -235,7 +235,45 @@ vim.pack.add({
 })
 
 -- LSP
+vim.lsp.config('texlab', {
+    settings = {
+        texlab = {
+            build = {
+                onSave = true,
+            },
+            forwardSearch = {
+                executable = 'zathura',
+                args = {
+                    '--synctex-forward', '%l:1:%f',
+                    '-x', string.format(
+                        -- NOTE: Need double escaping: Lua string + texlab
+                        "nvim --server %s --remote-send '<C-\\><C-n>:e %%%%{input}<CR>:%%%%{line}<CR>'", vim.v.servername
+                    ),
+                    '%p',
+                }
+            },
+        }
+    }
+})
 vim.lsp.enable('texlab')
+
+local lsp_augroup = vim.api.nvim_create_augroup('LspUserConfig', {clear = true})
+
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = lsp_augroup,
+    pattern = '*',
+    callback = function(ev)
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
+        if client and client.name == 'texlab' then
+            vim.keymap.set('n', '<LocalLeader>ll', '<Cmd>LspTexlabBuild<CR>', {buffer = ev.buf, desc = 'Texlab: build'})
+            vim.keymap.set('n', '<LocalLeader>lv', '<Cmd>LspTexlabForward<CR>', {buffer = ev.buf, desc = 'Texlab: forward search'})
+            vim.keymap.set('n', '<LocalLeader>lc', '<Cmd>LspTexlabCleanAuxiliary<CR>', {buffer = ev.buf, desc = 'Texlab: clean auxiliary files (latexmk -c)'})
+            vim.keymap.set('n', '<LocalLeader>lC', '<Cmd>LspTexlabCleanArtifacts<CR>', {buffer = ev.buf, desc = 'Texlab: clean artifacts (latexmk -C)'})
+        end
+    end,
+    desc = 'Set up Texlab bindings'
+})
 
 -- vim-tex
 vim.g.vimtex_view_method = 'zathura'
