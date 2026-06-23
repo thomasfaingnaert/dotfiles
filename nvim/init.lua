@@ -48,6 +48,11 @@ vim.opt.listchars = { eol = '¬', tab = '▸ ', trail = '·', precedes = '←', 
 vim.diagnostic.config({virtual_text = {current_line = false}, virtual_lines = {current_line = true}})
 
 -- Statusline
+function get_statusline_path()
+    local path = vim.fn.expand('%:~:.')
+    return path ~= '' and path or '[No Name]'
+end
+
 function get_statusline_diagnostics()
     local current = vim.diagnostic.count(0) -- counts in local buffer
     local total = vim.diagnostic.count() -- counts for all buffers
@@ -87,7 +92,7 @@ end
 
 local function get_statusline()
     return table.concat({
-        '%f',                                                       -- Path to the file in the buffer
+        "%{ luaeval('get_statusline_path()') }",                    -- Path to the file in the buffer
         '%<',                                                       -- Start truncating here, so filename is always visible
         '%( %h%)',                                                  -- Help flag: [Help] or empty
         '%( %w%)',                                                  -- Preview flag: [Preview] or empty
