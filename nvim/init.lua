@@ -245,10 +245,7 @@ vim.lsp.config('texlab', {
                 executable = 'zathura',
                 args = {
                     '--synctex-forward', '%l:1:%f',
-                    '-x', string.format(
-                        -- NOTE: Need double escaping: Lua string + texlab
-                        "nvim --server %s --remote-send '<C-\\><C-n>:e %%%%{input}<CR>:%%%%{line}<CR>'", vim.v.servername
-                    ),
+                    '-x', 'texlab inverse-search -i %%{input} -l %%{line}',
                     '%p',
                 }
             },
