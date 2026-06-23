@@ -44,6 +44,9 @@ vim.opt.wildcharm = vim.fn.char2nr('')
 -- Listchars
 vim.opt.listchars = { eol = '¬', tab = '▸ ', trail = '·', precedes = '←', extends = '→' }
 
+-- Diagnostics
+vim.diagnostic.config({virtual_text = {current_line = false}, virtual_lines = {current_line = true}})
+
 --------------------------------------------------------------------------------
 --- KEYMAPPINGS
 --------------------------------------------------------------------------------
@@ -127,6 +130,13 @@ end
 
 vim.keymap.set('c', '<Tab>', cmdline_tab('<C-g>', '<C-z>'), {expr = true})
 vim.keymap.set('c', '<S-Tab>', cmdline_tab('<C-t>', '<S-Tab>'), {expr = true})
+
+--------------------------------------------------------------------------------
+--- COMMANDS
+--------------------------------------------------------------------------------
+
+-- Diagnostics
+vim.api.nvim_create_user_command('DiagnosticsToQf', vim.diagnostic.setqflist, {desc = 'Open the quickfix window with all diagnostics in the current buffer'})
 
 --------------------------------------------------------------------------------
 --- AUTOCOMMANDS
