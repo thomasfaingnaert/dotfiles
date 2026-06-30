@@ -197,6 +197,9 @@ end
 vim.keymap.set('c', '<Tab>', cmdline_tab('<C-g>', '<C-z>'), {expr = true})
 vim.keymap.set('c', '<S-Tab>', cmdline_tab('<C-t>', '<S-Tab>'), {expr = true})
 
+-- Use CTRL+BACKSPACE to kill previous word backward.
+vim.keymap.set('i', '<C-h>', '<C-w>')
+
 --------------------------------------------------------------------------------
 --- COMMANDS
 --------------------------------------------------------------------------------
