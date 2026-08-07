@@ -205,7 +205,29 @@ vim.keymap.set('i', '<C-h>', '<C-w>')
 --------------------------------------------------------------------------------
 
 -- Diagnostics
-vim.api.nvim_create_user_command('DiagnosticsToQf', vim.diagnostic.setqflist, {desc = 'Open the quickfix window with all diagnostics in the current buffer'})
+vim.api.nvim_create_user_command('DiagnosticsToQf',
+    function(opts)
+        local severity = nil
+
+        if opts.args ~= '' then
+            local sev = vim.diagnostic.severity[opts.args:upper()]
+            if not sev then
+                vim.notify('Invalid severity: ' .. opts.args, vim.log.levels.ERROR)
+                return
+            end
+
+            severity = { min = sev }
+        end
+
+        vim.diagnostic.setqflist({ open = true, severity = severity})
+    end,
+    {
+        desc = 'Open the quickfix window with all diagnostics in the current buffer',
+        nargs = '?',
+        complete = function()
+            return { 'ERROR', 'WARN', 'INFO', 'HINT' }
+        end,
+    })
 
 --------------------------------------------------------------------------------
 --- AUTOCOMMANDS
