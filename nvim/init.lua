@@ -248,6 +248,11 @@ vim.lsp.config('texlab', {
         texlab = {
             build = {
                 onSave = true,
+                forwardSearchAfter = true,
+            },
+            chktex = {
+                onOpenAndSave = true,
+                onEdit = true,
             },
             forwardSearch = {
                 executable = 'zathura',
