@@ -265,8 +265,6 @@ vim.pack.add({
 })
 
 -- LSP
-local lsp_augroup = vim.api.nvim_create_augroup('LspUserConfig', {clear = true})
-
 vim.lsp.config('texlab', {
     settings = {
         texlab = {
@@ -289,31 +287,16 @@ vim.lsp.config('texlab', {
         }
     }
 })
-
 vim.lsp.enable('texlab')
-
-vim.api.nvim_create_autocmd('LspAttach', {
-    group = lsp_augroup,
-    pattern = '*',
-    callback = function(ev)
-        local client = vim.lsp.get_client_by_id(ev.data.client_id)
-
-        if client and client.name == 'texlab' then
-            vim.keymap.set('n', '<LocalLeader>ll', '<Cmd>LspTexlabBuild<CR>', {buffer = ev.buf, desc = 'Texlab: build'})
-            vim.keymap.set('n', '<LocalLeader>lv', '<Cmd>LspTexlabForward<CR>', {buffer = ev.buf, desc = 'Texlab: forward search'})
-            vim.keymap.set('n', '<LocalLeader>lc', '<Cmd>LspTexlabCleanAuxiliary<CR>', {buffer = ev.buf, desc = 'Texlab: clean auxiliary files (latexmk -c)'})
-            vim.keymap.set('n', '<LocalLeader>lC', '<Cmd>LspTexlabCleanArtifacts<CR>', {buffer = ev.buf, desc = 'Texlab: clean artifacts (latexmk -C)'})
-        end
-    end,
-    desc = 'Set up Texlab bindings'
-})
 
 
 
 vim.lsp.config('clangd', {
 })
-
 vim.lsp.enable('clangd')
+
+
+local lsp_augroup = vim.api.nvim_create_augroup('LspUserConfig', {clear = true})
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = lsp_augroup,
@@ -321,11 +304,28 @@ vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(ev)
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
-        if client and client.name == 'clangd' then
+        if not client then
+            return
+        end
+
+        -- Capability specific settings.
+        if client:supports_method('textDocument/formatting') then
+            vim.keymap.set('n', '<Leader>=', vim.lsp.buf.format, {buffer = ev.buf, desc = 'LSP: Format entire buffer'})
+        end
+
+        -- Client specific settings.
+        if client.name == 'texlab' then
+            vim.keymap.set('n', '<LocalLeader>ll', '<Cmd>LspTexlabBuild<CR>', {buffer = ev.buf, desc = 'Texlab: build'})
+            vim.keymap.set('n', '<LocalLeader>lv', '<Cmd>LspTexlabForward<CR>', {buffer = ev.buf, desc = 'Texlab: forward search'})
+            vim.keymap.set('n', '<LocalLeader>lc', '<Cmd>LspTexlabCleanAuxiliary<CR>', {buffer = ev.buf, desc = 'Texlab: clean auxiliary files (latexmk -c)'})
+            vim.keymap.set('n', '<LocalLeader>lC', '<Cmd>LspTexlabCleanArtifacts<CR>', {buffer = ev.buf, desc = 'Texlab: clean artifacts (latexmk -C)'})
+        end
+
+        if client.name == 'clangd' then
             vim.keymap.set('n', '<BS>', '<Cmd>LspClangdSwitchSourceHeader<CR>', {buffer = ev.buf, desc = 'Clangd: switch source and header'})
         end
     end,
-    desc = 'Set up Clangd bindings'
+    desc = 'Set up LSP-specific bindings'
 })
 
 
