@@ -289,6 +289,10 @@ vim.lsp.config('texlab', {
 })
 vim.lsp.enable('texlab')
 
+vim.lsp.config('clangd', {
+})
+vim.lsp.enable('clangd')
+
 local lsp_augroup = vim.api.nvim_create_augroup('LspUserConfig', {clear = true})
 
 vim.api.nvim_create_autocmd('LspAttach', {
