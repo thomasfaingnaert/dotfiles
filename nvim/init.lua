@@ -265,6 +265,8 @@ vim.pack.add({
 })
 
 -- LSP
+local lsp_augroup = vim.api.nvim_create_augroup('LspUserConfig', {clear = true})
+
 vim.lsp.config('texlab', {
     settings = {
         texlab = {
@@ -287,13 +289,8 @@ vim.lsp.config('texlab', {
         }
     }
 })
+
 vim.lsp.enable('texlab')
-
-vim.lsp.config('clangd', {
-})
-vim.lsp.enable('clangd')
-
-local lsp_augroup = vim.api.nvim_create_augroup('LspUserConfig', {clear = true})
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = lsp_augroup,
@@ -310,6 +307,27 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
     desc = 'Set up Texlab bindings'
 })
+
+
+
+vim.lsp.config('clangd', {
+})
+
+vim.lsp.enable('clangd')
+
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = lsp_augroup,
+    pattern = '*',
+    callback = function(ev)
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
+        if client and client.name == 'clangd' then
+            vim.keymap.set('n', '<BS>', '<Cmd>LspClangdSwitchSourceHeader<CR>', {buffer = ev.buf, desc = 'Clangd: switch source and header'})
+        end
+    end,
+    desc = 'Set up Clangd bindings'
+})
+
 
 -- vim-tex
 vim.g.vimtex_view_method = 'zathura'
